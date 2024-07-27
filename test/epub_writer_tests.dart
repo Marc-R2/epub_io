@@ -6,16 +6,16 @@ import 'package:epub_plus/epub_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-main() async {
-  String fileName = "alicesAdventuresUnderGround.epub";
+void main() {
+  String fileName = "Das Silmarillion.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
   var targetFile = io.File(fullPath);
-  if (!(await targetFile.exists())) {
+  if (!targetFile.existsSync()) {
     throw Exception("Specified epub file not found: $fullPath");
   }
 
-  List<int> bytes = await targetFile.readAsBytes();
+  List<int> bytes = targetFile.readAsBytesSync();
 
   test("Book Round Trip", () async {
     EpubBook book = await EpubReader.readBook(bytes);

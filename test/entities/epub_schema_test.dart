@@ -3,7 +3,7 @@ library epubreadertest;
 import 'package:epub_plus/epub_plus.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   final reference = EpubSchema(
     package: EpubPackage(version: EpubVersion.epub2),
     navigation: EpubNavigation(),

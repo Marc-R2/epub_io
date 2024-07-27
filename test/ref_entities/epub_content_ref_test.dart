@@ -8,7 +8,7 @@ import 'package:epub_plus/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_plus/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   var reference = EpubContentRef();
 
   late EpubContentRef testContent;

@@ -3,7 +3,7 @@ library epubreadertest;
 import 'package:epub_plus/src/schema/opf/epub_metadata_date.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   var reference = EpubMetadataDate(
     date: "a date",
     event: "Some important event",

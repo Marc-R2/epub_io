@@ -3,7 +3,7 @@ library epubreadertest;
 import 'package:epub_plus/epub_plus.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   var reference = EpubTextContentFile(
     content: "Hello",
     contentMimeType: "application/test",

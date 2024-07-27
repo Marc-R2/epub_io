@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
 
-main() async {
+void main() {
   final int length = 10;
   final RandomString randomString = RandomString(Random(123788));
 

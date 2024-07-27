@@ -7,15 +7,15 @@ import 'package:test/test.dart';
 
 import 'package:epub_plus/epub_plus.dart';
 
-main() async {
+void main() {
   String fileName = "MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
   var targetFile = io.File(fullPath);
-  if (!(await targetFile.exists())) {
+  if (!targetFile.existsSync()) {
     throw Exception("Specified epub file not found: $fullPath");
   }
-  List<int> bytes = await targetFile.readAsBytes();
+  List<int> bytes = targetFile.readAsBytesSync();
   test("Test Epub Image", () async {
     EpubBook epubRef = await EpubReader.readBook(bytes);
 

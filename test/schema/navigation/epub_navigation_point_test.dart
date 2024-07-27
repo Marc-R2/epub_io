@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
 
-main() async {
+void main() {
   final generator = RandomDataGenerator(Random(7898), 10);
   final EpubNavigationPoint reference = generator.randomEpubNavigationPoint(1);
 

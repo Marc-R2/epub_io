@@ -6,7 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 import 'package:epub_plus/epub_plus.dart';
 
-void main() async {
+void main() {
   const fileName = "alicesAdventuresUnderGround.epub";
   String fullPath = path.join(
     io.Directory.current.path,

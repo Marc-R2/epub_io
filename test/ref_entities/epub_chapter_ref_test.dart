@@ -5,7 +5,7 @@ import 'package:epub_plus/epub_plus.dart';
 import 'package:epub_plus/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   var arch = Archive();
   var bookRef = EpubBookRef(epubArchive: arch);
   var contentFileRef = EpubTextContentFileRef(epubBookRef: bookRef);

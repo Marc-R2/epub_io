@@ -3,7 +3,7 @@ library epubreadertest;
 import 'package:epub_plus/src/schema/opf/epub_metadata_meta.dart';
 import 'package:test/test.dart';
 
-main() async {
+void main() {
   var reference = EpubMetadataMeta(
     content: "some content",
     name: "Orthros",
