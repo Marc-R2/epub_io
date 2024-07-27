@@ -1,19 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:epub_io/src/entities/epub_chapter.dart';
+import 'package:epub_io/src/entities/epub_content.dart';
+import 'package:epub_io/src/entities/epub_schema.dart';
 import 'package:image/image.dart';
 
-import 'epub_chapter.dart';
-import 'epub_content.dart';
-import 'epub_schema.dart';
-
 class EpubBook {
-  final String? title;
-  final String? author;
-  final List<String?> authors;
-  final EpubSchema? schema;
-  final EpubContent? content;
-  final Image? coverImage;
-  final List<EpubChapter> chapters;
-
   const EpubBook({
     this.title,
     this.author,
@@ -23,6 +14,14 @@ class EpubBook {
     this.coverImage,
     this.chapters = const <EpubChapter>[],
   });
+
+  final String? title;
+  final String? author;
+  final List<String?> authors;
+  final EpubSchema? schema;
+  final EpubContent? content;
+  final Image? coverImage;
+  final List<EpubChapter> chapters;
 
   @override
   int get hashCode {

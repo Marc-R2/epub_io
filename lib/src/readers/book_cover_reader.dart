@@ -2,18 +2,18 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:image/image.dart' as images;
-
-import '../ref_entities/epub_book_ref.dart';
-import '../ref_entities/epub_byte_content_file_ref.dart';
 
 class BookCoverReader {
   static Future<images.Image?> readBookCover(EpubBookRef bookRef) async {
     final metaItems = bookRef.schema?.package?.metadata?.metaItems;
     if (metaItems == null || metaItems.isEmpty) return null;
 
-    final coverMetaItem = metaItems.firstWhereOrNull((metaItem) =>
-        metaItem.name != null && metaItem.name!.toLowerCase() == 'cover');
+    final coverMetaItem = metaItems.firstWhereOrNull(
+      (metaItem) => metaItem.name?.toLowerCase() == 'cover',
+    );
     if (coverMetaItem == null) return null;
     if (coverMetaItem.content == null || coverMetaItem.content!.isEmpty) {
       throw Exception(
@@ -21,10 +21,12 @@ class BookCoverReader {
       );
     }
 
-    var coverManifestItem = bookRef.schema?.package?.manifest?.items
-        .firstWhereOrNull((manifestItem) =>
-            manifestItem.id?.toLowerCase() ==
-            coverMetaItem.content?.toLowerCase());
+    final coverManifestItem =
+        bookRef.schema?.package?.manifest?.items.firstWhereOrNull(
+      (manifestItem) =>
+          manifestItem.id?.toLowerCase() ==
+          coverMetaItem.content?.toLowerCase(),
+    );
     if (coverManifestItem == null) {
       throw Exception(
         'Incorrect EPUB manifest: item with ID = "${coverMetaItem.content}" is missing.',
@@ -39,9 +41,8 @@ class BookCoverReader {
     }
 
     coverImageContentFileRef = bookRef.content!.images[coverManifestItem.href];
-    var coverImageContent =
+    final coverImageContent =
         await coverImageContentFileRef!.readContentAsBytes();
-    var retval = images.decodeImage(Uint8List.fromList(coverImageContent));
-    return retval;
+    return images.decodeImage(Uint8List.fromList(coverImageContent));
   }
 }

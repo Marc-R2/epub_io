@@ -1,96 +1,94 @@
-library epubreadertest;
-
-import 'package:epub_plus/epub_plus.dart';
+import 'package:epub_io/epub_plus.dart';
 import 'package:test/test.dart';
 
 void main() {
-  var reference = EpubContent();
+  const reference = EpubContent();
 
   late EpubContent testContent;
   late EpubTextContentFile textContentFile;
   late EpubByteContentFile byteContentFile;
 
   setUp(() async {
-    testContent = EpubContent();
+    testContent = const EpubContent();
 
-    textContentFile = EpubTextContentFile(
-      content: "Some string",
-      contentMimeType: "application/text",
+    textContentFile = const EpubTextContentFile(
+      content: 'Some string',
+      contentMimeType: 'application/text',
       contentType: EpubContentType.other,
-      fileName: "orthros.txt",
+      fileName: 'orthros.txt',
     );
 
-    byteContentFile = EpubByteContentFile(
+    byteContentFile = const EpubByteContentFile(
       content: [0, 1, 2, 3],
-      contentMimeType: "application/orthros",
+      contentMimeType: 'application/orthros',
       contentType: EpubContentType.other,
-      fileName: "orthros.bin",
+      fileName: 'orthros.bin',
     );
   });
 
-  group("EpubContent", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubContent', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testContent, equals(reference));
       });
 
-      test("is false when Html changes", () async {
-        testContent = testContent.copyWith(html: {"someKey": textContentFile});
+      test('is false when Html changes', () async {
+        testContent = testContent.copyWith(html: {'someKey': textContentFile});
         expect(testContent, isNot(reference));
       });
 
-      test("is false when Css changes", () async {
-        testContent = testContent.copyWith(css: {"someKey": textContentFile});
+      test('is false when Css changes', () async {
+        testContent = testContent.copyWith(css: {'someKey': textContentFile});
         expect(testContent, isNot(reference));
       });
 
-      test("is false when Images changes", () async {
+      test('is false when Images changes', () async {
         testContent =
-            testContent.copyWith(images: {"someKey": byteContentFile});
+            testContent.copyWith(images: {'someKey': byteContentFile});
         expect(testContent, isNot(reference));
       });
 
-      test("is false when Fonts changes", () async {
-        testContent = testContent.copyWith(fonts: {"someKey": byteContentFile});
+      test('is false when Fonts changes', () async {
+        testContent = testContent.copyWith(fonts: {'someKey': byteContentFile});
         expect(testContent, isNot(reference));
       });
 
-      test("is false when AllFiles changes", () async {
+      test('is false when AllFiles changes', () async {
         testContent =
-            testContent.copyWith(allFiles: {"someKey": byteContentFile});
+            testContent.copyWith(allFiles: {'someKey': byteContentFile});
         expect(testContent, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testContent.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Html changes", () async {
-        testContent = testContent.copyWith(html: {"someKey": textContentFile});
+      test('is false when Html changes', () async {
+        testContent = testContent.copyWith(html: {'someKey': textContentFile});
         expect(testContent.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Css changes", () async {
-        testContent = testContent.copyWith(css: {"someKey": textContentFile});
+      test('is false when Css changes', () async {
+        testContent = testContent.copyWith(css: {'someKey': textContentFile});
         expect(testContent.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Images changes", () async {
+      test('is false when Images changes', () async {
         testContent =
-            testContent.copyWith(images: {"someKey": byteContentFile});
+            testContent.copyWith(images: {'someKey': byteContentFile});
         expect(testContent.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Fonts changes", () async {
-        testContent = testContent.copyWith(fonts: {"someKey": byteContentFile});
+      test('is false when Fonts changes', () async {
+        testContent = testContent.copyWith(fonts: {'someKey': byteContentFile});
         expect(testContent.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when AllFiles changes", () async {
+      test('is false when AllFiles changes', () async {
         testContent =
-            testContent.copyWith(allFiles: {"someKey": byteContentFile});
+            testContent.copyWith(allFiles: {'someKey': byteContentFile});
         expect(testContent.hashCode, isNot(reference.hashCode));
       });
     });

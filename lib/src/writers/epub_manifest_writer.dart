@@ -1,4 +1,4 @@
-import 'package:epub_plus/src/schema/opf/epub_manifest.dart';
+import 'package:epub_io/src/schema/opf/epub_manifest.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubManifestWriter {
@@ -6,14 +6,14 @@ class EpubManifestWriter {
     builder.element(
       'manifest',
       nest: () {
-        for (var item in manifest!.items) {
+        for (final item in manifest!.items) {
           builder.element(
             'item',
             nest: () {
               builder
-                ..attribute('id', item.id!)
-                ..attribute('href', item.href!)
-                ..attribute('media-type', item.mediaType!);
+                ..attribute('id', item.id)
+                ..attribute('href', item.href)
+                ..attribute('media-type', item.mediaType);
             },
           );
         }

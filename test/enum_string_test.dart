@@ -1,34 +1,31 @@
-library epubtest;
-
+import 'package:epub_io/epub_plus.dart';
 import 'package:test/test.dart';
-
-import 'package:epub_plus/epub_plus.dart';
 
 void main() {
   group('EnumFromString', () {
-    test("Enum One", () {
+    test('Enum One', () {
       expect(
-        EnumFromString<Simple>(Simple.values).get("ONE"),
+        EnumFromString<Simple>(Simple.values).get('ONE'),
         equals(Simple.one),
       );
     });
 
-    test("Enum Two", () {
+    test('Enum Two', () {
       expect(
-        EnumFromString<Simple>(Simple.values).get("TWO"),
+        EnumFromString<Simple>(Simple.values).get('TWO'),
         equals(Simple.two),
       );
     });
 
-    test("Enum One Lower Case", () {
+    test('Enum One Lower Case', () {
       expect(
-        EnumFromString<Simple>(Simple.values).get("one"),
+        EnumFromString<Simple>(Simple.values).get('one'),
         equals(Simple.one),
       );
     });
 
-    test("Enum null", () {
-      expect(EnumFromString<Simple>(Simple.values).get("null"), isNull);
+    test('Enum null', () {
+      expect(EnumFromString<Simple>(Simple.values).get('null'), isNull);
     });
   });
 }

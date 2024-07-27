@@ -1,12 +1,6 @@
 import 'package:collection/collection.dart';
 
 class EpubChapter {
-  final String? title;
-  final String? contentFileName;
-  final String? anchor;
-  final String? htmlContent;
-  final List<EpubChapter> subChapters;
-
   const EpubChapter({
     this.title,
     this.contentFileName,
@@ -14,6 +8,11 @@ class EpubChapter {
     this.htmlContent,
     this.subChapters = const <EpubChapter>[],
   });
+  final String? title;
+  final String? contentFileName;
+  final String? anchor;
+  final String? htmlContent;
+  final List<EpubChapter> subChapters;
 
   @override
   int get hashCode {

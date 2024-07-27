@@ -1,7 +1,7 @@
-import '../ref_entities/epub_book_ref.dart';
-import '../ref_entities/epub_chapter_ref.dart';
-import '../ref_entities/epub_text_content_file_ref.dart';
-import '../schema/navigation/epub_navigation_point.dart';
+import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 
 class ChapterReader {
   static List<EpubChapterRef> getChapters(EpubBookRef bookRef) {
@@ -12,14 +12,16 @@ class ChapterReader {
   }
 
   static List<EpubChapterRef> getChaptersImpl(
-      EpubBookRef bookRef, List<EpubNavigationPoint> navigationPoints) {
-    var result = <EpubChapterRef>[];
+    EpubBookRef bookRef,
+    List<EpubNavigationPoint> navigationPoints,
+  ) {
+    final result = <EpubChapterRef>[];
     // navigationPoints.forEach((EpubNavigationPoint navigationPoint) {
-    for (var navigationPoint in navigationPoints) {
+    for (final navigationPoint in navigationPoints) {
       String? contentFileName;
       String? anchor;
       if (navigationPoint.content?.source == null) continue;
-      var contentSourceAnchorCharIndex =
+      final contentSourceAnchorCharIndex =
           navigationPoint.content!.source!.indexOf('#');
       if (contentSourceAnchorCharIndex == -1) {
         contentFileName = navigationPoint.content!.source;
@@ -39,7 +41,7 @@ class ChapterReader {
       }
 
       htmlContentFileRef = bookRef.content!.html[contentFileName];
-      var chapterRef = EpubChapterRef(
+      final chapterRef = EpubChapterRef(
         epubTextContentFileRef: htmlContentFileRef,
         title: navigationPoint.navigationLabels.first.text,
         contentFileName: contentFileName,

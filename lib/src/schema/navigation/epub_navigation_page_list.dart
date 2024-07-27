@@ -1,13 +1,12 @@
 import 'package:collection/collection.dart';
 
-import 'epub_navigation_page_target.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
 
 class EpubNavigationPageList {
-  final List<EpubNavigationPageTarget> targets;
-
   const EpubNavigationPageList({
     this.targets = const <EpubNavigationPageTarget>[],
   });
+  final List<EpubNavigationPageTarget> targets;
 
   @override
   int get hashCode => const DeepCollectionEquality().hash(targets);

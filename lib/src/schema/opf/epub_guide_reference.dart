@@ -1,13 +1,12 @@
 class EpubGuideReference {
-  final String? type;
-  final String? title;
-  final String? href;
-
   const EpubGuideReference({
     this.type,
     this.title,
     this.href,
   });
+  final String? type;
+  final String? title;
+  final String? href;
 
   @override
   int get hashCode => type.hashCode ^ title.hashCode ^ href.hashCode;

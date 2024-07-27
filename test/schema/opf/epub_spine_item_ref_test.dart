@@ -1,17 +1,15 @@
-library epubreadertest;
-
 import 'dart:math';
 
-import 'package:epub_plus/src/schema/opf/epub_spine_item_ref.dart';
+import 'package:epub_io/src/schema/opf/epub_spine_item_ref.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
 
 void main() {
-  final int length = 10;
-  final RandomString randomString = RandomString(Random(123788));
+  const length = 10;
+  final randomString = RandomString(Random(123788));
 
-  var reference = EpubSpineItemRef(
+  final reference = EpubSpineItemRef(
     idRef: randomString.randomAlpha(length),
     isLinear: true,
   );
@@ -22,34 +20,34 @@ void main() {
     testSpineItemRef = reference.copyWith();
   });
 
-  group("EpubSpineItemRef", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubSpineItemRef', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testSpineItemRef, equals(reference));
       });
-      test("is false when IsLinear changes", () async {
+      test('is false when IsLinear changes', () async {
         testSpineItemRef =
             testSpineItemRef.copyWith(isLinear: !testSpineItemRef.isLinear);
 
         expect(testSpineItemRef, isNot(reference));
       });
-      test("is false when IdRef changes", () async {
+      test('is false when IdRef changes', () async {
         testSpineItemRef =
             testSpineItemRef.copyWith(idRef: randomString.randomAlpha(length));
         expect(testSpineItemRef, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testSpineItemRef.hashCode, equals(reference.hashCode));
       });
-      test("is false when IsLinear changes", () async {
+      test('is false when IsLinear changes', () async {
         testSpineItemRef =
             testSpineItemRef.copyWith(isLinear: !testSpineItemRef.isLinear);
         expect(testSpineItemRef.hashCode, isNot(reference.hashCode));
       });
-      test("is false when IdRef changes", () async {
+      test('is false when IdRef changes', () async {
         testSpineItemRef =
             testSpineItemRef.copyWith(idRef: randomString.randomAlpha(length));
         expect(testSpineItemRef.hashCode, isNot(reference.hashCode));

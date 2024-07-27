@@ -1,17 +1,16 @@
 import 'package:collection/collection.dart';
 
-import 'epub_spine_item_ref.dart';
+import 'package:epub_io/src/schema/opf/epub_spine_item_ref.dart';
 
 class EpubSpine {
+  const EpubSpine({
+    required this.ltr,
+    this.tableOfContents,
+    this.items = const <EpubSpineItemRef>[],
+  });
   final String? tableOfContents;
   final List<EpubSpineItemRef> items;
   final bool ltr;
-
-  const EpubSpine({
-    this.tableOfContents,
-    this.items = const <EpubSpineItemRef>[],
-    required this.ltr,
-  });
 
   @override
   int get hashCode =>

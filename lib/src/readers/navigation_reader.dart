@@ -1,39 +1,41 @@
 import 'dart:async';
+import 'dart:convert' as convert;
 
 import 'package:archive/archive.dart';
-import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:epub_plus/src/schema/opf/epub_version.dart';
-import 'package:xml/xml.dart' as xml;
+import 'package:epub_io/src/schema/navigation/epub_metadata.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_doc_author.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_doc_title.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_head.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_head_meta.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_label.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_list.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_map.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_page_list.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_page_target_type.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
+import 'package:epub_io/src/schema/opf/epub_package.dart';
+import 'package:epub_io/src/schema/opf/epub_version.dart';
+import 'package:epub_io/src/utils/enum_from_string.dart';
+import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:path/path.dart' as path;
-
-import '../schema/navigation/epub_metadata.dart';
-import '../schema/navigation/epub_navigation.dart';
-import '../schema/navigation/epub_navigation_doc_author.dart';
-import '../schema/navigation/epub_navigation_doc_title.dart';
-import '../schema/navigation/epub_navigation_head.dart';
-import '../schema/navigation/epub_navigation_head_meta.dart';
-import '../schema/navigation/epub_navigation_label.dart';
-import '../schema/navigation/epub_navigation_list.dart';
-import '../schema/navigation/epub_navigation_map.dart';
-import '../schema/navigation/epub_navigation_page_list.dart';
-import '../schema/navigation/epub_navigation_page_target.dart';
-import '../schema/navigation/epub_navigation_page_target_type.dart';
-import '../schema/navigation/epub_navigation_point.dart';
-import '../schema/navigation/epub_navigation_target.dart';
-import '../schema/opf/epub_package.dart';
-import '../utils/enum_from_string.dart';
-import '../utils/zip_path_utils.dart';
+import 'package:xml/xml.dart' as xml;
 
 // ignore: omit_local_variable_types
 
 class NavigationReader {
   static String? _tocFileEntryPath;
 
-  static Future<EpubNavigation> readNavigation(Archive epubArchive,
-      String contentDirectoryPath, EpubPackage package) async {
+  static Future<EpubNavigation> readNavigation(
+    Archive epubArchive,
+    String contentDirectoryPath,
+    EpubPackage package,
+  ) async {
     if (package.version == EpubVersion.epub2) {
-      var tocId = package.spine?.tableOfContents;
+      final tocId = package.spine?.tableOfContents;
       if (tocId == null || tocId.isEmpty) {
         throw Exception('EPUB parsing error: TOC ID is empty.');
       }
@@ -59,8 +61,9 @@ class NavigationReader {
         );
       }
 
-      var containerDocument = xml.XmlDocument.parse(
-        convert.utf8.decode(tocFileEntry.content),
+      final containerDocument = xml.XmlDocument.parse(
+        // TODO(Marc-R2): unknown casting - check if it's correct
+        convert.utf8.decode(tocFileEntry.content as List<int>),
       );
 
       const ncxNamespace = 'http://www.daisy.org/z3986/2005/ncx/';
@@ -70,7 +73,8 @@ class NavigationReader {
 
       if (ncxNode == null) {
         throw Exception(
-            'EPUB parsing error: TOC file does not contain ncx element.');
+          'EPUB parsing error: TOC file does not contain ncx element.',
+        );
       }
 
       final headNode =
@@ -96,9 +100,7 @@ class NavigationReader {
       final navigationDocTitle = readNavigationDocTitle(docTitleNode);
       final docAuthors = ncxNode
           .findElements('docAuthor', namespace: ncxNamespace)
-          .map<EpubNavigationDocAuthor>(
-            (docAuthorNode) => readNavigationDocAuthor(docAuthorNode),
-          )
+          .map<EpubNavigationDocAuthor>(readNavigationDocAuthor)
           .toList();
 
       final navMapNode =
@@ -113,15 +115,13 @@ class NavigationReader {
       final pageListNode =
           ncxNode.findElements('pageList', namespace: ncxNamespace).firstOrNull;
       final pageList = switch (pageListNode) {
-        xml.XmlElement element => readNavigationPageList(element),
+        final xml.XmlElement element => readNavigationPageList(element),
         null => null,
       };
 
       final navLists = ncxNode
           .findElements('navList', namespace: ncxNamespace)
-          .map<EpubNavigationList>(
-            (navigationListNode) => readNavigationList(navigationListNode),
-          )
+          .map<EpubNavigationList>(readNavigationList)
           .toList();
 
       return EpubNavigation(
@@ -158,8 +158,10 @@ class NavigationReader {
       _tocFileEntryPath =
           '${((_tocFileEntryPath!.split('/')..removeLast())..removeAt(0)).join('/')}/';
 
-      var containerDocument =
-          xml.XmlDocument.parse(convert.utf8.decode(tocFileEntry.content));
+      final containerDocument = xml.XmlDocument.parse(
+        // TODO(Marc-R2): unknown casting - check if it's correct
+        convert.utf8.decode(tocFileEntry.content as List<int>),
+      );
 
       final headNode = containerDocument.findAllElements('head').firstOrNull;
       if (headNode == null) {
@@ -200,10 +202,11 @@ class NavigationReader {
   static EpubNavigationContent readNavigationContent(
     xml.XmlElement navigationContentNode,
   ) {
-    String? id, source;
+    String? id;
+    String? source;
 
     for (final attribute in navigationContentNode.attributes) {
-      var attributeValue = attribute.value;
+      final attributeValue = attribute.value;
       switch (attribute.name.local.toLowerCase()) {
         case 'id':
           id = attributeValue;
@@ -226,10 +229,11 @@ class NavigationReader {
   static EpubNavigationContent readNavigationContentV3(
     xml.XmlElement navigationContentNode,
   ) {
-    String? id, source;
+    String? id;
+    String? source;
 
     for (final attribute in navigationContentNode.attributes) {
-      var attributeValue = attribute.value;
+      final attributeValue = attribute.value;
 
       switch (attribute.name.local.toLowerCase()) {
         case 'id':
@@ -299,7 +303,9 @@ class NavigationReader {
     headNode.children.whereType<xml.XmlElement>().forEach(
       (xml.XmlElement metaNode) {
         if (metaNode.name.local.toLowerCase() == 'meta') {
-          String? name, content, scheme;
+          String? name;
+          String? content;
+          String? scheme;
 
           for (final metaNodeAttribute in metaNode.attributes) {
             final attributeValue = metaNodeAttribute.value;
@@ -341,7 +347,7 @@ class NavigationReader {
   static EpubNavigationLabel readNavigationLabel(
     xml.XmlElement navigationLabelNode,
   ) {
-    var navigationLabelTextNode = navigationLabelNode
+    final navigationLabelTextNode = navigationLabelNode
         .findElements('text', namespace: navigationLabelNode.name.namespaceUri)
         .firstWhereOrNull((xml.XmlElement? elem) => elem != null);
     if (navigationLabelTextNode == null) {
@@ -365,7 +371,8 @@ class NavigationReader {
   static EpubNavigationList readNavigationList(
     xml.XmlElement navigationListNode,
   ) {
-    String? id, classs;
+    String? id;
+    String? classs;
 
     for (final attribute in navigationListNode.attributes) {
       final attributeValue = attribute.value;
@@ -411,7 +418,7 @@ class NavigationReader {
         .whereType<xml.XmlElement>()
         .forEach((xml.XmlElement navigationPointNode) {
       if (navigationPointNode.name.local.toLowerCase() == 'navpoint') {
-        var navigationPoint = readNavigationPoint(navigationPointNode);
+        final navigationPoint = readNavigationPoint(navigationPointNode);
         points.add(navigationPoint);
       }
     });
@@ -419,14 +426,15 @@ class NavigationReader {
   }
 
   static EpubNavigationMap readNavigationMapV3(
-      xml.XmlElement navigationMapNode) {
+    xml.XmlElement navigationMapNode,
+  ) {
     final points = <EpubNavigationPoint>[];
 
     navigationMapNode.children
         .whereType<xml.XmlElement>()
         .forEach((xml.XmlElement navigationPointNode) {
       if (navigationPointNode.name.local.toLowerCase() == 'li') {
-        var navigationPoint = readNavigationPointV3(navigationPointNode);
+        final navigationPoint = readNavigationPointV3(navigationPointNode);
         points.add(navigationPoint);
       }
     });
@@ -450,20 +458,24 @@ class NavigationReader {
   }
 
   static EpubNavigationPageTarget readNavigationPageTarget(
-      xml.XmlElement navigationPageTargetNode) {
-    String? id, value, classs, playOrder;
+    xml.XmlElement navigationPageTargetNode,
+  ) {
+    String? id;
+    String? value;
+    String? classs;
+    String? playOrder;
 
     EpubNavigationPageTargetType? type;
 
-    for (var attribute in navigationPageTargetNode.attributes) {
-      var attributeValue = attribute.value;
+    for (final attribute in navigationPageTargetNode.attributes) {
+      final attributeValue = attribute.value;
       switch (attribute.name.local.toLowerCase()) {
         case 'id':
           id = attributeValue;
         case 'value':
           value = attributeValue;
         case 'type':
-          var converter = EnumFromString<EpubNavigationPageTargetType>(
+          final converter = EnumFromString<EpubNavigationPageTargetType>(
             EpubNavigationPageTargetType.values,
           );
           var type = converter.get(attributeValue);
@@ -488,7 +500,7 @@ class NavigationReader {
         .forEach((xml.XmlElement navigationPageTargetChildNode) {
       switch (navigationPageTargetChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          var navigationLabel =
+          final navigationLabel =
               readNavigationLabel(navigationPageTargetChildNode);
           navigationLabels.add(navigationLabel);
         case 'content':
@@ -514,10 +526,13 @@ class NavigationReader {
   }
 
   static EpubNavigationPoint readNavigationPoint(
-      xml.XmlElement navigationPointNode) {
-    String? id, classs, playOrder;
+    xml.XmlElement navigationPointNode,
+  ) {
+    String? id;
+    String? classs;
+    String? playOrder;
     for (final attribute in navigationPointNode.attributes) {
-      var attributeValue = attribute.value;
+      final attributeValue = attribute.value;
       switch (attribute.name.local.toLowerCase()) {
         case 'id':
           id = attributeValue;
@@ -538,13 +553,14 @@ class NavigationReader {
       (xml.XmlElement navigationPointChildNode) {
         switch (navigationPointChildNode.name.local.toLowerCase()) {
           case 'navlabel':
-            var navigationLabel = readNavigationLabel(navigationPointChildNode);
+            final navigationLabel =
+                readNavigationLabel(navigationPointChildNode);
             navigationLabels.add(navigationLabel);
           case 'content':
             final navContent = readNavigationContent(navigationPointChildNode);
             content = navContent;
           case 'navpoint':
-            var childNavigationPoint =
+            final childNavigationPoint =
                 readNavigationPoint(navigationPointChildNode);
             childNavigationPoints.add(childNavigationPoint);
         }
@@ -575,7 +591,9 @@ class NavigationReader {
   static EpubNavigationPoint readNavigationPointV3(
     xml.XmlElement navigationPointNode,
   ) {
-    String? id, classs, playOrder;
+    String? id;
+    String? classs;
+    String? playOrder;
 
     EpubNavigationContent? content;
 
@@ -622,10 +640,14 @@ class NavigationReader {
   }
 
   static EpubNavigationTarget readNavigationTarget(
-      xml.XmlElement navigationTargetNode) {
-    String? id, classs, value, playOrder;
+    xml.XmlElement navigationTargetNode,
+  ) {
+    String? id;
+    String? classs;
+    String? value;
+    String? playOrder;
 
-    for (var attribute in navigationTargetNode.attributes) {
+    for (final attribute in navigationTargetNode.attributes) {
       final attributeValue = attribute.value;
 
       switch (attribute.name.local.toLowerCase()) {

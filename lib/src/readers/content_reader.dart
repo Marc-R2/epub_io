@@ -1,9 +1,9 @@
-import '../entities/epub_content_type.dart';
-import '../ref_entities/epub_book_ref.dart';
-import '../ref_entities/epub_byte_content_file_ref.dart';
-import '../ref_entities/epub_content_file_ref.dart';
-import '../ref_entities/epub_content_ref.dart';
-import '../ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_io/src/entities/epub_content_type.dart';
+import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 
 class ContentReader {
   static EpubContentRef parseContentMap(EpubBookRef bookRef) {
@@ -14,9 +14,9 @@ class ContentReader {
     final allFiles = <String, EpubContentFileRef>{};
 
     for (final manifestItem in bookRef.schema!.package!.manifest!.items) {
-      var fileName = manifestItem.href ?? '';
-      var contentMimeType = manifestItem.mediaType!;
-      var contentType = EpubContentType.fromMimeType(contentMimeType);
+      final fileName = manifestItem.href ?? '';
+      final contentMimeType = manifestItem.mediaType!;
+      final contentType = EpubContentType.fromMimeType(contentMimeType);
       switch (contentType) {
         case EpubContentType.xhtml11:
         case EpubContentType.css:
@@ -25,7 +25,7 @@ class ContentReader {
         case EpubContentType.xml:
         case EpubContentType.dtbook:
         case EpubContentType.dtbookNCX:
-          var epubTextContentFile = EpubTextContentFileRef(
+          final epubTextContentFile = EpubTextContentFileRef(
             epubBookRef: bookRef,
             fileName: Uri.decodeFull(fileName),
             contentMimeType: contentMimeType,
@@ -41,7 +41,7 @@ class ContentReader {
           }
           allFiles[fileName] = epubTextContentFile;
         default:
-          var epubByteContentFile = EpubByteContentFileRef(
+          final epubByteContentFile = EpubByteContentFileRef(
             epubBookRef: bookRef,
             fileName: Uri.decodeFull(fileName),
             contentMimeType: contentMimeType,

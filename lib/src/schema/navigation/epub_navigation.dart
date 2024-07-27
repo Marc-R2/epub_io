@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:collection/collection.dart';
 
-import 'epub_navigation_doc_author.dart';
-import 'epub_navigation_doc_title.dart';
-import 'epub_navigation_head.dart';
-import 'epub_navigation_list.dart';
-import 'epub_navigation_map.dart';
-import 'epub_navigation_page_list.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_doc_author.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_doc_title.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_head.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_list.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_map.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_page_list.dart';
 
 class EpubNavigation {
   final EpubNavigationHead? head;

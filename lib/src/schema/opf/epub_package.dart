@@ -1,16 +1,10 @@
-import 'epub_guide.dart';
-import 'epub_manifest.dart';
-import 'epub_metadata.dart';
-import 'epub_spine.dart';
-import 'epub_version.dart';
+import 'package:epub_io/src/schema/opf/epub_guide.dart';
+import 'package:epub_io/src/schema/opf/epub_manifest.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata.dart';
+import 'package:epub_io/src/schema/opf/epub_spine.dart';
+import 'package:epub_io/src/schema/opf/epub_version.dart';
 
 class EpubPackage {
-  final EpubVersion? version;
-  final EpubMetadata? metadata;
-  final EpubManifest? manifest;
-  final EpubSpine? spine;
-  final EpubGuide? guide;
-
   const EpubPackage({
     this.version,
     this.metadata,
@@ -18,6 +12,11 @@ class EpubPackage {
     this.spine,
     this.guide,
   });
+  final EpubVersion? version;
+  final EpubMetadata? metadata;
+  final EpubManifest? manifest;
+  final EpubSpine? spine;
+  final EpubGuide? guide;
 
   EpubPackage copyWith({
     EpubVersion? version,

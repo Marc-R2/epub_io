@@ -1,23 +1,20 @@
-library epubreadertest;
-
 import 'dart:io' as io;
 
+import 'package:epub_io/epub_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-import 'package:epub_plus/epub_plus.dart';
-
 void main() {
-  String fileName = "MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub";
-  String fullPath =
-      path.join(io.Directory.current.path, "test", "res", fileName);
-  var targetFile = io.File(fullPath);
+  const fileName = 'MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub';
+  final fullPath =
+      path.join(io.Directory.current.path, 'test', 'res', fileName);
+  final targetFile = io.File(fullPath);
   if (!targetFile.existsSync()) {
-    throw Exception("Specified epub file not found: $fullPath");
+    throw Exception('Specified epub file not found: $fullPath');
   }
-  List<int> bytes = targetFile.readAsBytesSync();
-  test("Test Epub Image", () async {
-    EpubBook epubRef = await EpubReader.readBook(bytes);
+  final List<int> bytes = targetFile.readAsBytesSync();
+  test('Test Epub Image', () async {
+    final epubRef = await EpubReader.readBook(bytes);
 
     expect(epubRef.coverImage, isNotNull);
 
@@ -26,10 +23,10 @@ void main() {
     // expect(1034, epubRef.CoverImage.height);
   });
 
-  test("Test Epub Ref Image", () async {
-    EpubBookRef epubRef = await EpubReader.openBook(bytes);
+  test('Test Epub Ref Image', () async {
+    final epubRef = await EpubReader.openBook(bytes);
 
-    Image? coverImage = await epubRef.readCover();
+    final coverImage = await epubRef.readCover();
 
     expect(coverImage, isNotNull);
 

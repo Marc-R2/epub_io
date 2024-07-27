@@ -1,11 +1,10 @@
 class EpubSpineItemRef {
+  const EpubSpineItemRef({
+    required this.isLinear,
+    this.idRef,
+  });
   final String? idRef;
   final bool isLinear;
-
-  const EpubSpineItemRef({
-    this.idRef,
-    required this.isLinear,
-  });
 
   @override
   int get hashCode => idRef.hashCode ^ isLinear.hashCode;

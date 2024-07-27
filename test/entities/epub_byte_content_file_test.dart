@@ -1,14 +1,12 @@
-library epubreadertest;
-
-import 'package:epub_plus/epub_plus.dart';
+import 'package:epub_io/epub_plus.dart';
 import 'package:test/test.dart';
 
 void main() {
-  var reference = EpubByteContentFile(
+  const reference = EpubByteContentFile(
     content: [0, 1, 2, 3],
-    contentMimeType: "application/test",
+    contentMimeType: 'application/test',
     contentType: EpubContentType.other,
-    fileName: "orthrosFile",
+    fileName: 'orthrosFile',
   );
 
   late EpubByteContentFile testFile;
@@ -17,32 +15,32 @@ void main() {
     testFile = reference.copyWith();
   });
 
-  group("EpubByteContentFile", () {
-    test(".equals is true for equivalent objects", () async {
+  group('EpubByteContentFile', () {
+    test('.equals is true for equivalent objects', () async {
       expect(testFile, equals(reference));
     });
 
-    test(".equals is false when Content changes", () async {
+    test('.equals is false when Content changes', () async {
       testFile = testFile.copyWith(content: [3, 2, 1, 0]);
       expect(testFile, isNot(reference));
     });
 
-    test(".equals is false when ContentMimeType changes", () async {
-      testFile = testFile.copyWith(contentMimeType: "application/different");
+    test('.equals is false when ContentMimeType changes', () async {
+      testFile = testFile.copyWith(contentMimeType: 'application/different');
       expect(testFile, isNot(reference));
     });
 
-    test(".equals is false when ContentType changes", () async {
+    test('.equals is false when ContentType changes', () async {
       testFile = testFile.copyWith(contentType: EpubContentType.css);
       expect(testFile, isNot(reference));
     });
 
-    test(".equals is false when FileName changes", () async {
-      testFile = testFile.copyWith(fileName: "a_different_file_name");
+    test('.equals is false when FileName changes', () async {
+      testFile = testFile.copyWith(fileName: 'a_different_file_name');
       expect(testFile, isNot(reference));
     });
 
-    test(".hashCode is the same for equivalent content", () async {
+    test('.hashCode is the same for equivalent content', () async {
       expect(testFile.hashCode, equals(reference.hashCode));
     });
 
@@ -52,7 +50,7 @@ void main() {
     });
 
     test('.hashCode changes when ContentMimeType changes', () async {
-      testFile = testFile.copyWith(contentMimeType: "application/different");
+      testFile = testFile.copyWith(contentMimeType: 'application/different');
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
 
@@ -62,7 +60,7 @@ void main() {
     });
 
     test('.hashCode changes when FileName changes', () async {
-      testFile = testFile.copyWith(fileName: "a_different_file_name");
+      testFile = testFile.copyWith(fileName: 'a_different_file_name');
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
   });

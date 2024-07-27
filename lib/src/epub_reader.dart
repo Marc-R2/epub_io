@@ -2,21 +2,21 @@ import 'dart:async';
 
 import 'package:archive/archive.dart';
 
-import 'entities/epub_book.dart';
-import 'entities/epub_byte_content_file.dart';
-import 'entities/epub_chapter.dart';
-import 'entities/epub_content.dart';
-import 'entities/epub_content_file.dart';
-import 'entities/epub_text_content_file.dart';
-import 'readers/content_reader.dart';
-import 'readers/schema_reader.dart';
-import 'ref_entities/epub_book_ref.dart';
-import 'ref_entities/epub_byte_content_file_ref.dart';
-import 'ref_entities/epub_chapter_ref.dart';
-import 'ref_entities/epub_content_file_ref.dart';
-import 'ref_entities/epub_content_ref.dart';
-import 'ref_entities/epub_text_content_file_ref.dart';
-import 'schema/opf/epub_metadata_creator.dart';
+import 'package:epub_io/src/entities/epub_book.dart';
+import 'package:epub_io/src/entities/epub_byte_content_file.dart';
+import 'package:epub_io/src/entities/epub_chapter.dart';
+import 'package:epub_io/src/entities/epub_content.dart';
+import 'package:epub_io/src/entities/epub_content_file.dart';
+import 'package:epub_io/src/entities/epub_text_content_file.dart';
+import 'package:epub_io/src/readers/content_reader.dart';
+import 'package:epub_io/src/readers/schema_reader.dart';
+import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 
 /// A class that provides the primary interface to read Epub files.
 ///
@@ -58,7 +58,7 @@ class EpubReader {
       loadedBytes = bytes;
     }
 
-    var epubArchive = ZipDecoder().decodeBytes(loadedBytes);
+    final epubArchive = ZipDecoder().decodeBytes(loadedBytes);
 
     final schema = await SchemaReader.readSchema(epubArchive);
     final title = schema.package!.metadata!.titles
@@ -91,9 +91,9 @@ class EpubReader {
 
   /// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
   static Future<EpubBook> readBook(FutureOr<List<int>> bytes) async {
-    List<int> loadedBytes = await bytes;
+    final loadedBytes = await bytes;
 
-    var epubBookRef = await openBook(loadedBytes);
+    final epubBookRef = await openBook(loadedBytes);
     final schema = epubBookRef.schema;
     final title = epubBookRef.title;
     final authors = epubBookRef.authors;
@@ -144,10 +144,10 @@ class EpubReader {
   static Future<Map<String, EpubTextContentFile>> readTextContentFiles(
     Map<String, EpubTextContentFileRef> textContentFileRefs,
   ) async {
-    var result = <String, EpubTextContentFile>{};
+    final result = <String, EpubTextContentFile>{};
 
     await Future.forEach(textContentFileRefs.keys, (String key) async {
-      EpubContentFileRef value = textContentFileRefs[key]!;
+      final EpubContentFileRef value = textContentFileRefs[key]!;
       final content = await value.readContentAsText();
       final textContentFile = EpubTextContentFile(
         fileName: value.fileName,
@@ -163,8 +163,8 @@ class EpubReader {
   static Future<Map<String, EpubByteContentFile>> readByteContentFiles(
     Map<String, EpubByteContentFileRef> byteContentFileRefs,
   ) async {
-    var result = <String, EpubByteContentFile>{};
-    await Future.forEach(byteContentFileRefs.keys, (dynamic key) async {
+    final result = <String, EpubByteContentFile>{};
+    await Future.forEach(byteContentFileRefs.keys, (String key) async {
       result[key] = await readByteContentFile(byteContentFileRefs[key]!);
     });
     return result;
@@ -187,7 +187,7 @@ class EpubReader {
   static Future<List<EpubChapter>> readChapters(
     List<EpubChapterRef> chapterRefs,
   ) async {
-    var result = <EpubChapter>[];
+    final result = <EpubChapter>[];
 
     await Future.forEach(chapterRefs, (EpubChapterRef chapterRef) async {
       final title = chapterRef.title;

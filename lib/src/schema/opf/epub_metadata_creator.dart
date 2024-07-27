@@ -1,13 +1,12 @@
 class EpubMetadataCreator {
-  final String? creator;
-  final String? fileAs;
-  final String? role;
-
   const EpubMetadataCreator({
     this.creator,
     this.fileAs,
     this.role,
   });
+  final String? creator;
+  final String? fileAs;
+  final String? role;
 
   @override
   int get hashCode => creator.hashCode ^ fileAs.hashCode ^ role.hashCode;

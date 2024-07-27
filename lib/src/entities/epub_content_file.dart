@@ -1,15 +1,14 @@
-import 'epub_content_type.dart';
+import 'package:epub_io/src/entities/epub_content_type.dart';
 
 abstract class EpubContentFile {
-  final String? fileName;
-  final EpubContentType? contentType;
-  final String? contentMimeType;
-
   const EpubContentFile({
     this.fileName,
     this.contentType,
     this.contentMimeType,
   });
+  final String? fileName;
+  final EpubContentType? contentType;
+  final String? contentMimeType;
 
   @override
   int get hashCode =>

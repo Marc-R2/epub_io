@@ -1,13 +1,11 @@
-library epubreadertest;
-
-import 'package:epub_plus/src/schema/opf/epub_metadata_creator.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 import 'package:test/test.dart';
 
 void main() {
-  var reference = EpubMetadataCreator(
-    creator: "orthros",
-    fileAs: "Large",
-    role: "Creator",
+  const reference = EpubMetadataCreator(
+    creator: 'orthros',
+    fileAs: 'Large',
+    role: 'Creator',
   );
 
   late EpubMetadataCreator testMetadataCreator;
@@ -16,52 +14,52 @@ void main() {
     testMetadataCreator = reference.copyWith();
   });
 
-  group("EpubMetadataCreator", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubMetadataCreator', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testMetadataCreator, equals(reference));
       });
 
-      test("is false when Creator changes", () async {
+      test('is false when Creator changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          creator: "NotOrthros",
+          creator: 'NotOrthros',
         );
         expect(testMetadataCreator, isNot(reference));
       });
-      test("is false when FileAs changes", () async {
+      test('is false when FileAs changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          fileAs: "Small",
+          fileAs: 'Small',
         );
         expect(testMetadataCreator, isNot(reference));
       });
-      test("is false when Role changes", () async {
+      test('is false when Role changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          role: "Copier",
+          role: 'Copier',
         );
         expect(testMetadataCreator, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testMetadataCreator.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Creator changes", () async {
+      test('is false when Creator changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          creator: "NotOrthros",
+          creator: 'NotOrthros',
         );
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });
-      test("is false when FileAs changes", () async {
+      test('is false when FileAs changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          fileAs: "Small",
+          fileAs: 'Small',
         );
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });
-      test("is false when Role changes", () async {
+      test('is false when Role changes', () async {
         testMetadataCreator = testMetadataCreator.copyWith(
-          role: "Copier",
+          role: 'Copier',
         );
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });

@@ -1,16 +1,13 @@
-library epubreadertest;
-
 import 'dart:math';
 
-import 'package:epub_plus/src/schema/navigation/epub_navigation_doc_author.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_doc_author.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
 
 void main() {
   final generator = RandomDataGenerator(Random(7898), 10);
-  final EpubNavigationDocAuthor reference =
-      generator.randomNavigationDocAuthor();
+  final reference = generator.randomNavigationDocAuthor();
 
   late EpubNavigationDocAuthor testNavigationDocAuthor;
 
@@ -20,24 +17,24 @@ void main() {
     );
   });
 
-  group("EpubNavigationDocAuthor", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationDocAuthor', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocAuthor, equals(reference));
       });
 
-      test("is false when Authors changes", () async {
+      test('is false when Authors changes', () async {
         testNavigationDocAuthor.authors.add(generator.randomString());
         expect(testNavigationDocAuthor, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocAuthor.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Authors changes", () async {
+      test('is false when Authors changes', () async {
         testNavigationDocAuthor.authors.add(generator.randomString());
         expect(testNavigationDocAuthor.hashCode, isNot(reference.hashCode));
       });

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:collection/collection.dart';
 
-import 'epub_guide_reference.dart';
+import 'package:epub_io/src/schema/opf/epub_guide_reference.dart';
 
 class EpubGuide {
   final List<EpubGuideReference> items;

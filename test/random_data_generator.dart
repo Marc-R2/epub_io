@@ -1,16 +1,15 @@
 import 'dart:math' show Random;
 
-import 'package:epub_plus/epub_plus.dart';
-import 'package:epub_plus/src/schema/navigation/epub_navigation_target.dart';
-import 'package:epub_plus/src/schema/opf/epub_metadata_contributor.dart';
-import 'package:epub_plus/src/schema/opf/epub_metadata_date.dart';
-import 'package:epub_plus/src/schema/opf/epub_metadata_identifier.dart';
-import 'package:epub_plus/src/schema/opf/epub_metadata_meta.dart';
+import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 
 class RandomString {
-  final Random rng;
-
   RandomString(this.rng);
+  final Random rng;
 
   static const asciiStart = 33;
   static const asciiEnd = 126;
@@ -36,7 +35,8 @@ class RandomString {
     int to = asciiEnd,
   }) {
     return String.fromCharCodes(
-        List.generate(length, (index) => randomBetween(from, to)));
+      List.generate(length, (index) => randomBetween(from, to)),
+    );
   }
 
   /// Generates a random string of [length] with only numeric characters.
@@ -45,39 +45,44 @@ class RandomString {
 
   /// Generates a random string of [length] with only alpha characters.
   String randomAlpha(int length) {
-    var lowerAlphaLength = randomBetween(0, length);
-    var upperAlphaLength = length - lowerAlphaLength;
-    var lowerAlpha = randomString(lowerAlphaLength,
-        from: lowerAlphaStart, to: lowerAlphaEnd);
-    var upperAlpha = randomString(upperAlphaLength,
-        from: upperAlphaStart, to: upperAlphaEnd);
+    final lowerAlphaLength = randomBetween(0, length);
+    final upperAlphaLength = length - lowerAlphaLength;
+    final lowerAlpha = randomString(
+      lowerAlphaLength,
+      from: lowerAlphaStart,
+      to: lowerAlphaEnd,
+    );
+    final upperAlpha = randomString(
+      upperAlphaLength,
+      from: upperAlphaStart,
+      to: upperAlphaEnd,
+    );
     return randomMerge(lowerAlpha, upperAlpha);
   }
 
   /// Generates a random string of [length] with alpha-numeric characters.
   String randomAlphaNumeric(int length) {
-    var alphaLength = randomBetween(0, length);
-    var numericLength = length - alphaLength;
-    var alpha = randomAlpha(alphaLength);
-    var numeric = randomNumeric(numericLength);
+    final alphaLength = randomBetween(0, length);
+    final numericLength = length - alphaLength;
+    final alpha = randomAlpha(alphaLength);
+    final numeric = randomNumeric(numericLength);
     return randomMerge(alpha, numeric);
   }
 
   /// Merge [a] with [b] and scramble characters.
   String randomMerge(String a, String b) {
-    List<int> mergedCodeUnits = List.from("$a$b".codeUnits);
+    final mergedCodeUnits = List<int>.from("$a$b".codeUnits);
     mergedCodeUnits.shuffle(rng);
     return String.fromCharCodes(mergedCodeUnits);
   }
 }
 
 class RandomDataGenerator {
+  RandomDataGenerator(this.rng, this._length)
+      : _randomString = RandomString(rng);
   final Random rng;
   final RandomString _randomString;
   final int _length;
-
-  RandomDataGenerator(this.rng, this._length)
-      : _randomString = RandomString(rng);
 
   String randomString() {
     return _randomString.randomAlphaNumeric(_length);
@@ -192,7 +197,7 @@ class RandomDataGenerator {
   }
 
   EpubMetadata randomEpubMetadata() {
-    var reference = EpubMetadata(
+    final reference = EpubMetadata(
       contributors: [randomEpubMetadataContributor()],
       coverages: [_randomString.randomAlpha(_length)],
       creators: [randomEpubMetadataCreator()],

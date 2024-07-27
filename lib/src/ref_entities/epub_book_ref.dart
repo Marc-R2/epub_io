@@ -2,22 +2,14 @@ import 'dart:async';
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
+import 'package:epub_io/src/entities/epub_schema.dart';
+import 'package:epub_io/src/readers/book_cover_reader.dart';
+import 'package:epub_io/src/readers/chapter_reader.dart';
+import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:image/image.dart';
 
-import '../entities/epub_schema.dart';
-import '../readers/book_cover_reader.dart';
-import '../readers/chapter_reader.dart';
-import 'epub_chapter_ref.dart';
-import 'epub_content_ref.dart';
-
 class EpubBookRef {
-  final Archive epubArchive;
-  final String? title;
-  final String? author;
-  final List<String> authors;
-  final EpubSchema? schema;
-  final EpubContentRef? content;
-
   const EpubBookRef({
     required this.epubArchive,
     this.title,
@@ -26,6 +18,13 @@ class EpubBookRef {
     this.schema,
     this.content,
   });
+
+  final Archive epubArchive;
+  final String? title;
+  final String? author;
+  final List<String> authors;
+  final EpubSchema? schema;
+  final EpubContentRef? content;
 
   @override
   int get hashCode {

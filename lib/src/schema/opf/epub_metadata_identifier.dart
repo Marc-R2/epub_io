@@ -1,13 +1,12 @@
 class EpubMetadataIdentifier {
-  final String? id;
-  final String? scheme;
-  final String? identifier;
-
   const EpubMetadataIdentifier({
     this.id,
     this.scheme,
     this.identifier,
   });
+  final String? id;
+  final String? scheme;
+  final String? identifier;
 
   @override
   int get hashCode => id.hashCode ^ scheme.hashCode ^ identifier.hashCode;

@@ -1,16 +1,16 @@
 import 'package:collection/collection.dart';
 
-import 'epub_content_file.dart';
+import 'package:epub_io/src/entities/epub_content_file.dart';
 
 class EpubByteContentFile extends EpubContentFile {
-  final List<int>? content;
-
   const EpubByteContentFile({
     super.fileName,
     super.contentMimeType,
     super.contentType,
     this.content,
   });
+
+  final List<int>? content;
 
   @override
   int get hashCode =>

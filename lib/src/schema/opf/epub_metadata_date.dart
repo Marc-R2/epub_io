@@ -1,11 +1,10 @@
 class EpubMetadataDate {
-  final String? date;
-  final String? event;
-
   const EpubMetadataDate({
     this.date,
     this.event,
   });
+  final String? date;
+  final String? event;
 
   @override
   int get hashCode => date.hashCode ^ event.hashCode;

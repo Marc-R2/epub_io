@@ -1,20 +1,19 @@
 import 'package:collection/collection.dart';
 
-import 'epub_navigation_label.dart';
-import 'epub_navigation_target.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_label.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 
 class EpubNavigationList {
-  final String? id;
-  final String? classs;
-  final List<EpubNavigationLabel> navigationLabels;
-  final List<EpubNavigationTarget> navigationTargets;
-
   const EpubNavigationList({
     this.id,
     this.classs,
     this.navigationLabels = const <EpubNavigationLabel>[],
     this.navigationTargets = const <EpubNavigationTarget>[],
   });
+  final String? id;
+  final String? classs;
+  final List<EpubNavigationLabel> navigationLabels;
+  final List<EpubNavigationTarget> navigationTargets;
 
   @override
   int get hashCode {

@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:collection/collection.dart';
 
-import 'epub_metadata.dart';
-import 'epub_navigation_label.dart';
+import 'package:epub_io/src/schema/navigation/epub_metadata.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_label.dart';
 
 class EpubNavigationPoint {
   final String? id;

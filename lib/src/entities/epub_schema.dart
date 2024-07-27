@@ -1,16 +1,15 @@
-import '../schema/navigation/epub_navigation.dart';
-import '../schema/opf/epub_package.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation.dart';
+import 'package:epub_io/src/schema/opf/epub_package.dart';
 
 class EpubSchema {
-  final EpubPackage? package;
-  final EpubNavigation? navigation;
-  final String? contentDirectoryPath;
-
   const EpubSchema({
     this.package,
     this.navigation,
     this.contentDirectoryPath,
   });
+  final EpubPackage? package;
+  final EpubNavigation? navigation;
+  final String? contentDirectoryPath;
 
   @override
   int get hashCode =>

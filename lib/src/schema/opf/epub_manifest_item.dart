@@ -1,14 +1,4 @@
 class EpubManifestItem {
-  final String? id;
-  final String? href;
-  final String? mediaType;
-  final String? mediaOverlay;
-  final String? requiredNamespace;
-  final String? requiredModules;
-  final String? fallback;
-  final String? fallbackStyle;
-  final String? properties;
-
   const EpubManifestItem({
     this.id,
     this.href,
@@ -20,6 +10,15 @@ class EpubManifestItem {
     this.fallbackStyle,
     this.properties,
   });
+  final String? id;
+  final String? href;
+  final String? mediaType;
+  final String? mediaOverlay;
+  final String? requiredNamespace;
+  final String? requiredModules;
+  final String? fallback;
+  final String? fallbackStyle;
+  final String? properties;
 
   @override
   int get hashCode {

@@ -1,14 +1,6 @@
 import 'package:collection/collection.dart';
 
 class EpubMetadataMeta {
-  final String? name;
-  final String? content;
-  final String? id;
-  final String? refines;
-  final String? property;
-  final String? scheme;
-  final Map<String, String> attributes;
-
   const EpubMetadataMeta({
     this.name,
     this.content,
@@ -18,6 +10,13 @@ class EpubMetadataMeta {
     this.scheme,
     this.attributes = const <String, String>{},
   });
+  final String? name;
+  final String? content;
+  final String? id;
+  final String? refines;
+  final String? property;
+  final String? scheme;
+  final Map<String, String> attributes;
 
   @override
   int get hashCode {

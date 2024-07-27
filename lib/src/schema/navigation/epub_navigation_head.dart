@@ -1,13 +1,12 @@
 import 'package:collection/collection.dart';
 
-import 'epub_navigation_head_meta.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_head_meta.dart';
 
 class EpubNavigationHead {
-  final List<EpubNavigationHeadMeta> metadata;
-
   const EpubNavigationHead({
     this.metadata = const <EpubNavigationHeadMeta>[],
   });
+  final List<EpubNavigationHeadMeta> metadata;
 
   @override
   int get hashCode => const DeepCollectionEquality().hash(metadata);

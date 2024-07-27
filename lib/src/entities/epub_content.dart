@@ -1,16 +1,10 @@
 import 'package:collection/collection.dart';
 
-import 'epub_byte_content_file.dart';
-import 'epub_content_file.dart';
-import 'epub_text_content_file.dart';
+import 'package:epub_io/src/entities/epub_byte_content_file.dart';
+import 'package:epub_io/src/entities/epub_content_file.dart';
+import 'package:epub_io/src/entities/epub_text_content_file.dart';
 
 class EpubContent {
-  final Map<String, EpubTextContentFile> html;
-  final Map<String, EpubTextContentFile> css;
-  final Map<String, EpubByteContentFile> images;
-  final Map<String, EpubByteContentFile> fonts;
-  final Map<String, EpubContentFile> allFiles;
-
   const EpubContent({
     this.html = const <String, EpubTextContentFile>{},
     this.css = const <String, EpubTextContentFile>{},
@@ -18,6 +12,11 @@ class EpubContent {
     this.fonts = const <String, EpubByteContentFile>{},
     this.allFiles = const <String, EpubContentFile>{},
   });
+  final Map<String, EpubTextContentFile> html;
+  final Map<String, EpubTextContentFile> css;
+  final Map<String, EpubByteContentFile> images;
+  final Map<String, EpubByteContentFile> fonts;
+  final Map<String, EpubContentFile> allFiles;
 
   @override
   int get hashCode {

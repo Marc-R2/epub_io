@@ -1,41 +1,39 @@
-library epubreadertest;
-
 import 'dart:math';
 
-import 'package:epub_plus/src/schema/navigation/epub_navigation_label.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_label.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
 
 void main() {
-  final RandomDataGenerator generator = RandomDataGenerator(Random(123778), 10);
+  final generator = RandomDataGenerator(Random(123778), 10);
 
-  final EpubNavigationLabel reference = generator.randomEpubNavigationLabel();
+  final reference = generator.randomEpubNavigationLabel();
 
   late EpubNavigationLabel testNavigationLabel;
   setUp(() async {
     testNavigationLabel = reference.copyWith();
   });
 
-  group("EpubNavigationLabel", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationLabel', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationLabel, equals(reference));
       });
 
-      test("is false when Text changes", () async {
+      test('is false when Text changes', () async {
         testNavigationLabel =
             reference.copyWith(text: generator.randomString());
         expect(testNavigationLabel, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationLabel.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Metadata changes", () async {
+      test('is false when Metadata changes', () async {
         testNavigationLabel = reference.copyWith(
           text: generator.randomString(),
         );

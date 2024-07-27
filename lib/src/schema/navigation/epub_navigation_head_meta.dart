@@ -1,13 +1,12 @@
 class EpubNavigationHeadMeta {
-  final String? name;
-  final String? content;
-  final String? scheme;
-
   const EpubNavigationHeadMeta({
     this.name,
     this.content,
     this.scheme,
   });
+  final String? name;
+  final String? content;
+  final String? scheme;
 
   @override
   int get hashCode => name.hashCode ^ content.hashCode ^ scheme.hashCode;

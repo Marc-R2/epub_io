@@ -1,13 +1,12 @@
 import 'package:collection/collection.dart';
 
-import 'epub_navigation_point.dart';
+import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 
 class EpubNavigationMap {
-  final List<EpubNavigationPoint> points;
-
   const EpubNavigationMap({
     this.points = const <EpubNavigationPoint>[],
   });
+  final List<EpubNavigationPoint> points;
 
   @override
   int get hashCode => const DeepCollectionEquality().hash(points);

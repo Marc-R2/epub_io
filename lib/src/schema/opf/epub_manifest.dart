@@ -1,13 +1,12 @@
 import 'package:collection/collection.dart';
 
-import 'epub_manifest_item.dart';
+import 'package:epub_io/src/schema/opf/epub_manifest_item.dart';
 
 class EpubManifest {
-  final List<EpubManifestItem> items;
-
   const EpubManifest({
     this.items = const <EpubManifestItem>[],
   });
+  final List<EpubManifestItem> items;
 
   @override
   int get hashCode => const DeepCollectionEquality().hash(items);

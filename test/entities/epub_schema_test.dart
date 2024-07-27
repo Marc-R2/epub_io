@@ -1,13 +1,11 @@
-library epubreadertest;
-
-import 'package:epub_plus/epub_plus.dart';
+import 'package:epub_io/epub_plus.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final reference = EpubSchema(
+  const reference = EpubSchema(
     package: EpubPackage(version: EpubVersion.epub2),
     navigation: EpubNavigation(),
-    contentDirectoryPath: "some/random/path",
+    contentDirectoryPath: 'some/random/path',
   );
 
   late EpubSchema testSchema;
@@ -16,14 +14,14 @@ void main() {
     testSchema = reference.copyWith();
   });
 
-  group("EpubSchema", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubSchema', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testSchema, equals(reference));
       });
 
-      test("is false when Package changes", () async {
-        var package = EpubPackage(
+      test('is false when Package changes', () async {
+        const package = EpubPackage(
           version: EpubVersion.epub3,
           guide: EpubGuide(),
         );
@@ -32,9 +30,9 @@ void main() {
         expect(testSchema, isNot(reference));
       });
 
-      test("is false when Navigation changes", () async {
+      test('is false when Navigation changes', () async {
         testSchema = testSchema.copyWith(
-          navigation: EpubNavigation(
+          navigation: const EpubNavigation(
             docTitle: EpubNavigationDocTitle(),
             docAuthors: [EpubNavigationDocAuthor()],
           ),
@@ -43,20 +41,21 @@ void main() {
         expect(testSchema, isNot(reference));
       });
 
-      test("is false when ContentDirectoryPath changes", () async {
+      test('is false when ContentDirectoryPath changes', () async {
         testSchema = testSchema.copyWith(
-            contentDirectoryPath: "some/other/random/path/to/dev/null");
+          contentDirectoryPath: 'some/other/random/path/to/dev/null',
+        );
         expect(testSchema, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testSchema.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Package changes", () async {
-        final package = EpubPackage(
+      test('is false when Package changes', () async {
+        const package = EpubPackage(
           version: EpubVersion.epub3,
           guide: EpubGuide(),
         );
@@ -65,9 +64,9 @@ void main() {
         expect(testSchema.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Navigation changes", () async {
+      test('is false when Navigation changes', () async {
         testSchema = testSchema.copyWith(
-          navigation: EpubNavigation(
+          navigation: const EpubNavigation(
             docTitle: EpubNavigationDocTitle(),
             docAuthors: [EpubNavigationDocAuthor()],
           ),
@@ -76,9 +75,10 @@ void main() {
         expect(testSchema.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when ContentDirectoryPath changes", () async {
+      test('is false when ContentDirectoryPath changes', () async {
         testSchema = testSchema.copyWith(
-            contentDirectoryPath: "some/other/random/path/to/dev/null");
+          contentDirectoryPath: 'some/other/random/path/to/dev/null',
+        );
         expect(testSchema.hashCode, isNot(reference.hashCode));
       });
     });

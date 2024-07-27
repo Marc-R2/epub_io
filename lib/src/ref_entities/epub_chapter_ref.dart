@@ -2,15 +2,9 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 
-import 'epub_text_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 
 class EpubChapterRef {
-  final EpubTextContentFileRef? epubTextContentFileRef;
-  final String? title;
-  final String? contentFileName;
-  final String? anchor;
-  final List<EpubChapterRef> subChapters;
-
   const EpubChapterRef({
     this.epubTextContentFileRef,
     this.title,
@@ -18,6 +12,11 @@ class EpubChapterRef {
     this.anchor,
     this.subChapters = const <EpubChapterRef>[],
   });
+  final EpubTextContentFileRef? epubTextContentFileRef;
+  final String? title;
+  final String? contentFileName;
+  final String? anchor;
+  final List<EpubChapterRef> subChapters;
 
   @override
   int get hashCode {

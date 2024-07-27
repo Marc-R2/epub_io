@@ -1,29 +1,12 @@
 import 'package:collection/collection.dart';
 
-import 'epub_metadata_contributor.dart';
-import 'epub_metadata_creator.dart';
-import 'epub_metadata_date.dart';
-import 'epub_metadata_identifier.dart';
-import 'epub_metadata_meta.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
+import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 
 class EpubMetadata {
-  final List<String> titles;
-  final List<EpubMetadataCreator> creators;
-  final List<String> subjects;
-  final String? description;
-  final List<String> publishers;
-  final List<EpubMetadataContributor> contributors;
-  final List<EpubMetadataDate> dates;
-  final List<String> types;
-  final List<String> formats;
-  final List<EpubMetadataIdentifier> identifiers;
-  final List<String> sources;
-  final List<String> languages;
-  final List<String> relations;
-  final List<String> coverages;
-  final List<String> rights;
-  final List<EpubMetadataMeta> metaItems;
-
   const EpubMetadata({
     this.titles = const <String>[],
     this.creators = const <EpubMetadataCreator>[],
@@ -42,6 +25,22 @@ class EpubMetadata {
     this.rights = const <String>[],
     this.metaItems = const <EpubMetadataMeta>[],
   });
+  final List<String> titles;
+  final List<EpubMetadataCreator> creators;
+  final List<String> subjects;
+  final String? description;
+  final List<String> publishers;
+  final List<EpubMetadataContributor> contributors;
+  final List<EpubMetadataDate> dates;
+  final List<String> types;
+  final List<String> formats;
+  final List<EpubMetadataIdentifier> identifiers;
+  final List<String> sources;
+  final List<String> languages;
+  final List<String> relations;
+  final List<String> coverages;
+  final List<String> rights;
+  final List<EpubMetadataMeta> metaItems;
 
   @override
   int get hashCode {

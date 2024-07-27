@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
 
 class EpubNavigationDocTitle {
-  final List<String> titles;
-
   const EpubNavigationDocTitle({
     this.titles = const <String>[],
   });
+  final List<String> titles;
 
   @override
   int get hashCode => const DeepCollectionEquality().hash(titles);

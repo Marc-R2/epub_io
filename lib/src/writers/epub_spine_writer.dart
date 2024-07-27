@@ -1,4 +1,4 @@
-import 'package:epub_plus/src/schema/opf/epub_spine.dart';
+import 'package:epub_io/src/schema/opf/epub_spine.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubSpineWriter {
@@ -7,12 +7,12 @@ class EpubSpineWriter {
       'spine',
       attributes: {'toc': spine.tableOfContents!},
       nest: () {
-        for (var spineitem in spine.items) {
+        for (final spineitem in spine.items) {
           builder.element(
             'itemref',
             attributes: {
               'idref': spineitem.idRef!,
-              'linear': spineitem.isLinear ? 'yes' : 'no'
+              'linear': spineitem.isLinear ? 'yes' : 'no',
             },
           );
         }

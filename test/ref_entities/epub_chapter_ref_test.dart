@@ -1,102 +1,100 @@
-library epubreadertest;
-
 import 'package:archive/archive.dart';
-import 'package:epub_plus/epub_plus.dart';
-import 'package:epub_plus/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
 void main() {
-  var arch = Archive();
-  var bookRef = EpubBookRef(epubArchive: arch);
-  var contentFileRef = EpubTextContentFileRef(epubBookRef: bookRef);
-  var reference = EpubChapterRef(
+  final arch = Archive();
+  final bookRef = EpubBookRef(epubArchive: arch);
+  final contentFileRef = EpubTextContentFileRef(epubBookRef: bookRef);
+  final reference = EpubChapterRef(
     epubTextContentFileRef: contentFileRef,
-    anchor: "anchor",
-    contentFileName: "orthros",
+    anchor: 'anchor',
+    contentFileName: 'orthros',
     subChapters: [],
-    title: "A New Look at Chapters",
+    title: 'A New Look at Chapters',
   );
 
   late EpubBookRef bookRef2;
   late EpubChapterRef testChapterRef;
 
   setUp(() async {
-    var arch2 = Archive();
+    final arch2 = Archive();
     bookRef2 = EpubBookRef(epubArchive: arch2);
-    var contentFileRef2 = EpubTextContentFileRef(epubBookRef: bookRef2);
+    final contentFileRef2 = EpubTextContentFileRef(epubBookRef: bookRef2);
 
     testChapterRef =
         reference.copyWith(epubTextContentFileRef: contentFileRef2);
   });
 
-  group("EpubChapterRef", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubChapterRef', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testChapterRef, equals(reference));
       });
 
-      test("is false when Anchor changes", () async {
-        testChapterRef = testChapterRef.copyWith(anchor: "NotAnAnchor");
+      test('is false when Anchor changes', () async {
+        testChapterRef = testChapterRef.copyWith(anchor: 'NotAnAnchor');
         expect(testChapterRef, isNot(reference));
       });
 
-      test("is false when ContentFileName changes", () async {
-        testChapterRef = testChapterRef.copyWith(contentFileName: "NotOrthros");
+      test('is false when ContentFileName changes', () async {
+        testChapterRef = testChapterRef.copyWith(contentFileName: 'NotOrthros');
         expect(testChapterRef, isNot(reference));
       });
 
-      test("is false when SubChapters changes", () async {
-        var subchapterContentFileRef =
+      test('is false when SubChapters changes', () async {
+        final subchapterContentFileRef =
             EpubTextContentFileRef(epubBookRef: bookRef2);
-        var chapter = EpubChapterRef(
+        final chapter = EpubChapterRef(
           epubTextContentFileRef: subchapterContentFileRef,
-          title: "A Brave new Epub",
-          contentFileName: "orthros.txt",
+          title: 'A Brave new Epub',
+          contentFileName: 'orthros.txt',
         );
 
         testChapterRef = testChapterRef.copyWith(subChapters: [chapter]);
         expect(testChapterRef, isNot(reference));
       });
 
-      test("is false when Title changes", () async {
-        testChapterRef = testChapterRef.copyWith(title: "A Boring Old World");
+      test('is false when Title changes', () async {
+        testChapterRef = testChapterRef.copyWith(title: 'A Boring Old World');
         expect(testChapterRef, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testChapterRef.hashCode, equals(reference.hashCode));
       });
 
-      test("is true for equivalent objects", () async {
+      test('is true for equivalent objects', () async {
         expect(testChapterRef.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Anchor changes", () async {
-        testChapterRef = testChapterRef.copyWith(anchor: "NotAnAnchor");
+      test('is false when Anchor changes', () async {
+        testChapterRef = testChapterRef.copyWith(anchor: 'NotAnAnchor');
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when ContentFileName changes", () async {
-        testChapterRef = testChapterRef.copyWith(contentFileName: "NotOrthros");
+      test('is false when ContentFileName changes', () async {
+        testChapterRef = testChapterRef.copyWith(contentFileName: 'NotOrthros');
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when SubChapters changes", () async {
-        var subchapterContentFileRef =
+      test('is false when SubChapters changes', () async {
+        final subchapterContentFileRef =
             EpubTextContentFileRef(epubBookRef: bookRef2);
-        var chapter = EpubChapterRef(
+        final chapter = EpubChapterRef(
           epubTextContentFileRef: subchapterContentFileRef,
-          title: "A Brave new Epub",
-          contentFileName: "orthros.txt",
+          title: 'A Brave new Epub',
+          contentFileName: 'orthros.txt',
         );
         testChapterRef = testChapterRef.copyWith(subChapters: [chapter]);
         expect(testChapterRef, isNot(reference));
       });
 
-      test("is false when Title changes", () async {
-        testChapterRef = testChapterRef.copyWith(title: "A Boring Old World");
+      test('is false when Title changes', () async {
+        testChapterRef = testChapterRef.copyWith(title: 'A Boring Old World');
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
     });
