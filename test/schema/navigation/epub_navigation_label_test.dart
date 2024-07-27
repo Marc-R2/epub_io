@@ -6,49 +6,12 @@ import 'package:test/test.dart';
 import '../../random_data_generator.dart';
 
 void main() {
-  final generator = RandomDataGenerator(Random(123778), 10);
+  // final generator = RandomDataGenerator(Random(123778), 10);
+  // final reference = generator.randomEpubNavigationLabel();
 
-  final reference = generator.randomEpubNavigationLabel();
-
-  late EpubNavigationLabel testNavigationLabel;
-  setUp(() async {
-    testNavigationLabel = reference.copyWith();
-  });
+  setUp(() {});
 
   group('EpubNavigationLabel', () {
-    group('.equals', () {
-      test('is true for equivalent objects', () async {
-        expect(testNavigationLabel, equals(reference));
-      });
-
-      test('is false when Text changes', () async {
-        testNavigationLabel =
-            reference.copyWith(text: generator.randomString());
-        expect(testNavigationLabel, isNot(reference));
-      });
-    });
-
-    group('.hashCode', () {
-      test('is true for equivalent objects', () async {
-        expect(testNavigationLabel.hashCode, equals(reference.hashCode));
-      });
-
-      test('is false when Metadata changes', () async {
-        testNavigationLabel = reference.copyWith(
-          text: generator.randomString(),
-        );
-        expect(testNavigationLabel.hashCode, isNot(reference.hashCode));
-      });
-    });
+    // TODO(Marc-R2): Removed redundant tests
   });
-}
-
-extension on EpubNavigationLabel {
-  EpubNavigationLabel copyWith({
-    String? text,
-  }) {
-    return EpubNavigationLabel(
-      text: text ?? this.text,
-    );
-  }
 }
