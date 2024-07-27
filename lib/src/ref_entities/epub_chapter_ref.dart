@@ -1,51 +1,20 @@
-import 'dart:async';
-
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubChapterRef {
-  const EpubChapterRef({
-    this.epubTextContentFileRef,
-    this.title,
-    this.contentFileName,
-    this.anchor,
-    this.subChapters = const <EpubChapterRef>[],
-  });
-  final EpubTextContentFileRef? epubTextContentFileRef;
-  final String? title;
-  final String? contentFileName;
-  final String? anchor;
-  final List<EpubChapterRef> subChapters;
+part 'epub_chapter_ref.freezed.dart';
 
-  @override
-  int get hashCode {
-    final hash = const DeepCollectionEquality().hash;
-    return epubTextContentFileRef.hashCode ^
-        title.hashCode ^
-        contentFileName.hashCode ^
-        anchor.hashCode ^
-        hash(subChapters);
-  }
+@freezed
+class EpubChapterRef with _$EpubChapterRef {
+  const factory EpubChapterRef({
+    EpubTextContentFileRef? epubTextContentFileRef,
+    String? title,
+    String? contentFileName,
+    String? anchor,
+    @Default(<EpubChapterRef>[]) List<EpubChapterRef> subChapters,
+  }) = _EpubChapterRef;
 
-  @override
-  bool operator ==(covariant EpubChapterRef other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
+  const EpubChapterRef._();
 
-    return other.epubTextContentFileRef == epubTextContentFileRef &&
-        other.title == title &&
-        other.contentFileName == contentFileName &&
-        other.anchor == anchor &&
-        listEquals(other.subChapters, subChapters);
-  }
-
-  Future<String> readHtmlContent() async {
-    return epubTextContentFileRef!.readContentAsText();
-  }
-
-  @override
-  String toString() {
-    return 'Title: $title, Subchapter count: ${subChapters.length}';
-  }
+  Future<String> readHtmlContent() =>
+      epubTextContentFileRef!.readContentAsText();
 }

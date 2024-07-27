@@ -1,19 +1,10 @@
-import 'package:collection/collection.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubNavigationDocAuthor {
-  const EpubNavigationDocAuthor({
-    this.authors = const <String>[],
-  });
-  final List<String> authors;
+part 'epub_navigation_doc_author.freezed.dart';
 
-  @override
-  int get hashCode => const DeepCollectionEquality().hash(authors);
-
-  @override
-  bool operator ==(covariant EpubNavigationDocAuthor other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return listEquals(other.authors, authors);
-  }
+@freezed
+class EpubNavigationDocAuthor with _$EpubNavigationDocAuthor {
+  const factory EpubNavigationDocAuthor({
+    @Default(<String>[]) List<String> authors,
+  }) = _EpubNavigationDocAuthor;
 }

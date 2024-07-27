@@ -1,55 +1,18 @@
-class EpubManifestItem {
-  const EpubManifestItem({
-    this.id,
-    this.href,
-    this.mediaType,
-    this.mediaOverlay,
-    this.requiredNamespace,
-    this.requiredModules,
-    this.fallback,
-    this.fallbackStyle,
-    this.properties,
-  });
-  final String? id;
-  final String? href;
-  final String? mediaType;
-  final String? mediaOverlay;
-  final String? requiredNamespace;
-  final String? requiredModules;
-  final String? fallback;
-  final String? fallbackStyle;
-  final String? properties;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        href.hashCode ^
-        mediaType.hashCode ^
-        mediaOverlay.hashCode ^
-        requiredNamespace.hashCode ^
-        requiredModules.hashCode ^
-        fallback.hashCode ^
-        fallbackStyle.hashCode ^
-        properties.hashCode;
-  }
+part 'epub_manifest_item.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubManifestItem other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.href == href &&
-        other.mediaType == mediaType &&
-        other.mediaOverlay == mediaOverlay &&
-        other.requiredNamespace == requiredNamespace &&
-        other.requiredModules == requiredModules &&
-        other.fallback == fallback &&
-        other.fallbackStyle == fallbackStyle &&
-        other.properties == properties;
-  }
-
-  @override
-  String toString() {
-    return 'Id: $id, Href = $href, MediaType = $mediaType, Properties = $properties, MediaOverlay = $mediaOverlay';
-  }
+@freezed
+class EpubManifestItem with _$EpubManifestItem {
+  const factory EpubManifestItem({
+    String? id,
+    String? href,
+    String? mediaType,
+    String? mediaOverlay,
+    String? requiredNamespace,
+    String? requiredModules,
+    String? fallback,
+    String? fallbackStyle,
+    String? properties,
+  }) = _EpubManifestItem;
 }

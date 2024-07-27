@@ -1,25 +1,12 @@
-class EpubGuideReference {
-  const EpubGuideReference({
-    this.type,
-    this.title,
-    this.href,
-  });
-  final String? type;
-  final String? title;
-  final String? href;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode => type.hashCode ^ title.hashCode ^ href.hashCode;
+part 'epub_guide_reference.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubGuideReference other) {
-    if (identical(this, other)) return true;
-
-    return other.type == type && other.title == title && other.href == href;
-  }
-
-  @override
-  String toString() {
-    return 'Type: $type, Href: $href';
-  }
+@freezed
+class EpubGuideReference with _$EpubGuideReference {
+  const factory EpubGuideReference({
+    String? type,
+    String? title,
+    String? href,
+  }) = _EpubGuideReference;
 }

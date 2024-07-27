@@ -1,21 +1,11 @@
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/schema/opf/epub_manifest_item.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubManifest {
-  const EpubManifest({
-    this.items = const <EpubManifestItem>[],
-  });
-  final List<EpubManifestItem> items;
+part 'epub_manifest.freezed.dart';
 
-  @override
-  int get hashCode => const DeepCollectionEquality().hash(items);
-
-  @override
-  bool operator ==(covariant EpubManifest other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return listEquals(other.items, items);
-  }
+@freezed
+class EpubManifest with _$EpubManifest {
+  const factory EpubManifest({
+    @Default(<EpubManifestItem>[]) List<EpubManifestItem> items,
+  }) = _EpubManifest;
 }

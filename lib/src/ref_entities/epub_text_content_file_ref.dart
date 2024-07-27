@@ -1,31 +1,19 @@
-import 'dart:async';
-
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubTextContentFileRef extends EpubContentFileRef {
-  EpubTextContentFileRef({
-    required super.epubBookRef,
-    super.fileName,
-    super.contentMimeType,
-    super.contentType,
-  });
+part 'epub_text_content_file_ref.freezed.dart';
+
+@freezed
+class EpubTextContentFileRef with _$EpubTextContentFileRef, EpubContentFileRef {
+  const factory EpubTextContentFileRef({
+    required EpubBookRef epubBookRef,
+    String? fileName,
+    String? contentMimeType,
+    EpubContentType? contentType,
+  }) = _EpubTextContentFileRef;
+
+  const EpubTextContentFileRef._();
 
   Future<String> readContentAsync() => readContentAsText();
-
-  @override
-  int get hashCode =>
-      epubBookRef.hashCode ^
-      fileName.hashCode ^
-      contentMimeType.hashCode ^
-      contentType.hashCode;
-
-  @override
-  bool operator ==(covariant EpubTextContentFileRef other) {
-    if (identical(this, other)) return true;
-
-    return other.epubBookRef == epubBookRef &&
-        other.fileName == fileName &&
-        other.contentMimeType == contentMimeType &&
-        other.contentType == contentType;
-  }
 }

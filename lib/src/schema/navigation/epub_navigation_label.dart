@@ -1,21 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class EpubNavigationLabel {
-  final String? text;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const EpubNavigationLabel({
-    this.text,
-  });
+part 'epub_navigation_label.freezed.dart';
 
-  @override
-  int get hashCode => text.hashCode;
-
-  @override
-  bool operator ==(covariant EpubNavigationLabel other) {
-    if (identical(this, other)) return true;
-
-    return other.text == text;
-  }
-
-  @override
-  String toString() => '$text';
+@freezed
+class EpubNavigationLabel with _$EpubNavigationLabel {
+  const factory EpubNavigationLabel({
+    String? text,
+  }) = _EpubNavigationLabel;
 }

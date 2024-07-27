@@ -7,35 +7,14 @@ import 'package:epub_io/src/entities/epub_content_type.dart';
 import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 
-abstract class EpubContentFileRef {
-  const EpubContentFileRef({
-    required this.epubBookRef,
-    this.fileName,
-    this.contentType,
-    this.contentMimeType,
-  });
-  final EpubBookRef epubBookRef;
-  final String? fileName;
-  final EpubContentType? contentType;
-  final String? contentMimeType;
+mixin EpubContentFileRef {
+  EpubBookRef get epubBookRef;
 
-  @override
-  int get hashCode {
-    return epubBookRef.hashCode ^
-        fileName.hashCode ^
-        contentType.hashCode ^
-        contentMimeType.hashCode;
-  }
+  String? get fileName;
 
-  @override
-  bool operator ==(covariant EpubContentFileRef other) {
-    if (identical(this, other)) return true;
+  EpubContentType? get contentType;
 
-    return other.epubBookRef == epubBookRef &&
-        other.fileName == fileName &&
-        other.contentType == contentType &&
-        other.contentMimeType == contentMimeType;
-  }
+  String? get contentMimeType;
 
   ArchiveFile getContentFileEntry() {
     final contentFilePath = ZipPathUtils.combine(

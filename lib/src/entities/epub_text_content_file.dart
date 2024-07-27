@@ -1,28 +1,16 @@
-import 'package:epub_io/src/entities/epub_content_file.dart';
+import 'package:epub_io/epub_io.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubTextContentFile extends EpubContentFile {
-  const EpubTextContentFile({
-    super.fileName,
-    super.contentMimeType,
-    super.contentType,
-    this.content,
-  });
-  final String? content;
+part 'epub_text_content_file.freezed.dart';
 
-  @override
-  int get hashCode =>
-      fileName.hashCode ^
-      contentMimeType.hashCode ^
-      contentType.hashCode ^
-      content.hashCode;
-
-  @override
-  bool operator ==(covariant EpubTextContentFile other) {
-    if (identical(this, other)) return true;
-
-    return other.fileName == fileName &&
-        other.contentMimeType == contentMimeType &&
-        other.contentType == contentType &&
-        other.content == content;
-  }
+@freezed
+class EpubTextContentFile
+    with _$EpubTextContentFile
+    implements EpubContentFile {
+  const factory EpubTextContentFile({
+    String? fileName,
+    String? contentMimeType,
+    EpubContentType? contentType,
+    String? content,
+  }) = _EpubTextContentFile;
 }

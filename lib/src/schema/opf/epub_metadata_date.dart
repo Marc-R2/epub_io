@@ -1,18 +1,11 @@
-class EpubMetadataDate {
-  const EpubMetadataDate({
-    this.date,
-    this.event,
-  });
-  final String? date;
-  final String? event;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode => date.hashCode ^ event.hashCode;
+part 'epub_metadata_date.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubMetadataDate other) {
-    if (identical(this, other)) return true;
-
-    return other.date == date && other.event == event;
-  }
+@freezed
+class EpubMetadataDate with _$EpubMetadataDate {
+  const factory EpubMetadataDate({
+    String? date,
+    String? event,
+  }) = _EpubMetadataDate;
 }

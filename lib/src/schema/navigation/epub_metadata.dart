@@ -1,26 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubNavigationContent {
-  final String? id;
-  final String? source;
+part 'epub_metadata.freezed.dart';
 
-  const EpubNavigationContent({
-    this.id,
-    this.source,
-  });
-
-  @override
-  int get hashCode => id.hashCode ^ source.hashCode;
-
-  @override
-  bool operator ==(covariant EpubNavigationContent other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id && other.source == source;
-  }
-
-  @override
-  String toString() {
-    return 'Source: $source';
-  }
+@freezed
+class EpubNavigationContent with _$EpubNavigationContent {
+  const factory EpubNavigationContent({
+    String? id,
+    String? source,
+  }) = _EpubNavigationContent;
 }

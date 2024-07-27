@@ -1,21 +1,12 @@
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubNavigationPageList {
-  const EpubNavigationPageList({
-    this.targets = const <EpubNavigationPageTarget>[],
-  });
-  final List<EpubNavigationPageTarget> targets;
+part 'epub_navigation_page_list.freezed.dart';
 
-  @override
-  int get hashCode => const DeepCollectionEquality().hash(targets);
-
-  @override
-  bool operator ==(covariant EpubNavigationPageList other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return listEquals(other.targets, targets);
-  }
+@freezed
+class EpubNavigationPageList with _$EpubNavigationPageList {
+  const factory EpubNavigationPageList({
+    @Default(<EpubNavigationPageTarget>[])
+    List<EpubNavigationPageTarget> targets,
+  }) = _EpubNavigationPageList;
 }

@@ -1,22 +1,12 @@
-class EpubMetadataIdentifier {
-  const EpubMetadataIdentifier({
-    this.id,
-    this.scheme,
-    this.identifier,
-  });
-  final String? id;
-  final String? scheme;
-  final String? identifier;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode => id.hashCode ^ scheme.hashCode ^ identifier.hashCode;
+part 'epub_metadata_identifier.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubMetadataIdentifier other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.scheme == scheme &&
-        other.identifier == identifier;
-  }
+@freezed
+class EpubMetadataIdentifier with _$EpubMetadataIdentifier {
+  const factory EpubMetadataIdentifier({
+    String? id,
+    String? scheme,
+    String? identifier,
+  }) = _EpubMetadataIdentifier;
 }

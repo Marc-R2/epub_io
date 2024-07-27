@@ -1,23 +1,11 @@
-class EpubSpineItemRef {
-  const EpubSpineItemRef({
-    required this.isLinear,
-    this.idRef,
-  });
-  final String? idRef;
-  final bool isLinear;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode => idRef.hashCode ^ isLinear.hashCode;
+part 'epub_spine_item_ref.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubSpineItemRef other) {
-    if (identical(this, other)) return true;
-
-    return other.idRef == idRef && other.isLinear == isLinear;
-  }
-
-  @override
-  String toString() {
-    return 'IdRef: $idRef';
-  }
+@freezed
+class EpubSpineItemRef with _$EpubSpineItemRef {
+  const factory EpubSpineItemRef({
+    required bool isLinear,
+    String? idRef,
+  }) = _EpubSpineItemRef;
 }

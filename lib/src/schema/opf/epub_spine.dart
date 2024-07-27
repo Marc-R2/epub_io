@@ -1,30 +1,13 @@
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/schema/opf/epub_spine_item_ref.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubSpine {
-  const EpubSpine({
-    required this.ltr,
-    this.tableOfContents,
-    this.items = const <EpubSpineItemRef>[],
-  });
-  final String? tableOfContents;
-  final List<EpubSpineItemRef> items;
-  final bool ltr;
+part 'epub_spine.freezed.dart';
 
-  @override
-  int get hashCode =>
-      tableOfContents.hashCode ^
-      const DeepCollectionEquality().hash(items) ^
-      ltr.hashCode;
-
-  @override
-  bool operator ==(covariant EpubSpine other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return other.tableOfContents == tableOfContents &&
-        listEquals(other.items, items) &&
-        other.ltr == ltr;
-  }
+@freezed
+class EpubSpine with _$EpubSpine {
+  const factory EpubSpine({
+    required bool ltr,
+    String? tableOfContents,
+    @Default(<EpubSpineItemRef>[]) List<EpubSpineItemRef> items,
+  }) = _EpubSpine;
 }

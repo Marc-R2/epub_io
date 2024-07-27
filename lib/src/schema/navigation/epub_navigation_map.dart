@@ -1,21 +1,11 @@
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubNavigationMap {
-  const EpubNavigationMap({
-    this.points = const <EpubNavigationPoint>[],
-  });
-  final List<EpubNavigationPoint> points;
+part 'epub_navigation_map.freezed.dart';
 
-  @override
-  int get hashCode => const DeepCollectionEquality().hash(points);
-
-  @override
-  bool operator ==(covariant EpubNavigationMap other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return listEquals(other.points, points);
-  }
+@freezed
+class EpubNavigationMap with _$EpubNavigationMap {
+  const factory EpubNavigationMap({
+    @Default(<EpubNavigationPoint>[]) List<EpubNavigationPoint> points,
+  }) = _EpubNavigationMap;
 }

@@ -1,22 +1,12 @@
-class EpubMetadataCreator {
-  const EpubMetadataCreator({
-    this.creator,
-    this.fileAs,
-    this.role,
-  });
-  final String? creator;
-  final String? fileAs;
-  final String? role;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  int get hashCode => creator.hashCode ^ fileAs.hashCode ^ role.hashCode;
+part 'epub_metadata_creator.freezed.dart';
 
-  @override
-  bool operator ==(covariant EpubMetadataCreator other) {
-    if (identical(this, other)) return true;
-
-    return other.creator == creator &&
-        other.fileAs == fileAs &&
-        other.role == role;
-  }
+@freezed
+class EpubMetadataCreator with _$EpubMetadataCreator {
+  const factory EpubMetadataCreator({
+    String? creator,
+    String? fileAs,
+    String? role,
+  }) = _EpubMetadataCreator;
 }

@@ -1,23 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:collection/collection.dart';
-
 import 'package:epub_io/src/schema/opf/epub_guide_reference.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class EpubGuide {
-  final List<EpubGuideReference> items;
+part 'epub_guide.freezed.dart';
 
-  const EpubGuide({
-    this.items = const <EpubGuideReference>[],
-  });
-
-  @override
-  int get hashCode => const DeepCollectionEquality().hash(items);
-
-  @override
-  bool operator ==(covariant EpubGuide other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return listEquals(other.items, items);
-  }
+@freezed
+class EpubGuide with _$EpubGuide {
+  const factory EpubGuide({
+    @Default(<EpubGuideReference>[]) List<EpubGuideReference> items,
+  }) = _EpubGuide;
 }
