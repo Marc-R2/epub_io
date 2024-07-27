@@ -3,7 +3,7 @@
 import 'dart:io' as io;
 
 import 'package:collection/collection.dart';
-import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:path/path.dart' as path;
 
 void main(List<String> args) async {

@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 

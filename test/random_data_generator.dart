@@ -1,6 +1,6 @@
 import 'dart:math' show Random;
 
-import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';

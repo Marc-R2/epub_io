@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';

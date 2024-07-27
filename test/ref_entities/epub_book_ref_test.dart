@@ -1,5 +1,5 @@
 import 'package:archive/archive.dart';
-import 'package:epub_io/epub_plus.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
