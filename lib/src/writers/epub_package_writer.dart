@@ -4,7 +4,7 @@ import 'package:epub_io/src/writers/epub_guide_writer.dart';
 import 'package:epub_io/src/writers/epub_manifest_writer.dart';
 import 'package:epub_io/src/writers/epub_metadata_writer.dart';
 import 'package:epub_io/src/writers/epub_spine_writer.dart';
-import 'package:xml/xml.dart' show XmlBuilder;
+import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
 
 class EpubPackageWriter {
   static const String _namespace = 'http://www.idpf.org/2007/opf';
@@ -33,6 +33,12 @@ class EpubPackageWriter {
       },
     );
 
-    return builder.buildDocument().toXmlString(pretty: true);
+    return builder.buildDocument().toXmlString(
+          pretty: true,
+          preserveWhitespace: (node) {
+            if (node is! XmlElement || node.children.length != 1) return false;
+            return node.children.first.nodeType == XmlNodeType.TEXT;
+          },
+        );
   }
 }
