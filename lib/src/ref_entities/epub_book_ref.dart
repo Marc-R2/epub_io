@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:archive/archive.dart';
+import 'package:epub_io/src/entities/epub_book.dart';
+import 'package:epub_io/src/entities/epub_chapter.dart';
+import 'package:epub_io/src/entities/epub_content.dart';
 import 'package:epub_io/src/entities/epub_schema.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/chapter_reader.dart';
@@ -25,5 +28,24 @@ class EpubBookRef with _$EpubBookRef {
 
   List<EpubChapterRef> getChapters() => ChapterReader.getChapters(this);
 
-  Future<Image?> readCover() => BookCoverReader.readBookCover(this);
+  Future<List<int>> readCoverBytes() =>
+      BookCoverReader.readBookCoverAsBytes(this);
+
+  Future<Image?> readCover() => BookCoverReader.readBookCoverImage(this);
+
+  EpubBook asEpubBook({
+    required EpubContent content,
+    required List<EpubChapter> chapters,
+    Image? coverImage,
+  }) {
+    return EpubBook(
+      title: title,
+      author: author,
+      authors: authors,
+      schema: schema,
+      content: content,
+      chapters: chapters,
+      coverImage: coverImage,
+    );
+  }
 }
