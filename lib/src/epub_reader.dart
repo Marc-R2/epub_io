@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:archive/archive.dart';
+// TODO(Marc-R2): archive_io is not compatible with web
+// provide a version based on platform to support the web
+import 'package:archive/archive_io.dart';
 
 import 'package:epub_io/src/entities/epub_book.dart';
 import 'package:epub_io/src/entities/epub_byte_content_file.dart';
@@ -37,6 +40,15 @@ import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 /// String genres = metadata.Subjects.join(', ');
 /// ```
 class EpubReader {
+  static Future<EpubBookRef> openBookStream(File file) async =>
+      openBookStreamPath(file.absolute.path);
+
+  static Future<EpubBookRef> openBookStreamPath(String path) async {
+    final inputStream = InputFileStream(path);
+    final archive = ZipDecoder().decodeBuffer(inputStream);
+    return openBookWithArchive(archive);
+  }
+
   /// Loads basics metadata.
   ///
   /// Opens the book asynchronously without reading its main content.
@@ -59,8 +71,12 @@ class EpubReader {
     }
 
     final epubArchive = ZipDecoder().decodeBytes(loadedBytes);
+    return openBookWithArchive(epubArchive);
+  }
 
-    final schema = await SchemaReader.readSchema(epubArchive);
+  static Future<EpubBookRef> openBookWithArchive(Archive archive) async {
+    final schema = await SchemaReader.readSchema(archive);
+
     final title = schema.package!.metadata!.titles
         .firstWhere((String name) => true, orElse: () => '');
     final authors = schema.package!.metadata!.creators
@@ -70,7 +86,7 @@ class EpubReader {
     final author = authors.join(', ');
 
     final bookRef = EpubBookRef(
-      epubArchive: epubArchive,
+      epubArchive: archive,
       title: title,
       author: author,
       authors: authors,
@@ -79,35 +95,33 @@ class EpubReader {
 
     final content = ContentReader.parseContentMap(bookRef);
 
-    return EpubBookRef(
-      epubArchive: epubArchive,
-      title: title,
-      author: author,
-      authors: authors,
-      schema: schema,
-      content: content,
-    );
+    return bookRef.copyWith(content: content);
+  }
+
+  static Future<EpubBook> readBookStream(File file) async {
+    final epubBookRef = await openBookStream(file);
+    return readBookFromRef(epubBookRef);
+  }
+
+  static Future<EpubBook> readBookStreamPath(String path) async {
+    final epubBookRef = await openBookStreamPath(path);
+    return readBookFromRef(epubBookRef);
   }
 
   /// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
   static Future<EpubBook> readBook(FutureOr<List<int>> bytes) async {
     final loadedBytes = await bytes;
-
     final epubBookRef = await openBook(loadedBytes);
-    final schema = epubBookRef.schema;
-    final title = epubBookRef.title;
-    final authors = epubBookRef.authors;
-    final author = epubBookRef.author;
+    return readBookFromRef(epubBookRef);
+  }
+
+  static Future<EpubBook> readBookFromRef(EpubBookRef epubBookRef) async {
     final content = await readContent(epubBookRef.content!);
     final coverImage = await epubBookRef.readCover();
     final chapterRefs = epubBookRef.getChapters();
     final chapters = await readChapters(chapterRefs);
 
-    return EpubBook(
-      title: title,
-      author: author,
-      authors: authors,
-      schema: schema,
+    return epubBookRef.asEpubBook(
       content: content,
       coverImage: coverImage,
       chapters: chapters,
