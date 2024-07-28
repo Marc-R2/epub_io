@@ -33,6 +33,6 @@ class EpubPackageWriter {
       },
     );
 
-    return builder.buildDocument().toXmlString();
+    return builder.buildDocument().toXmlString(pretty: true);
   }
 }
