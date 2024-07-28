@@ -12,7 +12,8 @@ class EpubSpineWriter {
             'itemref',
             attributes: {
               'idref': spineitem.idRef!,
-              'linear': spineitem.isLinear ? 'yes' : 'no',
+              if (spineitem.isLinear != null)
+                'linear': spineitem.isLinear! ? 'yes' : 'no',
             },
           );
         }

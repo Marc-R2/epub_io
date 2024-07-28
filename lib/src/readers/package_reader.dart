@@ -445,8 +445,11 @@ class PackageReader {
           }
 
           final linearAttribute = spineItemNode.getAttribute('linear');
-          final isLinear = linearAttribute == null ||
-              (linearAttribute.toLowerCase() == 'no');
+
+          bool? isLinear;
+          if (linearAttribute != null) {
+            isLinear = linearAttribute.toLowerCase() == 'yes';
+          }
 
           final spineItemRef = EpubSpineItemRef(
             idRef: idRef,
