@@ -27,9 +27,15 @@ class EpubPackageWriter {
           package.metadata,
           package.version,
         );
-        EpubManifestWriter.writeManifest(builder, package.manifest);
-        EpubSpineWriter.writeSpine(builder, package.spine!);
-        EpubGuideWriter.writeGuide(builder, package.guide);
+        if (package.manifest != null) {
+          EpubManifestWriter.writeManifest(builder, package.manifest!);
+        }
+        if (package.spine != null) {
+          EpubSpineWriter.writeSpine(builder, package.spine!);
+        }
+        if (package.guide != null) {
+          EpubGuideWriter.writeGuide(builder, package.guide!);
+        }
       },
     );
 

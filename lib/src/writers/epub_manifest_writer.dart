@@ -2,11 +2,11 @@ import 'package:epub_io/src/schema/opf/epub_manifest.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubManifestWriter {
-  static void writeManifest(XmlBuilder builder, EpubManifest? manifest) {
+  static void writeManifest(XmlBuilder builder, EpubManifest manifest) {
     builder.element(
       'manifest',
       nest: () {
-        for (final item in manifest!.items) {
+        for (final item in manifest.items) {
           builder.element(
             'item',
             nest: () {

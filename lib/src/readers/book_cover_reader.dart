@@ -58,7 +58,12 @@ class BookCoverReader {
   }
 
   static Future<images.Image?> readBookCoverImage(EpubBookRef bookRef) async {
-    final coverImageContent = await readBookCoverAsBytes(bookRef);
-    return images.decodeImage(Uint8List.fromList(coverImageContent));
+    try {
+      final coverImageContent = await readBookCoverAsBytes(bookRef);
+      return images.decodeImage(Uint8List.fromList(coverImageContent));
+    } catch (e) {
+      print('Error reading book cover: $e');
+      return null;
+    }
   }
 }

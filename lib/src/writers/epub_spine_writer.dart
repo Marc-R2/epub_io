@@ -5,7 +5,9 @@ class EpubSpineWriter {
   static void writeSpine(XmlBuilder builder, EpubSpine spine) {
     builder.element(
       'spine',
-      attributes: {'toc': spine.tableOfContents!},
+      attributes: {
+        if (spine.tableOfContents != null) 'toc': spine.tableOfContents!,
+      },
       nest: () {
         for (final spineitem in spine.items) {
           builder.element(
