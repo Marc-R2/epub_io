@@ -15,5 +15,9 @@ class EpubPackage with _$EpubPackage {
     EpubManifest? manifest,
     EpubSpine? spine,
     EpubGuide? guide,
+    String? uniqueIdentifier,
+    String? prefix,
+    String? xmlns,
+    String? xmlLang,
   }) = _EpubPackage;
 }

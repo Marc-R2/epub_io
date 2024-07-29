@@ -375,6 +375,12 @@ class PackageReader {
     final packageNode = containerDocument
         .findElements('package', namespace: opfNamespace)
         .firstWhere((XmlElement? elem) => elem != null);
+
+    final uniqueIdentifier = packageNode.getAttribute('unique-identifier');
+    final xmlns = packageNode.getAttribute('xmlns');
+    final prefix = packageNode.getAttribute('prefix');
+    final xmlLang = packageNode.getAttribute('xml:lang');
+
     EpubVersion? version;
     final epubVersionValue = packageNode.getAttribute('version');
     if (epubVersionValue == '2.0') {
@@ -425,6 +431,10 @@ class PackageReader {
       manifest: manifest,
       spine: spine,
       guide: guide,
+      uniqueIdentifier: uniqueIdentifier,
+      prefix: prefix,
+      xmlns: xmlns,
+      xmlLang: xmlLang,
     );
   }
 
