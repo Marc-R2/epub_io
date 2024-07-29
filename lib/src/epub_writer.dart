@@ -5,13 +5,10 @@ import 'package:epub_io/src/entities/epub_book.dart';
 import 'package:epub_io/src/entities/epub_byte_content_file.dart';
 import 'package:epub_io/src/entities/epub_text_content_file.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
+import 'package:epub_io/src/writers/epub_container_writer.dart';
 import 'package:epub_io/src/writers/epub_package_writer.dart';
 
 class EpubWriter {
-  // TODO(Marc-R2): Investigate if this always is the container file
-  static const _containerFile =
-      '<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>';
-
   // Creates a Zip Archive of an EpubBook
   static Archive _createArchive(EpubBook book) {
     final arch = Archive();
@@ -25,12 +22,16 @@ class EpubWriter {
       ),
     );
 
-    // Add Container file
+    // Generate the META-INF/container.xml file and add it to the Archive
+    final container = EpubContainerWriter.write(book.schema!.epubContainer);
+    final containerBytes = convert.utf8.encode(container);
+
     arch.addFile(
       ArchiveFile(
         'META-INF/container.xml',
-        _containerFile.length,
-        convert.utf8.encode(_containerFile),
+        containerBytes.length,
+        containerBytes,
+        // ArchiveFile.DEFLATE,
       ),
     );
 
@@ -46,9 +47,13 @@ class EpubWriter {
 
       arch.addFile(
         ArchiveFile(
-          ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
+          ZipPathUtils.combine(
+            book.schema!.epubContainer.contentDirectoryPath,
+            name,
+          )!,
           content!.length,
           content,
+          // ArchiveFile.DEFLATE,
         ),
       );
     });
@@ -59,9 +64,13 @@ class EpubWriter {
 
     arch.addFile(
       ArchiveFile(
-        ZipPathUtils.combine(book.schema!.contentDirectoryPath, 'content.opf')!,
+        ZipPathUtils.combine(
+          book.schema!.epubContainer.contentDirectoryPath,
+          'content.opf',
+        )!,
         contentOpfBytes.length,
         contentOpfBytes,
+        // ArchiveFile.DEFLATE,
       ),
     );
 

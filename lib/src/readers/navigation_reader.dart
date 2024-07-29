@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:epub_io/src/schema/navigation/epub_metadata.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_doc_author.dart';
@@ -31,7 +32,7 @@ class NavigationReader {
 
   static Future<EpubNavigation> readNavigation(
     Archive epubArchive,
-    String contentDirectoryPath,
+    EpubContainer epubContainer,
     EpubPackage package,
   ) async {
     if (package.version == EpubVersion.epub2) {
@@ -50,8 +51,10 @@ class NavigationReader {
         );
       }
 
-      _tocFileEntryPath =
-          ZipPathUtils.combine(contentDirectoryPath, tocManifestItem.href);
+      _tocFileEntryPath = ZipPathUtils.combine(
+        epubContainer.contentDirectoryPath,
+        tocManifestItem.href,
+      );
       final tocFileEntry = epubArchive.files.firstWhereOrNull(
         (file) => file.name.toLowerCase() == _tocFileEntryPath?.toLowerCase(),
       );
@@ -144,8 +147,10 @@ class NavigationReader {
         );
       }
 
-      _tocFileEntryPath =
-          ZipPathUtils.combine(contentDirectoryPath, tocManifestItem.href);
+      _tocFileEntryPath = ZipPathUtils.combine(
+        epubContainer.contentDirectoryPath,
+        tocManifestItem.href,
+      );
       final tocFileEntry = epubArchive.files.firstWhereOrNull(
         (file) => file.name.toLowerCase() == _tocFileEntryPath!.toLowerCase(),
       );

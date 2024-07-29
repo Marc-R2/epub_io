@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:epub_io/src/schema/opf/epub_guide.dart';
 import 'package:epub_io/src/schema/opf/epub_guide_reference.dart';
 import 'package:epub_io/src/schema/opf/epub_manifest.dart';
@@ -358,10 +359,10 @@ class PackageReader {
 
   static Future<EpubPackage> readPackage(
     Archive epubArchive,
-    String rootFilePath,
+    EpubContainer rootFilePath,
   ) async {
     final rootFileEntry = epubArchive.files.firstWhereOrNull(
-      (ArchiveFile testFile) => testFile.name == rootFilePath,
+      (ArchiveFile testFile) => testFile.name == rootFilePath.rootFilePath,
     );
     if (rootFileEntry == null) {
       throw Exception('EPUB parsing error: root file not found in archive.');

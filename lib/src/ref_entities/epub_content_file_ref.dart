@@ -18,7 +18,7 @@ mixin EpubContentFileRef {
 
   ArchiveFile getContentFileEntry() {
     final contentFilePath = ZipPathUtils.combine(
-      epubBookRef.schema!.contentDirectoryPath,
+      epubBookRef.schema!.epubContainer.contentDirectoryPath,
       fileName,
     );
     final contentFileEntry = epubBookRef.epubArchive.files
