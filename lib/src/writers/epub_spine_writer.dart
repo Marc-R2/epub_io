@@ -7,6 +7,7 @@ class EpubSpineWriter {
       'spine',
       attributes: {
         if (spine.tableOfContents != null) 'toc': spine.tableOfContents!,
+        'page-progression-direction': spine.ltr ? 'ltr' : 'rtl',
       },
       nest: () {
         for (final spineitem in spine.items) {
