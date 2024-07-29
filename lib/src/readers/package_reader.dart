@@ -495,6 +495,7 @@ class PackageReader {
           final spineItemRef = EpubSpineItemRef(
             idRef: idRef,
             isLinear: isLinear,
+            properties: spineItemNode.getAttribute('properties'),
           );
           items.add(spineItemRef);
         }

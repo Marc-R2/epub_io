@@ -7,5 +7,6 @@ class EpubSpineItemRef with _$EpubSpineItemRef {
   const factory EpubSpineItemRef({
     bool? isLinear,
     String? idRef,
+    String? properties,
   }) = _EpubSpineItemRef;
 }
