@@ -177,6 +177,9 @@ class EpubMetadataWriter {
                   if (metaitem.content != null) {
                     builder.text(metaitem.content!);
                   }
+                  metaitem.attributes.forEach(
+                    (key, value) => builder.attribute(key, value),
+                  );
                 }
               },
             ),
