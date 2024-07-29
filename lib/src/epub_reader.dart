@@ -4,7 +4,6 @@ import 'dart:io';
 // TODO(Marc-R2): archive_io is not compatible with web
 // provide a version based on platform to support the web
 import 'package:archive/archive_io.dart';
-
 import 'package:epub_io/src/entities/epub_book.dart';
 import 'package:epub_io/src/entities/epub_byte_content_file.dart';
 import 'package:epub_io/src/entities/epub_chapter.dart';
@@ -143,7 +142,7 @@ class EpubReader {
     await Future.forEach(
       contentRef.allFiles.keys.where((key) => !allFiles.containsKey(key)),
       (key) async =>
-          allFiles[key] = await readByteContentFile(contentRef.allFiles[key]!),
+          allFiles[key] = await readContentFile(contentRef.allFiles[key]!),
     );
 
     return EpubContent(
@@ -155,14 +154,38 @@ class EpubReader {
     );
   }
 
+  static Future<EpubContentFile> readContentFile(
+    EpubContentFileRef<dynamic> contentFileRef,
+  ) async {
+    final content = await contentFileRef.readContent();
+
+    if (content is String) {
+      return EpubTextContentFile(
+        fileName: contentFileRef.fileName,
+        contentType: contentFileRef.contentType,
+        contentMimeType: contentFileRef.contentMimeType,
+        content: content,
+      );
+    } else if (content is List<int>) {
+      return EpubByteContentFile(
+        fileName: contentFileRef.fileName,
+        contentType: contentFileRef.contentType,
+        contentMimeType: contentFileRef.contentMimeType,
+        content: content,
+      );
+    } else {
+      throw Exception('Unknown content type');
+    }
+  }
+
   static Future<Map<String, EpubTextContentFile>> readTextContentFiles(
     Map<String, EpubTextContentFileRef> textContentFileRefs,
   ) async {
     final result = <String, EpubTextContentFile>{};
 
     await Future.forEach(textContentFileRefs.keys, (String key) async {
-      final EpubContentFileRef value = textContentFileRefs[key]!;
-      final content = await value.readContentAsText();
+      final value = textContentFileRefs[key]!;
+      final content = await value.readContent();
       final textContentFile = EpubTextContentFile(
         fileName: value.fileName,
         contentType: value.contentType,
@@ -185,9 +208,9 @@ class EpubReader {
   }
 
   static Future<EpubByteContentFile> readByteContentFile(
-    EpubContentFileRef contentFileRef,
+    EpubByteContentFileRef contentFileRef,
   ) async {
-    final content = await contentFileRef.readContentAsBytes();
+    final content = await contentFileRef.readContent();
     final result = EpubByteContentFile(
       fileName: contentFileRef.fileName,
       contentType: contentFileRef.contentType,
@@ -198,28 +221,10 @@ class EpubReader {
     return result;
   }
 
-  static Future<List<EpubChapter>> readChapters(
+  static Future<List<EpubChapter<dynamic>>> readChapters(
     List<EpubChapterRef> chapterRefs,
   ) async {
-    final result = <EpubChapter>[];
-
-    await Future.forEach(chapterRefs, (EpubChapterRef chapterRef) async {
-      final title = chapterRef.title;
-      final contentFileName = chapterRef.contentFileName;
-      final anchor = chapterRef.anchor;
-      final htmlContent = await chapterRef.readHtmlContent();
-      final subChapters = await readChapters(chapterRef.subChapters);
-
-      final chapter = EpubChapter(
-        title: title,
-        contentFileName: contentFileName,
-        anchor: anchor,
-        htmlContent: htmlContent,
-        subChapters: subChapters,
-      );
-
-      result.add(chapter);
-    });
-    return result;
+    final res = chapterRefs.map((chapterRef) => chapterRef.asChapter());
+    return Future.wait<EpubChapter<dynamic>>(res);
   }
 }

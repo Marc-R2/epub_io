@@ -54,7 +54,7 @@ class BookCoverReader {
     final cover = coverMetaItem(bookRef);
     final manifest = coverManifestItem(bookRef, cover);
     final coverImage = coverImageContentFileRef(bookRef, manifest);
-    return coverImage.readContentAsBytes();
+    return coverImage.readContent();
   }
 
   static Future<images.Image?> readBookCoverImage(EpubBookRef bookRef) async {

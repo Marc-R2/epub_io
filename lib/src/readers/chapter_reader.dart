@@ -1,6 +1,6 @@
 import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 
 class ChapterReader {
@@ -33,16 +33,16 @@ class ChapterReader {
             .substring(contentSourceAnchorCharIndex + 1);
       }
       contentFileName = Uri.decodeFull(contentFileName!);
-      EpubTextContentFileRef? htmlContentFileRef;
-      if (!bookRef.content!.html.containsKey(contentFileName)) {
+      EpubContentFileRef? htmlContentFileRef;
+      if (!bookRef.content!.allFiles.containsKey(contentFileName)) {
         throw Exception(
           'Incorrect EPUB manifest: item with href = "$contentFileName" is missing.',
         );
       }
 
-      htmlContentFileRef = bookRef.content!.html[contentFileName];
+      htmlContentFileRef = bookRef.content!.allFiles[contentFileName];
       final chapterRef = EpubChapterRef(
-        epubTextContentFileRef: htmlContentFileRef,
+        epubContentFileRef: htmlContentFileRef,
         title: navigationPoint.navigationLabels.first.text,
         contentFileName: contentFileName,
         anchor: anchor,

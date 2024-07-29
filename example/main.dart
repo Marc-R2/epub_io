@@ -41,8 +41,10 @@ void main(List<String> args) async {
     // Title of chapter
     final chapterTitle = chapter.title;
 
-    // HTML content of current chapter
-    final chapterHtmlContent = chapter.htmlContent;
+    // Content of current chapter
+    // Could be a string or a list of bytes
+    // (depending on the type of the chapter)
+    final chapterContent = chapter.content;
 
     // Nested chapters
     final subChapters = chapter.subChapters;

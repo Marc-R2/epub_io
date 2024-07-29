@@ -5,7 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'epub_byte_content_file_ref.freezed.dart';
 
 @freezed
-class EpubByteContentFileRef with _$EpubByteContentFileRef, EpubContentFileRef {
+class EpubByteContentFileRef
+    with _$EpubByteContentFileRef, EpubContentFileRef<List<int>> {
   const factory EpubByteContentFileRef({
     required EpubBookRef epubBookRef,
     String? fileName,
@@ -15,5 +16,5 @@ class EpubByteContentFileRef with _$EpubByteContentFileRef, EpubContentFileRef {
 
   const EpubByteContentFileRef._();
 
-  Future<List<int>> readContent() => readContentAsBytes();
+  Future<List<int>> readContent() async => getContentStream();
 }

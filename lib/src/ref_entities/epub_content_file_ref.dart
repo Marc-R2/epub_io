@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert' as convert;
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
@@ -7,7 +6,7 @@ import 'package:epub_io/src/entities/epub_content_type.dart';
 import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 
-mixin EpubContentFileRef {
+mixin EpubContentFileRef<T> {
   EpubBookRef get epubBookRef;
 
   String? get fileName;
@@ -47,15 +46,5 @@ mixin EpubContentFileRef {
     return contentStream;
   }
 
-  Future<List<int>> readContentAsBytes() async {
-    final contentFileEntry = getContentFileEntry();
-    final content = openContentStream(contentFileEntry);
-    return content;
-  }
-
-  Future<String> readContentAsText() async {
-    final contentStream = getContentStream();
-    final result = convert.utf8.decode(contentStream);
-    return result;
-  }
+  Future<T> readContent();
 }
