@@ -131,6 +131,14 @@ class PackageReader {
     return EpubManifest(items: items);
   }
 
+  static Link readMetadataLink(XmlElement manifestNode) {
+    final href = manifestNode.getAttribute('href');
+    final rel = manifestNode.getAttribute('rel');
+    final refines = manifestNode.getAttribute('refines');
+
+    return Link(href: href!, rel: rel, refines: refines);
+  }
+
   static EpubMetadata readMetadata(
     XmlElement metadataNode,
     EpubVersion? epubVersion,
@@ -150,6 +158,7 @@ class PackageReader {
     final relations = <String>[];
     final coverages = <String>[];
     final rights = <String>[];
+    final links = <Link>[];
     final metaItems = <EpubMetadataMeta>[];
     metadataNode.children.whereType<XmlElement>().forEach(
       (XmlElement metadataItemNode) {
@@ -173,6 +182,7 @@ class PackageReader {
           'relation' => relations.add(innerText),
           'coverage' => coverages.add(innerText),
           'rights' => rights.add(innerText),
+          'link' => links.add(readMetadataLink(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub2 =>
             metaItems.add(readMetadataMetaVersion2(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub3 =>
@@ -198,6 +208,9 @@ class PackageReader {
       coverages: coverages,
       rights: rights,
       metaItems: metaItems,
+      xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
+      xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
+      links: links,
     );
   }
 

@@ -19,7 +19,7 @@ class EpubPackageWriter {
         'version': package.version == EpubVersion.epub2 ? '2.0' : '3.0',
         if (package.uniqueIdentifier != null)
           'unique-identifier': package.uniqueIdentifier!,
-        'xmlns': package.xmlns ?? _namespace,
+        // 'xmlns': package.xmlns ?? _namespace,
         if (package.xmlLang != null) 'xml:lang': package.xmlLang!,
         if (package.prefix != null) 'prefix': package.prefix!,
       },

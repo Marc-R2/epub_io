@@ -3,40 +3,43 @@ import 'package:epub_io/src/schema/opf/epub_version.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubMetadataWriter {
-  static const _dcNamespace = 'http://purl.org/dc/elements/1.1/';
-  static const _opfNamespace = 'http://www.idpf.org/2007/opf';
-
   static void writeMetadata(
     XmlBuilder builder,
     EpubMetadata? meta,
     EpubVersion? version,
   ) {
+    final dcNamespace = meta!.xmlnsDc;
+    final opfNamespace = meta.xmlnsOpf;
+
     builder.element(
       'metadata',
-      namespaces: {_opfNamespace: 'opf', _dcNamespace: 'dc'},
+      namespaces: {
+        if (opfNamespace != null) opfNamespace: 'opf',
+        if (dcNamespace != null) dcNamespace: 'dc',
+      },
       nest: () {
-        meta!
+        meta
           ..titles.forEach(
             (item) =>
-                builder.element('title', nest: item, namespace: _dcNamespace),
+                builder.element('title', nest: item, namespace: dcNamespace),
           )
           ..creators.forEach(
             (item) => builder.element(
               'creator',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: () {
                 if (item.role != null) {
                   builder.attribute(
                     'role',
                     item.role,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 if (item.fileAs != null) {
                   builder.attribute(
                     'file-as',
                     item.fileAs,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 builder.text(item.creator!);
@@ -45,32 +48,32 @@ class EpubMetadataWriter {
           )
           ..subjects.forEach(
             (item) =>
-                builder.element('subject', namespace: _dcNamespace, nest: item),
+                builder.element('subject', namespace: dcNamespace, nest: item),
           )
           ..publishers.forEach(
             (item) => builder.element(
               'publisher',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: item,
             ),
           )
           ..contributors.forEach(
             (item) => builder.element(
               'contributor',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: () {
                 if (item.role != null) {
                   builder.attribute(
                     'role',
                     item.role,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 if (item.fileAs != null) {
                   builder.attribute(
                     'file-as',
                     item.fileAs,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 builder.text(item.contributor!);
@@ -80,13 +83,13 @@ class EpubMetadataWriter {
           ..dates.forEach(
             (date) => builder.element(
               'date',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: () {
                 if (date.event != null) {
                   builder.attribute(
                     'event',
                     date.event,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 builder.text(date.date!);
@@ -95,26 +98,26 @@ class EpubMetadataWriter {
           )
           ..types.forEach(
             (type) =>
-                builder.element('type', namespace: _dcNamespace, nest: type),
+                builder.element('type', namespace: dcNamespace, nest: type),
           )
           ..formats.forEach(
             (format) => builder.element(
               'format',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: format,
             ),
           )
           ..identifiers.forEach(
             (id) => builder.element(
               'identifier',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: () {
                 if (id.id != null) builder.attribute('id', id.id);
                 if (id.scheme != null) {
                   builder.attribute(
                     'scheme',
                     id.scheme,
-                    namespace: _opfNamespace,
+                    namespace: opfNamespace,
                   );
                 }
                 builder.text(id.identifier!);
@@ -123,32 +126,32 @@ class EpubMetadataWriter {
           )
           ..sources.forEach(
             (item) =>
-                builder.element('source', namespace: _dcNamespace, nest: item),
+                builder.element('source', namespace: dcNamespace, nest: item),
           )
           ..languages.forEach(
             (item) => builder.element(
               'language',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: item,
             ),
           )
           ..relations.forEach(
             (item) => builder.element(
               'relation',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: item,
             ),
           )
           ..coverages.forEach(
             (item) => builder.element(
               'coverage',
-              namespace: _dcNamespace,
+              namespace: dcNamespace,
               nest: item,
             ),
           )
           ..rights.forEach(
             (item) =>
-                builder.element('rights', namespace: _dcNamespace, nest: item),
+                builder.element('rights', namespace: dcNamespace, nest: item),
           )
           ..metaItems.forEach(
             (metaitem) => builder.element(
@@ -183,12 +186,22 @@ class EpubMetadataWriter {
                 }
               },
             ),
+          )
+          ..links?.forEach(
+            (link) => builder.element(
+              'link',
+              attributes: {
+                'href': link.href,
+                if (link.rel != null) 'rel': link.rel!,
+                if (link.refines != null) 'refines': link.refines!,
+              },
+            ),
           );
 
         if (meta.description != null) {
           builder.element(
             'description',
-            namespace: _dcNamespace,
+            namespace: dcNamespace,
             nest: meta.description,
           );
         }

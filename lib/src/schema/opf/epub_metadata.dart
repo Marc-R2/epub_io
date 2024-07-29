@@ -28,5 +28,17 @@ class EpubMetadata with _$EpubMetadata {
     @Default(<String>[]) List<String> coverages,
     @Default(<String>[]) List<String> rights,
     @Default(<EpubMetadataMeta>[]) List<EpubMetadataMeta> metaItems,
+    String? xmlnsDc,
+    String? xmlnsOpf,
+    List<Link>? links,
   }) = _EpubMetadata;
+}
+
+@freezed
+class Link with _$Link {
+  const factory Link({
+    required String href,
+    String? rel,
+    String? refines,
+  }) = _Link;
 }
