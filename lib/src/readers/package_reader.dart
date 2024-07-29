@@ -438,6 +438,20 @@ class PackageReader {
       guide = readGuide(guideNode);
     }
 
+    final bindingsNode = packageNode
+        .findElements('bindings', namespace: opfNamespace)
+        .firstWhereOrNull((XmlElement? elem) => elem != null);
+    List<MediaType>? bindings;
+    if (bindingsNode != null) {
+      bindings = bindingsNode.children
+          .whereType<XmlElement>()
+          .map((XmlElement bindingNode) {
+        final mediaType = bindingNode.getAttribute('media-type');
+        final handler = bindingNode.getAttribute('handler');
+        return MediaType(mediaType: mediaType, handler: handler);
+      }).toList();
+    }
+
     return EpubPackage(
       version: version,
       metadata: metadata,
@@ -448,6 +462,9 @@ class PackageReader {
       prefix: prefix,
       xmlns: xmlns,
       xmlLang: xmlLang,
+      bindings: bindings,
+      xmlVersion: containerDocument.declaration?.version,
+      xmlEncoding: containerDocument.declaration?.encoding,
     );
   }
 

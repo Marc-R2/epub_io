@@ -15,9 +15,20 @@ class EpubPackage with _$EpubPackage {
     EpubManifest? manifest,
     EpubSpine? spine,
     EpubGuide? guide,
+    List<MediaType>? bindings,
     String? uniqueIdentifier,
     String? prefix,
     String? xmlns,
     String? xmlLang,
+    String? xmlVersion,
+    String? xmlEncoding,
   }) = _EpubPackage;
+}
+
+@freezed
+class MediaType with _$MediaType {
+  const factory MediaType({
+    String? mediaType,
+    String? handler,
+  }) = _MediaType;
 }

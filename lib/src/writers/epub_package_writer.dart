@@ -11,7 +11,17 @@ class EpubPackageWriter {
 
   static String writeContent(EpubPackage package) {
     final builder = XmlBuilder();
-    builder.processing('xml', 'version="1.0"');
+    final sb = StringBuffer();
+
+    if (package.xmlVersion != null) {
+      sb.write('version="${package.xmlVersion}"');
+    }
+    if (package.xmlEncoding != null) {
+      if (sb.isNotEmpty) sb.write(' ');
+      sb.write('encoding="${package.xmlEncoding}"');
+    }
+
+    builder.processing('xml', sb.toString());
 
     builder.element(
       'package',
@@ -39,6 +49,22 @@ class EpubPackageWriter {
         }
         if (package.guide != null) {
           EpubGuideWriter.writeGuide(builder, package.guide!);
+        }
+        if (package.bindings != null) {
+          builder.element(
+            'bindings',
+            nest: () {
+              for (final binding in package.bindings!) {
+                builder.element(
+                  'mediaType',
+                  attributes: {
+                    'media-type': binding.mediaType!,
+                    'handler': binding.handler!,
+                  },
+                );
+              }
+            },
+          );
         }
       },
     );
