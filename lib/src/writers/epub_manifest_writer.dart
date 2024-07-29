@@ -14,6 +14,24 @@ class EpubManifestWriter {
                 ..attribute('id', item.id)
                 ..attribute('href', item.href)
                 ..attribute('media-type', item.mediaType);
+              if (item.mediaOverlay != null) {
+                builder.attribute('media-overlay', item.mediaOverlay);
+              }
+              if (item.requiredNamespace != null) {
+                builder.attribute('required-namespace', item.requiredNamespace);
+              }
+              if (item.requiredModules != null) {
+                builder.attribute('required-modules', item.requiredModules);
+              }
+              if (item.fallback != null) {
+                builder.attribute('fallback', item.fallback);
+              }
+              if (item.fallbackStyle != null) {
+                builder.attribute('fallback-style', item.fallbackStyle);
+              }
+              if (item.properties != null) {
+                builder.attribute('properties', item.properties);
+              }
             },
           );
         }
