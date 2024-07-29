@@ -64,10 +64,7 @@ class EpubWriter {
 
     arch.addFile(
       ArchiveFile(
-        ZipPathUtils.combine(
-          book.schema!.epubContainer.contentDirectoryPath,
-          'content.opf',
-        )!,
+        book.schema!.epubContainer.rootFilePath,
         contentOpfBytes.length,
         contentOpfBytes,
         // ArchiveFile.DEFLATE,
