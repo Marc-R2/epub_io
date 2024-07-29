@@ -139,7 +139,7 @@ class NavigationReader {
       //Version 3
 
       final tocManifestItem = package.manifest?.items.firstWhereOrNull(
-        (element) => element.properties == 'nav',
+        (element) => element.properties?.contains('nav') ?? false,
       );
       if (tocManifestItem == null) {
         throw Exception(

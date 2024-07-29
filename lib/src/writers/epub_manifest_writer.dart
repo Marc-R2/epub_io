@@ -30,7 +30,7 @@ class EpubManifestWriter {
                 builder.attribute('fallback-style', item.fallbackStyle);
               }
               if (item.properties != null) {
-                builder.attribute('properties', item.properties);
+                builder.attribute('properties', item.properties!.join(' '));
               }
             },
           );

@@ -13,6 +13,6 @@ class EpubManifestItem with _$EpubManifestItem {
     String? requiredModules,
     String? fallback,
     String? fallbackStyle,
-    String? properties,
+    Set<String>? properties,
   }) = _EpubManifestItem;
 }

@@ -122,7 +122,7 @@ class PackageReader {
           requiredModules: requiredModules,
           fallback: fallback,
           fallbackStyle: fallbackStyle,
-          properties: properties,
+          properties: properties?.split(' ').toSet(),
         );
 
         items.add(manifestItem);
