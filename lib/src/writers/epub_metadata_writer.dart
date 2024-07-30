@@ -1,5 +1,4 @@
-import 'package:epub_io/src/schema/opf/epub_metadata.dart';
-import 'package:epub_io/src/schema/opf/epub_version.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubMetadataWriter {
@@ -7,12 +6,14 @@ class EpubMetadataWriter {
     XmlBuilder builder,
     EpubMetadata? meta,
     EpubVersion? version,
+    NameSpace nameSpace,
   ) {
     final dcNamespace = meta!.xmlnsDc;
     final opfNamespace = meta.xmlnsOpf;
 
     builder.element(
       'metadata',
+      namespace: nameSpace.uri,
       namespaces: {
         if (opfNamespace != null) opfNamespace: 'opf',
         if (dcNamespace != null) dcNamespace: 'dc',
@@ -156,6 +157,7 @@ class EpubMetadataWriter {
           ..metaItems.forEach(
             (metaitem) => builder.element(
               'meta',
+              namespace: nameSpace.uri,
               nest: () {
                 if (version == EpubVersion.epub2) {
                   if (metaitem.name != null) {

@@ -6,9 +6,12 @@ import 'package:epub_io/src/writers/epub_metadata_writer.dart';
 import 'package:epub_io/src/writers/epub_spine_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
 
-class EpubPackageWriter {
-  static const String _namespace = 'http://www.idpf.org/2007/opf';
+extension NameSpaceObj on XmlBuilder {
+  void nameSpaceObj(NameSpace nameSpace) =>
+      namespace(nameSpace.uri, nameSpace.prefix);
+}
 
+class EpubPackageWriter {
   static String writeContent(EpubPackage package) {
     final builder = XmlBuilder();
     final sb = StringBuffer();
@@ -23,36 +26,43 @@ class EpubPackageWriter {
 
     builder.processing('xml', sb.toString());
 
+    final nameSpace = package.nameSpace;
+
     builder.element(
       'package',
+      namespace: nameSpace.uri,
+      namespaces: {nameSpace.uri: nameSpace.prefix},
       attributes: {
         'version': package.version == EpubVersion.epub2 ? '2.0' : '3.0',
         if (package.uniqueIdentifier != null)
           'unique-identifier': package.uniqueIdentifier!,
-        // 'xmlns': package.xmlns ?? _namespace,
         if (package.xmlLang != null) 'xml:lang': package.xmlLang!,
         if (package.prefix != null) 'prefix': package.prefix!,
       },
       nest: () {
-        builder.namespace(_namespace);
-
         EpubMetadataWriter.writeMetadata(
           builder,
           package.metadata,
           package.version,
+          nameSpace,
         );
         if (package.manifest != null) {
-          EpubManifestWriter.writeManifest(builder, package.manifest!);
+          EpubManifestWriter.writeManifest(
+            builder,
+            package.manifest!,
+            nameSpace,
+          );
         }
         if (package.spine != null) {
-          EpubSpineWriter.writeSpine(builder, package.spine!);
+          EpubSpineWriter.writeSpine(builder, package.spine!, nameSpace);
         }
         if (package.guide != null) {
-          EpubGuideWriter.writeGuide(builder, package.guide!);
+          EpubGuideWriter.writeGuide(builder, package.guide!, nameSpace);
         }
         if (package.bindings != null) {
           builder.element(
             'bindings',
+            namespace: nameSpace.uri,
             nest: () {
               for (final binding in package.bindings!) {
                 builder.element(

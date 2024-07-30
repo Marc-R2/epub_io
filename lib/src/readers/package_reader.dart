@@ -384,13 +384,18 @@ class PackageReader {
       // TODO(Marc-R2): unknown casting - check if it's correct
       convert.utf8.decode(rootFileEntry.content as List<int>),
     );
+
+    // TODO(Marc-R2): find out if this const can't be dynamic
     const opfNamespace = 'http://www.idpf.org/2007/opf';
     final packageNode = containerDocument
         .findElements('package', namespace: opfNamespace)
         .firstWhere((XmlElement? elem) => elem != null);
+    final nameSpace = NameSpace(
+      uri: packageNode.namespaceUri!,
+      prefix: packageNode.namespacePrefix,
+    );
 
     final uniqueIdentifier = packageNode.getAttribute('unique-identifier');
-    final xmlns = packageNode.getAttribute('xmlns');
     final prefix = packageNode.getAttribute('prefix');
     final xmlLang = packageNode.getAttribute('xml:lang');
 
@@ -404,7 +409,7 @@ class PackageReader {
       throw Exception('Unsupported EPUB version: $epubVersionValue.');
     }
     final metadataNode = packageNode
-        .findElements('metadata', namespace: opfNamespace)
+        .findElements('metadata', namespace: nameSpace.uri)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
     if (metadataNode == null) {
@@ -413,7 +418,7 @@ class PackageReader {
     final metadata = readMetadata(metadataNode, version);
 
     final manifestNode = packageNode
-        .findElements('manifest', namespace: opfNamespace)
+        .findElements('manifest', namespace: nameSpace.uri)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
     if (manifestNode == null) {
@@ -422,7 +427,7 @@ class PackageReader {
     final manifest = readManifest(manifestNode);
 
     final spineNode = packageNode
-        .findElements('spine', namespace: opfNamespace)
+        .findElements('spine', namespace: nameSpace.uri)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
     if (spineNode == null) {
@@ -431,7 +436,7 @@ class PackageReader {
     final spine = readSpine(spineNode);
 
     final guideNode = packageNode
-        .findElements('guide', namespace: opfNamespace)
+        .findElements('guide', namespace: nameSpace.uri)
         .firstWhereOrNull((XmlElement? elem) => elem != null);
     EpubGuide? guide;
     if (guideNode != null) {
@@ -439,7 +444,7 @@ class PackageReader {
     }
 
     final bindingsNode = packageNode
-        .findElements('bindings', namespace: opfNamespace)
+        .findElements('bindings', namespace: nameSpace.uri)
         .firstWhereOrNull((XmlElement? elem) => elem != null);
     List<MediaType>? bindings;
     if (bindingsNode != null) {
@@ -453,6 +458,7 @@ class PackageReader {
     }
 
     return EpubPackage(
+      nameSpace: nameSpace,
       version: version,
       metadata: metadata,
       manifest: manifest,
@@ -460,7 +466,6 @@ class PackageReader {
       guide: guide,
       uniqueIdentifier: uniqueIdentifier,
       prefix: prefix,
-      xmlns: xmlns,
       xmlLang: xmlLang,
       bindings: bindings,
       xmlVersion: containerDocument.declaration?.version,

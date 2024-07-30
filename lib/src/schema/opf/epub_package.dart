@@ -10,6 +10,7 @@ part 'epub_package.freezed.dart';
 @freezed
 class EpubPackage with _$EpubPackage {
   const factory EpubPackage({
+    required NameSpace nameSpace,
     EpubVersion? version,
     EpubMetadata? metadata,
     EpubManifest? manifest,
@@ -18,7 +19,6 @@ class EpubPackage with _$EpubPackage {
     List<MediaType>? bindings,
     String? uniqueIdentifier,
     String? prefix,
-    String? xmlns,
     String? xmlLang,
     String? xmlVersion,
     String? xmlEncoding,
@@ -31,4 +31,12 @@ class MediaType with _$MediaType {
     String? mediaType,
     String? handler,
   }) = _MediaType;
+}
+
+@freezed
+class NameSpace with _$NameSpace {
+  const factory NameSpace({
+    required String uri,
+    String? prefix,
+  }) = _NameSpace;
 }

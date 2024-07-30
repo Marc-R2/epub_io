@@ -144,6 +144,7 @@ class RandomDataGenerator {
 
   EpubPackage randomEpubPackage() {
     return EpubPackage(
+      nameSpace: const NameSpace(uri: 'lol,no'),
       guide: randomEpubGuide(),
       manifest: randomEpubManifest(),
       metadata: randomEpubMetadata(),

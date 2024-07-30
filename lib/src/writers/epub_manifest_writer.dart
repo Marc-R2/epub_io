@@ -1,14 +1,20 @@
-import 'package:epub_io/src/schema/opf/epub_manifest.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubManifestWriter {
-  static void writeManifest(XmlBuilder builder, EpubManifest manifest) {
+  static void writeManifest(
+    XmlBuilder builder,
+    EpubManifest manifest,
+    NameSpace nameSpace,
+  ) {
     builder.element(
       'manifest',
+      namespace: nameSpace.uri,
       nest: () {
         for (final item in manifest.items) {
           builder.element(
             'item',
+            namespace: nameSpace.uri,
             nest: () {
               builder
                 ..attribute('id', item.id)
