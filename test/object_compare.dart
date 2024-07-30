@@ -24,24 +24,26 @@ class ObjectCompare<T> {
     final newPath = [...path, key];
     final keyPath = newPath.join('.');
 
-    var h1 = b1.hashCode;
-    var h2 = b2.hashCode;
+    var h = (b1.hashCode, b2.hashCode);
 
     var useToString = '';
 
-    if (h1 != h2 && allowToString && b1.toString() == b2.toString()) {
-      h1 = b1.toString().hashCode;
-      h2 = b2.toString().hashCode;
-      useToString = ' $yellow(toString)$reset';
+    if (h.$1 != h.$2 && allowToString) {
+      if (b1.toString() == b2.toString()) {
+        h = (b1.toString().hashCode, b2.toString().hashCode);
+        useToString = ' $yellow(toString)$reset';
+      } else {
+        useToString = ' $red(tried toString)$reset';
+      }
     }
 
-    final show = (showObj && h1 != h2) ? ' $b1 $b2' : '';
+    final show = (showObj && h.$1 != h.$2) ? ' $b1 $b2' : '';
 
-    final color = h1 == h2 ? green : red;
+    final color = h.$1 == h.$2 ? green : red;
 
     final indent = '-' * (path.length + 1);
 
-    print('$indent $color$keyPath: $h1 $h2$useToString$show$reset');
+    print('$indent $color$keyPath: ${h.$1} ${h.$2}$useToString$show$reset');
 
     return (b1, b2, newPath);
   }
@@ -75,6 +77,21 @@ class ObjectCompare<T> {
     );
     return ObjectListCompare<I>(b1, b2, path: newPath);
   }
+
+  ObjectMapCompare<K, V> map<K, V>(
+    String key,
+    Map<K, V>? Function(T) f, {
+    bool showObj = false,
+    bool allowToString = true,
+  }) {
+    final (b1, b2, newPath) = _compare(
+      key,
+      f,
+      showObj: showObj,
+      allowToString: allowToString,
+    );
+    return ObjectMapCompare<K, V>(b1, b2, path: newPath);
+  }
 }
 
 class ObjectListCompare<T> extends ObjectCompare<List<T>?> {
@@ -85,6 +102,21 @@ class ObjectListCompare<T> extends ObjectCompare<List<T>?> {
   void forEach([void Function(ObjectCompare<T?>)? f]) {
     for (var i = 0; i < length; i++) {
       final childCompare = line('$i', (b) => b?.elementAtOrNull(i));
+      f?.call(childCompare);
+    }
+  }
+}
+
+class ObjectMapCompare<K, V> extends ObjectCompare<Map<K, V>?> {
+  ObjectMapCompare(super.obj1, super.obj2, {super.path});
+
+  int get length => max(obj1?.length ?? 0, obj2?.length ?? 0);
+
+  Set<K> get keys => {...?obj1?.keys, ...?obj2?.keys};
+
+  void forEach([void Function(ObjectCompare<V?>)? f]) {
+    for (final key in keys) {
+      final childCompare = line('[$key]', (b) => b?[key]);
       f?.call(childCompare);
     }
   }
