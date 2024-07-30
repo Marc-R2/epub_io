@@ -27,7 +27,7 @@ class ContentReader {
         case EpubContentType.dtbookNCX:
           final epubTextContentFile = EpubTextContentFileRef(
             epubBookRef: bookRef,
-            fileName: Uri.decodeFull(fileName),
+            fileName: fileName,
             contentMimeType: contentMimeType,
           );
 
@@ -43,7 +43,7 @@ class ContentReader {
         default:
           final epubByteContentFile = EpubByteContentFileRef(
             epubBookRef: bookRef,
-            fileName: Uri.decodeFull(fileName),
+            fileName: fileName,
             contentMimeType: contentMimeType,
             contentType: contentType,
           );
