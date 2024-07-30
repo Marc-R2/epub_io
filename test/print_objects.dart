@@ -3,6 +3,10 @@ import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 
 import 'object_compare.dart';
 
+void printHashCodes(EpubBook orgBook, EpubBook bookRoundTrip) {
+  printBook(ObjectCompare(orgBook, bookRoundTrip));
+}
+
 void printBook(ObjectCompare<EpubBook> book) {
   book
     ..line('.', (b) => b)
