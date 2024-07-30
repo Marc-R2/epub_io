@@ -29,8 +29,43 @@ void printPackage(ObjectCompare<EpubPackage?> package) {
   final metadata = package.line('metadata', (b) => b?.metadata);
   printMetadata(metadata);
   final manifest = package.line('manifest', (b) => b?.manifest);
-  final spine = package.line('manifest', (b) => b?.spine);
-  final guide = package.line('manifest', (b) => b?.guide);
+  printSpine(package.line('spine', (b) => b?.spine));
+  final guide = package.line('guide', (b) => b?.guide);
+  package.lines('bindings', (b) => b?.bindings)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printMediaType);
+  package
+    ..line('uniqueIdentifier', (b) => b?.uniqueIdentifier, showObj: true)
+    ..line('prefix', (b) => b?.prefix, showObj: true)
+    ..line('xmlLang', (b) => b?.xmlLang, showObj: true)
+    ..line('xmlVersion', (b) => b?.xmlVersion, showObj: true)
+    ..line('xmlEncoding', (b) => b?.xmlEncoding, showObj: true);
+  printNameSpace(package.line('nameSpace', (b) => b?.nameSpace, showObj: true));
+}
+
+void printNameSpace(ObjectCompare<NameSpace?> nameSpace) {
+  nameSpace
+    ..line('uri', (b) => b?.uri)
+    ..line('prefix', (b) => b?.prefix);
+}
+
+void printMediaType(ObjectCompare<MediaType?> mediaType) {
+  mediaType
+    ..line('mediaType', (b) => b?.mediaType, showObj: true)
+    ..line('handler', (b) => b?.handler, showObj: true);
+}
+
+void printSpine(ObjectCompare<EpubSpine?> spine) {
+  spine
+    ..line('ltr', (b) => b?.ltr, showObj: true)
+    ..line('tableOfContents', (b) => b?.tableOfContents);
+  spine.lines('items', (b) => b?.items).forEach(printEpubSpineItemRef);
+}
+
+void printEpubSpineItemRef(ObjectCompare<EpubSpineItemRef?> item) {
+  item
+    ..line('idRef', (b) => b?.idRef)
+    ..line('isLinear', (b) => b?.isLinear, showObj: true);
 }
 
 void printMetadata(ObjectCompare<EpubMetadata?> metadata) {
@@ -48,9 +83,25 @@ void printMetadata(ObjectCompare<EpubMetadata?> metadata) {
     ..line('sources', (b) => b?.sources)
     ..line('languages', (b) => b?.languages)
     ..line('relations', (b) => b?.relations)
-    ..line('coverages', (b) => b?.coverages)
-    ..line('rights', (b) => b?.rights, showObj: true);
+    ..line('coverages', (b) => b?.coverages)..line(
+      'rights', (b) => b?.rights, showObj: true)..line(
+      'xmlnsDc', (b) => b?.xmlnsDc, showObj: true)..line(
+      'xmlnsOpf', (b) => b?.xmlnsOpf, showObj: true);
   printMetaItems(metadata.lines('metaItems', (b) => b?.metaItems));
+  printLinks(metadata.lines('links', (b) => b?.links));
+}
+
+void printLinks(ObjectListCompare<Link?> links) {
+  links
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printLink);
+}
+
+void printLink(ObjectCompare<Link?> link) {
+  link
+    ..line('href', (b) => b?.href)
+    ..line('rel', (b) => b?.rel)
+    ..line('refines', (b) => b?.refines);
 }
 
 void printMetaItems(ObjectListCompare<EpubMetadataMeta?> metaItems) {
@@ -65,7 +116,8 @@ void printMetaItem(ObjectCompare<EpubMetadataMeta?> metaItem) {
     ..line('content', (b) => b?.content, showObj: true)
     ..line('id', (b) => b?.id)
     ..line('refines', (b) => b?.refines)
-    ..line('property', (b) => b?.property)
-    ..line('scheme', (b) => b?.scheme)
-    ..line('attributes', (b) => b?.attributes);
+    ..line('property', (b) => b?.property)..line('scheme', (b) => b?.scheme);
+  metaItem.map('attributes', (b) => b?.attributes, showObj: true)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach();
 }
