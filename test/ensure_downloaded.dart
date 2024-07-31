@@ -56,6 +56,7 @@ class EnsureDownloaded {
         await response.pipe(file.openWrite());
 
         // Check if the file is valid
+        await EpubReader.readBookStream(file);
         if (file.existsSync() && file.lengthSync() > 128) return file;
         print(file.readAsStringSync());
         throw Exception('Downloaded file is empty or not readable');
