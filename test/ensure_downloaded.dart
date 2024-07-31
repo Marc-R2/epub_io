@@ -67,9 +67,9 @@ class EnsureDownloaded {
 
         expect(bookRoundTrip.hashCode, equals(book.hashCode));
       } catch (e) {
-        file.deleteSync();
         print('Error reading $name: $e - file content:');
         print(file.readAsStringSync());
+        file.deleteSync();
         rethrow;
       }
     });
