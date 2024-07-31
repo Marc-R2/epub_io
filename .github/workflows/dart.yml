@@ -51,7 +51,7 @@ jobs:
       # Cache downloaded Epub-Files for tests
       - name: Cache downloaded Epub-Files for tests
         id: cache-epub-downloads
-        uses: actions/cache/save@v2
+        uses: actions/cache/save@v4
         with:
           path: |
             test/res/**
