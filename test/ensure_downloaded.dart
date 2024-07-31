@@ -46,7 +46,9 @@ class EnsureDownloaded {
       final written = EpubWriter.writeBook(book);
       final bookRoundTrip = await EpubReader.readBook(Future.value(written));
 
-      printHashCodes(book, bookRoundTrip);
+      if (book.hashCode != bookRoundTrip.hashCode) {
+        printHashCodes(book, bookRoundTrip);
+      }
 
       expect(bookRoundTrip.hashCode, equals(book.hashCode));
     });

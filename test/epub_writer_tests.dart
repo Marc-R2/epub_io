@@ -5,13 +5,11 @@ import 'package:epub_io/epub_io.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-import 'object_compare.dart';
 import 'print_objects.dart';
 
 void main() {
-  const fileName = 'acc.epub';
-  final fullPath =
-      path.join(io.Directory.current.path, 'test', 'res', fileName);
+  const fileName = 'assets/alicesAdventuresUnderGround.epub';
+  final fullPath = path.join(io.Directory.current.path, fileName);
   final targetFile = io.File(fullPath);
   final resultFile = io.File('$fullPath.zip');
   final resultFile2 = io.File('$fullPath.epub');
@@ -35,18 +33,14 @@ void main() {
     }
   }
 
-  void printHashCodes(EpubBook orgBook, EpubBook bookRoundTrip) {
-    printBook(ObjectCompare(orgBook, bookRoundTrip));
-  }
-
   test('Book Round Trip', () async {
     final book = await EpubReader.readBook(bytes);
 
     final written = EpubWriter.writeBook(book);
-    resultFile.writeAsBytesSync(written!);
-    resultFile2.writeAsBytesSync(written);
+    // resultFile.writeAsBytesSync(written!);
+    // resultFile2.writeAsBytesSync(written);
     print('Result written to ${resultFile.path}');
-    unzip(written);
+    // unzip(written);
 
     final bookRoundTrip = await EpubReader.readBook(Future.value(written));
 

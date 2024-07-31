@@ -60,6 +60,7 @@ jobs:
 
       - name: Checkout generated-files branch
         run: |
+          rm -rf test/res/*
           git fetch origin
           git checkout -b generated-files origin/generated-files || git checkout --orphan generated-files
 

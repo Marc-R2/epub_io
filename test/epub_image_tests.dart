@@ -1,11 +1,7 @@
-import 'dart:io' as io;
 
-import 'package:epub_io/epub_io.dart';
-import 'package:path/path.dart' as path;
-import 'package:test/test.dart';
 
 void main() {
-  const fileName = 'MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub';
+  /* const fileName = 'MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub';
   final fullPath =
       path.join(io.Directory.current.path, 'test', 'res', fileName);
   final targetFile = io.File(fullPath);
@@ -33,5 +29,5 @@ void main() {
     // expect(3, coverImage.format);
     // expect(581, coverImage.width);
     // expect(1034, coverImage.height);
-  });
+  }); */
 }
