@@ -25,30 +25,52 @@ class EnsureDownloaded {
       throw Exception('Duplicate file name $name in ${file.path}');
     }
     _files.add(file.path);
-    if (file.existsSync() && file.lengthSync() > 128) return file;
-    file.createSync(recursive: true);
 
-    final target = source.resolve(name);
-    print('Downloading $name from $target');
+    var retries = 0;
+    const maxRetries = 3;
 
-    if (lastDownload != null) {
-      // limit download frequency
-      final now = DateTime.now();
-      final diff = now.difference(lastDownload!);
-      if (diff.inSeconds < 5) {
-        final wait = const Duration(seconds: 5) + (diff * 2);
-        print('Waiting $wait before downloading $name');
-        await Future<void>.delayed(wait);
+    while (retries < maxRetries) {
+      try {
+        if (file.existsSync() && file.lengthSync() > 128) return file;
+        file.createSync(recursive: true);
+
+        final target = source.resolve(name);
+        print('Downloading $name from $target');
+
+        if (lastDownload != null) {
+          // limit download frequency
+          final now = DateTime.now();
+          final diff = now.difference(lastDownload!);
+          if (diff.inSeconds < 5) {
+            final wait = const Duration(seconds: 6) - (diff * 2);
+            print('Waiting $wait before downloading $name');
+            await Future<void>.delayed(wait);
+          }
+        }
+        lastDownload = DateTime.now();
+
+        final client = HttpClient();
+        final res = await client.getUrl(target);
+        final response = await res.close();
+
+        await response.pipe(file.openWrite());
+
+        // Check if the file is valid
+        if (file.existsSync() && file.lengthSync() > 128) return file;
+        print(file.readAsStringSync());
+        throw Exception('Downloaded file is empty or not readable');
+      } catch (e) {
+        print('Error downloading $name: $e');
+        retries++;
+        if (retries >= maxRetries) {
+          throw Exception(
+              'Failed to download $name after $maxRetries attempts');
+        }
+        print('Retrying download ($retries/$maxRetries)...');
       }
     }
-    lastDownload = DateTime.now();
 
-    final client = HttpClient();
-    final res = await client.getUrl(target);
-    final response = await res.close();
-
-    await response.pipe(file.openWrite());
-    return file;
+    throw Exception('Failed to download $name');
   }
 
   void testFile(String name) {
