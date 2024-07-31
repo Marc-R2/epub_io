@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:archive/archive.dart';
 import 'package:epub_io/src/entities/epub_book.dart';
 import 'package:epub_io/src/entities/epub_chapter.dart';
@@ -35,7 +36,7 @@ class EpubBookRef with _$EpubBookRef {
 
   EpubBook asEpubBook({
     required EpubContent content,
-    required List<EpubChapter> chapters,
+    required List<EpubChapter<dynamic>> chapters,
     Image? coverImage,
   }) {
     return EpubBook(

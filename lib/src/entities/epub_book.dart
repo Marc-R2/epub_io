@@ -15,6 +15,6 @@ class EpubBook with _$EpubBook {
     EpubSchema? schema,
     EpubContent? content,
     Image? coverImage,
-    @Default(<EpubChapter>[]) List<EpubChapter> chapters,
+    @Default([]) List<EpubChapter<dynamic>> chapters,
   }) = _EpubBook;
 }

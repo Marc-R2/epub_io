@@ -16,5 +16,6 @@ class EpubByteContentFileRef
 
   const EpubByteContentFileRef._();
 
+  @override
   Future<List<int>> readContent() async => getContentStream();
 }

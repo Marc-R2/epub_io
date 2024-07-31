@@ -7,8 +7,7 @@ void main() {
     contentDirectoryPath: 'some/random/path',
   ); */
 
-  setUp(() {
-  });
+  setUp(() {});
 
   group('EpubSchema', () {
     // TODO(Marc-R2): Removed redundant tests

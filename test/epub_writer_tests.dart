@@ -12,7 +12,7 @@ void main() {
   final fullPath = path.join(io.Directory.current.path, fileName);
   final targetFile = io.File(fullPath);
   final resultFile = io.File('$fullPath.zip');
-  final resultFile2 = io.File('$fullPath.epub');
+  // final resultFile2 = io.File('$fullPath.epub');
   if (!targetFile.existsSync()) {
     throw Exception('Specified epub file not found: $fullPath');
   }

@@ -10,8 +10,8 @@ class EpubNavigationPoint with _$EpubNavigationPoint {
     String? id,
     String? classs,
     String? playOrder,
-    @Default(<EpubNavigationLabel>[]) List<EpubNavigationLabel> navigationLabels,
+    @Default([]) List<EpubNavigationLabel> navigationLabels,
     EpubNavigationContent? content,
-    @Default(<EpubNavigationPoint>[]) List<EpubNavigationPoint> childNavigationPoints,
+    @Default([]) List<EpubNavigationPoint> childNavigationPoints,
   }) = _EpubNavigationPoint;
 }

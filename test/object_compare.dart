@@ -1,11 +1,11 @@
 import 'dart:math';
 
 class ObjectCompare<T> {
+  ObjectCompare(this.obj1, this.obj2, {this.path = const []});
+
   final List<String> path;
   final T obj1;
   final T obj2;
-
-  ObjectCompare(this.obj1, this.obj2, {this.path = const []});
 
   static const red = '\x1B[31m';
   static const yellow = '\x1B[33m';

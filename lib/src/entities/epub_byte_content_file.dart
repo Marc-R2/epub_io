@@ -4,7 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'epub_byte_content_file.freezed.dart';
 
 @freezed
-class EpubByteContentFile with _$EpubByteContentFile implements EpubContentFile {
+class EpubByteContentFile
+    with _$EpubByteContentFile
+    implements EpubContentFile {
   const factory EpubByteContentFile({
     String? fileName,
     String? contentMimeType,

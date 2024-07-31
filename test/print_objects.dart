@@ -29,12 +29,11 @@ void printSchema(ObjectCompare<EpubSchema?> schema) {
 }
 
 void printPackage(ObjectCompare<EpubPackage?> package) {
-  final version = package.line('version', (b) => b?.version);
-  final metadata = package.line('metadata', (b) => b?.metadata);
-  printMetadata(metadata);
-  final manifest = package.line('manifest', (b) => b?.manifest);
+  package.line('version', (b) => b?.version);
+  printMetadata(package.line('metadata', (b) => b?.metadata));
+  package.line('manifest', (b) => b?.manifest);
   printSpine(package.line('spine', (b) => b?.spine));
-  final guide = package.line('guide', (b) => b?.guide);
+  package.line('guide', (b) => b?.guide);
   package.lines('bindings', (b) => b?.bindings)
     ..line('length', (b) => b?.length, showObj: true)
     ..forEach(printMediaType);
@@ -86,8 +85,8 @@ void printMetadata(ObjectCompare<EpubMetadata?> metadata) {
     ..line('identifiers', (b) => b?.identifiers)
     ..line('sources', (b) => b?.sources)
     ..line('languages', (b) => b?.languages)
-    ..line('relations', (b) => b?.relations)
-    ..line('coverages', (b) => b?.coverages)..line(
+    ..line('relations', (b) => b?.relations)..line(
+      'coverages', (b) => b?.coverages)..line(
       'rights', (b) => b?.rights, showObj: true)..line(
       'xmlnsDc', (b) => b?.xmlnsDc, showObj: true)..line(
       'xmlnsOpf', (b) => b?.xmlnsOpf, showObj: true);
@@ -119,8 +118,8 @@ void printMetaItem(ObjectCompare<EpubMetadataMeta?> metaItem) {
     ..line('name', (b) => b?.name)
     ..line('content', (b) => b?.content, showObj: true)
     ..line('id', (b) => b?.id)
-    ..line('refines', (b) => b?.refines)
-    ..line('property', (b) => b?.property)..line('scheme', (b) => b?.scheme);
+    ..line('refines', (b) => b?.refines)..line(
+      'property', (b) => b?.property)..line('scheme', (b) => b?.scheme);
   metaItem.map('attributes', (b) => b?.attributes, showObj: true)
     ..line('length', (b) => b?.length, showObj: true)
     ..forEach();

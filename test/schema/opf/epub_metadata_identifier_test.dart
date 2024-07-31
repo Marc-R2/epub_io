@@ -1,4 +1,3 @@
-import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -16,8 +16,8 @@ class EpubContentRef with _$EpubContentRef {
     Map<String, EpubByteContentFileRef> images,
     @Default(<String, EpubByteContentFileRef>{})
     Map<String, EpubByteContentFileRef> fonts,
-    @Default(<String, EpubContentFileRef>{})
-    Map<String, EpubContentFileRef> allFiles,
+    @Default(<String, EpubContentFileRef<dynamic>>{})
+    Map<String, EpubContentFileRef<dynamic>> allFiles,
   }) = _EpubContentRef;
 
   const EpubContentRef._();

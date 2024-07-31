@@ -20,6 +20,7 @@ class EpubTextContentFileRef
 
   const EpubTextContentFileRef._();
 
+  @override
   Future<String> readContent() async {
     final contentStream = getContentStream();
     try {
