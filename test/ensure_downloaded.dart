@@ -36,7 +36,7 @@ class EnsureDownloaded {
       final now = DateTime.now();
       final diff = now.difference(lastDownload!);
       if (diff.inSeconds < 5) {
-        final wait = const Duration(seconds: 3) + diff;
+        final wait = const Duration(seconds: 5) + (diff * 2);
         print('Waiting $wait before downloading $name');
         await Future<void>.delayed(wait);
       }
