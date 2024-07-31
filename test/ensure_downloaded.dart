@@ -16,6 +16,8 @@ class EnsureDownloaded {
 
   static final _files = <String>{};
 
+  static DateTime? lastDownload;
+
   /// Just delete files to re-download them.
   Future<File> ensureDownloaded(String name) async {
     final file = File.fromUri(dir.uri.resolve(name));
@@ -23,11 +25,23 @@ class EnsureDownloaded {
       throw Exception('Duplicate file name $name in ${file.path}');
     }
     _files.add(file.path);
-    if (file.existsSync()) return file;
+    if (file.existsSync() && file.lengthSync() > 128) return file;
     file.createSync(recursive: true);
 
     final target = source.resolve(name);
     print('Downloading $name from $target');
+
+    if (lastDownload != null) {
+      // limit download frequency
+      final now = DateTime.now();
+      final diff = now.difference(lastDownload!);
+      if (diff.inSeconds < 5) {
+        final wait = const Duration(seconds: 3) + diff;
+        print('Waiting $wait before downloading $name');
+        await Future<void>.delayed(wait);
+      }
+    }
+    lastDownload = DateTime.now();
 
     final client = HttpClient();
     final res = await client.getUrl(target);
@@ -42,15 +56,22 @@ class EnsureDownloaded {
       final file = await ensureDownloaded(name);
       expect(file.existsSync(), isTrue);
 
-      final book = await EpubReader.readBookStream(file);
-      final written = EpubWriter.writeBook(book);
-      final bookRoundTrip = await EpubReader.readBook(Future.value(written));
+      try {
+        final book = await EpubReader.readBookStream(file);
+        final written = EpubWriter.writeBook(book);
+        final bookRoundTrip = await EpubReader.readBook(Future.value(written));
 
-      if (book.hashCode != bookRoundTrip.hashCode) {
-        printHashCodes(book, bookRoundTrip);
+        if (book.hashCode != bookRoundTrip.hashCode) {
+          printHashCodes(book, bookRoundTrip);
+        }
+
+        expect(bookRoundTrip.hashCode, equals(book.hashCode));
+      } catch (e) {
+        file.deleteSync();
+        print('Error reading $name: $e - file content:');
+        print(file.readAsStringSync());
+        rethrow;
       }
-
-      expect(bookRoundTrip.hashCode, equals(book.hashCode));
     });
   }
 
