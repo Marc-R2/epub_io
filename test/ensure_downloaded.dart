@@ -6,18 +6,27 @@ import 'package:test/test.dart';
 import 'print_objects.dart';
 
 class EnsureDownloaded {
-  const EnsureDownloaded({required this.dir, required this.source});
+  EnsureDownloaded({required this.dir, required String source})
+      : source = Uri.parse(source);
 
-  final String source;
+  EnsureDownloaded.fromUri({required this.dir, required this.source});
+
+  final Uri source;
   final Directory dir;
+
+  static final _files = <String>{};
 
   /// Just delete files to re-download them.
   Future<File> ensureDownloaded(String name) async {
     final file = File.fromUri(dir.uri.resolve(name));
+    if (_files.contains(file.path)) {
+      throw Exception('Duplicate file name $name in ${file.path}');
+    }
+    _files.add(file.path);
     if (file.existsSync()) return file;
     file.createSync(recursive: true);
 
-    final target = Uri.parse(source).resolve(name);
+    final target = source.resolve(name);
     print('Downloading $name from $target');
 
     final client = HttpClient();
@@ -42,4 +51,22 @@ class EnsureDownloaded {
       expect(bookRoundTrip.hashCode, equals(book.hashCode));
     });
   }
+
+  EnsureDownloadedSection section(String section) {
+    return EnsureDownloadedSection(
+      dir: dir,
+      source: source,
+      sectionName: section,
+    );
+  }
+}
+
+class EnsureDownloadedSection extends EnsureDownloaded {
+  EnsureDownloadedSection({
+    required super.dir,
+    required Uri source,
+    required this.sectionName,
+  }) : super.fromUri(source: source.resolve(sectionName));
+
+  final String sectionName;
 }
