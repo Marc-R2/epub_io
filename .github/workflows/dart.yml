@@ -25,6 +25,15 @@ jobs:
         with:
           sdk: "3.4.3"
 
+      # Try to restore downloaded Epub-Files for tests
+      - name: Restore cached Epub-Downloads for tests
+        id: restore-epub-downloads
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            test/res/**
+          key: ${{ runner.os }}-epub-downloads
+
       - name: Install dependencies
         run: dart pub get
 
@@ -38,6 +47,15 @@ jobs:
       - name: Run tests
         run: dart pub run test
         shell: bash
+
+      # Cache downloaded Epub-Files for tests
+      - name: Cache downloaded Epub-Files for tests
+        id: cache-epub-downloads
+        uses: actions/cache/save@v2
+        with:
+          path: |
+            test/res/**
+          key: ${{ runner.os }}-epub-downloads
 
       - name: Coverage information
         run: |
@@ -64,9 +82,9 @@ jobs:
           git fetch origin
           git checkout -b generated-files origin/generated-files || git checkout --orphan generated-files
 
-          - name: Rebase onto main
-            run: |
-              git rebase origin/main || git rebase --abort
+      - name: Rebase onto main
+        run: |
+          git rebase origin/main || git rebase --abort
 
       - name: Commit and push generated files
         if: success()
