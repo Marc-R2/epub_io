@@ -25,11 +25,6 @@ jobs:
         with:
           sdk: "3.4.3"
 
-      # Temporarily remove .gitignore to include generated files
-      - name: Override .gitignore for generated files
-        run: |
-          mv lib/.gitignore lib/.gitignore.backup
-
       - name: Prepare new content
         run: |
           mkdir ../new-content
@@ -60,6 +55,10 @@ jobs:
       - name: Copy new content
         run: |
           cp -a ../new-content/. ./
+
+      - name: Override .gitignore for generated files
+        run: |
+          mv lib/.gitignore lib/.gitignore.backup || true
 
       # Try to restore downloaded Epub-Files for tests
       - name: Restore cached Epub-Downloads for tests
