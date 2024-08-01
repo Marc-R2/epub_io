@@ -20,7 +20,18 @@ class EpubMetadataWriter {
         if (dcNamespace != null) dcNamespace: 'dc',
       },
       nest: () {
-        builder.nests('title', meta.titles);
+        builder
+          ..nests('title', meta.titles)
+          ..nests('subject', meta.subjects)
+          ..nests('publisher', meta.publishers)
+          ..nests('type', meta.types)
+          ..nests('format', meta.formats)
+          ..nests('source', meta.sources)
+          ..nests('language', meta.languages)
+          ..nests('relation', meta.relations)
+          ..nests('coverage', meta.coverages)
+          ..nests('rights', meta.rights)
+          ..writeXmls('link', meta.links);
 
         for (final item in meta.creators) {
           builder.element(
@@ -34,10 +45,6 @@ class EpubMetadataWriter {
             },
           );
         }
-
-        builder
-          ..nests('subject', meta.subjects)
-          ..nests('publisher', meta.publishers);
 
         for (final item in meta.contributors) {
           builder.element(
@@ -64,10 +71,6 @@ class EpubMetadataWriter {
           );
         }
 
-        builder
-          ..nests('type', meta.types)
-          ..nests('format', meta.formats);
-
         for (final id in meta.identifiers) {
           builder.element(
             'identifier',
@@ -80,13 +83,6 @@ class EpubMetadataWriter {
             },
           );
         }
-
-        builder
-          ..nests('source', meta.sources)
-          ..nests('language', meta.languages)
-          ..nests('relation', meta.relations)
-          ..nests('coverage', meta.coverages)
-          ..nests('rights', meta.rights);
 
         for (final metaItem in meta.metaItems) {
           builder.element(
@@ -112,8 +108,6 @@ class EpubMetadataWriter {
             },
           );
         }
-
-        builder.writeXmls('link', meta.links);
 
         if (meta.description != null) {
           builder.element(
