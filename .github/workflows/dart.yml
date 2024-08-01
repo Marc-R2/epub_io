@@ -84,7 +84,7 @@ jobs:
       - name: Checkout generated-files branch
         run: |
           git fetch origin
-          git checkout -b generated-files origin/generated-files || git checkout --orphan generated-files
+          git checkout -b generated-files origin/generated-files || git checkout -b generated-files
 
       - name: Remove all files in generated-files branch
         run: |
@@ -102,13 +102,18 @@ jobs:
           git config user.name "GitHub Actions Bot extends $(git log -1 $GITHUB_SHA --pretty=format:'%an')"
           git config user.email "$(git log -1 $GITHUB_SHA --pretty=format:'%ae')"
 
+      - name: Check Git status
+        run: |
+          git status
+          git log -n 1
+          git branch -a
+
       - name: Commit and push generated files
-        # if success and source branch is master/main
         if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         run: |
           git add .
           git commit -m "Update generated files"
-          git push -f origin generated-files
+          git push -f origin generated-files --verbose
 
       - name: Handle merge conflicts
         if: failure()

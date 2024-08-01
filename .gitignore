@@ -31,3 +31,4 @@ pubspec.lock
 .vscode/
 /test/res/
 /.idea/
+/coverage/
