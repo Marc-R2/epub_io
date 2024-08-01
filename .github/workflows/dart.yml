@@ -84,6 +84,7 @@ jobs:
         run: |
           git fetch origin
           git checkout -B generated-files origin/generated-files || git checkout --orphan generated-files
+          git pull
           git rm -rf . || true
           git clean -fdx
 
