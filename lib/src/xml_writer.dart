@@ -23,13 +23,17 @@ extension XmlWriter on XmlBuilder {
     );
   }
 
-  void writeXml(String name, XmlWrite xmlWrite) =>
-      elementOr(name, attributes: xmlWrite);
+  void writeXml(String name, XmlWrite xmlWrite, {NameSpace? nameSpace}) =>
+      elementOr(name, attributes: xmlWrite, namespace: nameSpace);
 
-  void writeXmls(String name, Iterable<XmlWrite>? xmlWrites) {
+  void writeXmls(
+    String name,
+    Iterable<XmlWrite>? xmlWrites, {
+    NameSpace? nameSpace,
+  }) {
     if (xmlWrites == null) return;
     for (final xmlWrite in xmlWrites) {
-      writeXml(name, xmlWrite);
+      writeXml(name, xmlWrite, nameSpace: nameSpace);
     }
   }
 }

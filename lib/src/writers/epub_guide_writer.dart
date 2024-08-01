@@ -1,4 +1,5 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubGuideWriter {
@@ -10,19 +11,11 @@ class EpubGuideWriter {
     builder.element(
       'guide',
       namespace: nameSpace.uri,
-      nest: () {
-        for (final guideItem in guide.items) {
-          builder.element(
-            'reference',
-            namespace: nameSpace.uri,
-            attributes: {
-              'type': guideItem.type!,
-              'title': guideItem.title!,
-              'href': guideItem.href!,
-            },
-          );
-        }
-      },
+      nest: () => builder.writeXmls(
+        'reference',
+        guide.items,
+        nameSpace: nameSpace,
+      ),
     );
   }
 }
