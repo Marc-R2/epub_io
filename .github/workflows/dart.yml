@@ -73,29 +73,35 @@ jobs:
       # Temporarily remove .gitignore to include generated files
       - name: Override .gitignore for generated files
         run: |
-          mv .gitignore .gitignore.backup
-        # echo "!path/to/generated/files/**" >> .gitignore
+          mv lib/.gitignore lib/.gitignore.backup
+
+      - name: move current directory to temporary directory outside the current
+        run: |
+          mkdir -p ../tmp/repo
+          cp -r ./ ../tmp/repo
+          rm -rf ./
 
       - name: Checkout generated-files branch
         run: |
-          rm -rf test/res/*
           git fetch origin
           git checkout -b generated-files origin/generated-files || git checkout --orphan generated-files
 
-      - name: Rebase onto main
+      - name: Remove all files in generated-files branch
         run: |
-          git rebase origin/main || git rebase --abort
+          git rm -rf .
+
+      - name: Add new current files
+        run: |
+          cp -r ../tmp/repo ./
+          rm -rf ../tmp/repo
 
       - name: Commit and push generated files
-        if: success()
+        # if success and source branch is master/main
+        if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         run: |
           git add .
           git commit -m "Update generated files"
           git push -f origin generated-files
-
-      - name: Restore .gitignore
-        run: |
-          mv .gitignore.backup .gitignore
 
       - name: Handle merge conflicts
         if: failure()

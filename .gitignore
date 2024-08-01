@@ -31,4 +31,3 @@ pubspec.lock
 .vscode/
 /test/res/
 /.idea/
-**.freezed.dart
