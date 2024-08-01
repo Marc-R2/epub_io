@@ -438,10 +438,20 @@ abstract class _EpubContainerXML implements EpubContainerXML {
       throw _privateConstructorUsedError;
 }
 
+EpubContainerRootFile _$EpubContainerRootFileFromJson(
+    Map<String, dynamic> json) {
+  return _EpubContainerRootFile.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EpubContainerRootFile {
+  @JsonKey(name: 'full-path')
   String get fullPath => throw _privateConstructorUsedError;
+  @JsonKey(name: 'media-type')
   String? get mediaType => throw _privateConstructorUsedError;
+
+  /// Serializes this EpubContainerRootFile to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubContainerRootFile
   /// with the given fields replaced by the non-null parameter values.
@@ -456,7 +466,9 @@ abstract class $EpubContainerRootFileCopyWith<$Res> {
           $Res Function(EpubContainerRootFile) then) =
       _$EpubContainerRootFileCopyWithImpl<$Res, EpubContainerRootFile>;
   @useResult
-  $Res call({String fullPath, String? mediaType});
+  $Res call(
+      {@JsonKey(name: 'full-path') String fullPath,
+      @JsonKey(name: 'media-type') String? mediaType});
 }
 
 /// @nodoc
@@ -500,7 +512,9 @@ abstract class _$$EpubContainerRootFileImplCopyWith<$Res>
       __$$EpubContainerRootFileImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String fullPath, String? mediaType});
+  $Res call(
+      {@JsonKey(name: 'full-path') String fullPath,
+      @JsonKey(name: 'media-type') String? mediaType});
 }
 
 /// @nodoc
@@ -534,13 +548,21 @@ class __$$EpubContainerRootFileImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$EpubContainerRootFileImpl extends _EpubContainerRootFile {
+  const _$EpubContainerRootFileImpl(
+      {@JsonKey(name: 'full-path') required this.fullPath,
+      @JsonKey(name: 'media-type') this.mediaType})
+      : super._();
 
-class _$EpubContainerRootFileImpl implements _EpubContainerRootFile {
-  const _$EpubContainerRootFileImpl({required this.fullPath, this.mediaType});
+  factory _$EpubContainerRootFileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EpubContainerRootFileImplFromJson(json);
 
   @override
+  @JsonKey(name: 'full-path')
   final String fullPath;
   @override
+  @JsonKey(name: 'media-type')
   final String? mediaType;
 
   @override
@@ -559,6 +581,7 @@ class _$EpubContainerRootFileImpl implements _EpubContainerRootFile {
                 other.mediaType == mediaType));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, fullPath, mediaType);
 
@@ -570,16 +593,30 @@ class _$EpubContainerRootFileImpl implements _EpubContainerRootFile {
   _$$EpubContainerRootFileImplCopyWith<_$EpubContainerRootFileImpl>
       get copyWith => __$$EpubContainerRootFileImplCopyWithImpl<
           _$EpubContainerRootFileImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EpubContainerRootFileImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _EpubContainerRootFile implements EpubContainerRootFile {
+abstract class _EpubContainerRootFile extends EpubContainerRootFile {
   const factory _EpubContainerRootFile(
-      {required final String fullPath,
-      final String? mediaType}) = _$EpubContainerRootFileImpl;
+          {@JsonKey(name: 'full-path') required final String fullPath,
+          @JsonKey(name: 'media-type') final String? mediaType}) =
+      _$EpubContainerRootFileImpl;
+  const _EpubContainerRootFile._() : super._();
+
+  factory _EpubContainerRootFile.fromJson(Map<String, dynamic> json) =
+      _$EpubContainerRootFileImpl.fromJson;
 
   @override
+  @JsonKey(name: 'full-path')
   String get fullPath;
   @override
+  @JsonKey(name: 'media-type')
   String? get mediaType;
 
   /// Create a copy of EpubContainerRootFile

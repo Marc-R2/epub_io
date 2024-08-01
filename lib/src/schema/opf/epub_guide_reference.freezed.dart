@@ -14,11 +14,18 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+EpubGuideReference _$EpubGuideReferenceFromJson(Map<String, dynamic> json) {
+  return _EpubGuideReference.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EpubGuideReference {
   String? get type => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get href => throw _privateConstructorUsedError;
+
+  /// Serializes this EpubGuideReference to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubGuideReference
   /// with the given fields replaced by the non-null parameter values.
@@ -118,9 +125,13 @@ class __$$EpubGuideReferenceImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$EpubGuideReferenceImpl extends _EpubGuideReference {
+  const _$EpubGuideReferenceImpl({this.type, this.title, this.href})
+      : super._();
 
-class _$EpubGuideReferenceImpl implements _EpubGuideReference {
-  const _$EpubGuideReferenceImpl({this.type, this.title, this.href});
+  factory _$EpubGuideReferenceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EpubGuideReferenceImplFromJson(json);
 
   @override
   final String? type;
@@ -144,6 +155,7 @@ class _$EpubGuideReferenceImpl implements _EpubGuideReference {
             (identical(other.href, href) || other.href == href));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, type, title, href);
 
@@ -155,13 +167,24 @@ class _$EpubGuideReferenceImpl implements _EpubGuideReference {
   _$$EpubGuideReferenceImplCopyWith<_$EpubGuideReferenceImpl> get copyWith =>
       __$$EpubGuideReferenceImplCopyWithImpl<_$EpubGuideReferenceImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EpubGuideReferenceImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _EpubGuideReference implements EpubGuideReference {
+abstract class _EpubGuideReference extends EpubGuideReference {
   const factory _EpubGuideReference(
       {final String? type,
       final String? title,
       final String? href}) = _$EpubGuideReferenceImpl;
+  const _EpubGuideReference._() : super._();
+
+  factory _EpubGuideReference.fromJson(Map<String, dynamic> json) =
+      _$EpubGuideReferenceImpl.fromJson;
 
   @override
   String? get type;

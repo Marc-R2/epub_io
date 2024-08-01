@@ -1,4 +1,5 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubMetadataWriter {
@@ -19,186 +20,94 @@ class EpubMetadataWriter {
         if (dcNamespace != null) dcNamespace: 'dc',
       },
       nest: () {
-        meta
-          ..titles.forEach(
-            (item) =>
-                builder.element('title', nest: item, namespace: dcNamespace),
-          )
-          ..creators.forEach(
-            (item) => builder.element(
-              'creator',
-              namespace: dcNamespace,
-              nest: () {
-                if (item.role != null) {
-                  builder.attribute(
-                    'role',
-                    item.role,
-                    namespace: opfNamespace,
-                  );
-                }
-                if (item.fileAs != null) {
-                  builder.attribute(
-                    'file-as',
-                    item.fileAs,
-                    namespace: opfNamespace,
-                  );
-                }
-                builder.text(item.creator!);
-              },
-            ),
-          )
-          ..subjects.forEach(
-            (item) =>
-                builder.element('subject', namespace: dcNamespace, nest: item),
-          )
-          ..publishers.forEach(
-            (item) => builder.element(
-              'publisher',
-              namespace: dcNamespace,
-              nest: item,
-            ),
-          )
-          ..contributors.forEach(
-            (item) => builder.element(
-              'contributor',
-              namespace: dcNamespace,
-              nest: () {
-                if (item.role != null) {
-                  builder.attribute(
-                    'role',
-                    item.role,
-                    namespace: opfNamespace,
-                  );
-                }
-                if (item.fileAs != null) {
-                  builder.attribute(
-                    'file-as',
-                    item.fileAs,
-                    namespace: opfNamespace,
-                  );
-                }
-                builder.text(item.contributor!);
-              },
-            ),
-          )
-          ..dates.forEach(
-            (date) => builder.element(
-              'date',
-              namespace: dcNamespace,
-              nest: () {
-                if (date.event != null) {
-                  builder.attribute(
-                    'event',
-                    date.event,
-                    namespace: opfNamespace,
-                  );
-                }
-                builder.text(date.date!);
-              },
-            ),
-          )
-          ..types.forEach(
-            (type) =>
-                builder.element('type', namespace: dcNamespace, nest: type),
-          )
-          ..formats.forEach(
-            (format) => builder.element(
-              'format',
-              namespace: dcNamespace,
-              nest: format,
-            ),
-          )
-          ..identifiers.forEach(
-            (id) => builder.element(
-              'identifier',
-              namespace: dcNamespace,
-              nest: () {
-                if (id.id != null) builder.attribute('id', id.id);
-                if (id.scheme != null) {
-                  builder.attribute(
-                    'scheme',
-                    id.scheme,
-                    namespace: opfNamespace,
-                  );
-                }
-                builder.text(id.identifier!);
-              },
-            ),
-          )
-          ..sources.forEach(
-            (item) =>
-                builder.element('source', namespace: dcNamespace, nest: item),
-          )
-          ..languages.forEach(
-            (item) => builder.element(
-              'language',
-              namespace: dcNamespace,
-              nest: item,
-            ),
-          )
-          ..relations.forEach(
-            (item) => builder.element(
-              'relation',
-              namespace: dcNamespace,
-              nest: item,
-            ),
-          )
-          ..coverages.forEach(
-            (item) => builder.element(
-              'coverage',
-              namespace: dcNamespace,
-              nest: item,
-            ),
-          )
-          ..rights.forEach(
-            (item) =>
-                builder.element('rights', namespace: dcNamespace, nest: item),
-          )
-          ..metaItems.forEach(
-            (metaitem) => builder.element(
-              'meta',
-              namespace: nameSpace.uri,
-              nest: () {
-                if (version == EpubVersion.epub2) {
-                  if (metaitem.name != null) {
-                    builder.attribute('name', metaitem.name);
-                  }
-                  if (metaitem.content != null) {
-                    builder.attribute('content', metaitem.content);
-                  }
-                } else if (version == EpubVersion.epub3) {
-                  if (metaitem.id != null) {
-                    builder.attribute('id', metaitem.id);
-                  }
-                  if (metaitem.refines != null) {
-                    builder.attribute('refines', metaitem.refines);
-                  }
-                  if (metaitem.property != null) {
-                    builder.attribute('property', metaitem.property);
-                  }
-                  if (metaitem.scheme != null) {
-                    builder.attribute('scheme', metaitem.scheme);
-                  }
-                  if (metaitem.content != null) {
-                    builder.text(metaitem.content!);
-                  }
-                  metaitem.attributes.forEach(
-                    (key, value) => builder.attribute(key, value),
-                  );
-                }
-              },
-            ),
-          )
-          ..links?.forEach(
-            (link) => builder.element(
-              'link',
-              attributes: {
-                'href': link.href,
-                if (link.rel != null) 'rel': link.rel!,
-                if (link.refines != null) 'refines': link.refines!,
-              },
-            ),
+        builder
+          ..nests('title', meta.titles)
+          ..nests('subject', meta.subjects)
+          ..nests('publisher', meta.publishers)
+          ..nests('type', meta.types)
+          ..nests('format', meta.formats)
+          ..nests('source', meta.sources)
+          ..nests('language', meta.languages)
+          ..nests('relation', meta.relations)
+          ..nests('coverage', meta.coverages)
+          ..nests('rights', meta.rights)
+          ..writeXmls('link', meta.links);
+
+        for (final item in meta.creators) {
+          builder.element(
+            'creator',
+            namespace: dcNamespace,
+            nest: () {
+              builder
+                ..attribute('role', item.role, namespace: opfNamespace)
+                ..attribute('file-as', item.fileAs, namespace: opfNamespace)
+                ..text(item.creator!);
+            },
           );
+        }
+
+        for (final item in meta.contributors) {
+          builder.element(
+            'contributor',
+            namespace: dcNamespace,
+            nest: () {
+              builder
+                ..attribute('role', item.role, namespace: opfNamespace)
+                ..attribute('file-as', item.fileAs, namespace: opfNamespace)
+                ..text(item.contributor!);
+            },
+          );
+        }
+
+        for (final date in meta.dates) {
+          builder.element(
+            'date',
+            namespace: dcNamespace,
+            nest: () {
+              builder
+                ..attribute('event', date.event, namespace: opfNamespace)
+                ..text(date.date!);
+            },
+          );
+        }
+
+        for (final id in meta.identifiers) {
+          builder.element(
+            'identifier',
+            namespace: dcNamespace,
+            nest: () {
+              builder
+                ..attribute('id', id.id)
+                ..attribute('scheme', id.scheme, namespace: opfNamespace)
+                ..text(id.identifier!);
+            },
+          );
+        }
+
+        for (final metaItem in meta.metaItems) {
+          builder.element(
+            'meta',
+            namespace: nameSpace.uri,
+            nest: () {
+              if (version == EpubVersion.epub2) {
+                builder
+                  ..attribute('name', metaItem.name)
+                  ..attribute('content', metaItem.content);
+              } else if (version == EpubVersion.epub3) {
+                builder
+                  ..attribute('id', metaItem.id)
+                  ..attribute('refines', metaItem.refines)
+                  ..attribute('property', metaItem.property)
+                  ..attribute('scheme', metaItem.scheme)
+                  ..text(metaItem.content!);
+
+                metaItem.attributes.forEach(
+                  (key, value) => builder.attribute(key, value),
+                );
+              }
+            },
+          );
+        }
 
         if (meta.description != null) {
           builder.element(

@@ -1,4 +1,5 @@
 import 'package:epub_io/src/schema/container/epub_container.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubContainerWriter {
@@ -7,6 +8,7 @@ class EpubContainerWriter {
 
     final sb = StringBuffer();
 
+    // TODO(Marc-R2): combine containerXML and other xml processing in one obj
     if (container.containerXML.xmlVersion != null) {
       sb.write('version="${container.containerXML.xmlVersion}"');
     }
@@ -30,23 +32,10 @@ class EpubContainerWriter {
           if (container.xmlns != null) 'xmlns': container.xmlns!,
           if (container.version != null) 'version': container.version!,
         },
-        nest: () {
-          builder.element(
-            'rootfiles',
-            nest: () {
-              for (final rootFile in container.rootFiles!) {
-                builder.element(
-                  'rootfile',
-                  attributes: {
-                    'full-path': rootFile.fullPath,
-                    if (rootFile.mediaType != null)
-                      'media-type': rootFile.mediaType!,
-                  },
-                );
-              }
-            },
-          );
-        },
+        nest: () => builder.element(
+          'rootfiles',
+          nest: () => builder.writeXmls('rootfile', container.rootFiles),
+        ),
       );
 
     return builder.buildDocument().toXmlString(pretty: true);

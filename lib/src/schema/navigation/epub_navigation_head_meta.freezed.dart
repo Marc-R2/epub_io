@@ -14,11 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+EpubNavigationHeadMeta _$EpubNavigationHeadMetaFromJson(
+    Map<String, dynamic> json) {
+  return _EpubNavigationHeadMeta.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EpubNavigationHeadMeta {
   String? get name => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String? get scheme => throw _privateConstructorUsedError;
+
+  /// Serializes this EpubNavigationHeadMeta to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubNavigationHeadMeta
   /// with the given fields replaced by the non-null parameter values.
@@ -122,9 +130,13 @@ class __$$EpubNavigationHeadMetaImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$EpubNavigationHeadMetaImpl extends _EpubNavigationHeadMeta {
+  const _$EpubNavigationHeadMetaImpl({this.name, this.content, this.scheme})
+      : super._();
 
-class _$EpubNavigationHeadMetaImpl implements _EpubNavigationHeadMeta {
-  const _$EpubNavigationHeadMetaImpl({this.name, this.content, this.scheme});
+  factory _$EpubNavigationHeadMetaImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EpubNavigationHeadMetaImplFromJson(json);
 
   @override
   final String? name;
@@ -148,6 +160,7 @@ class _$EpubNavigationHeadMetaImpl implements _EpubNavigationHeadMeta {
             (identical(other.scheme, scheme) || other.scheme == scheme));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, content, scheme);
 
@@ -159,13 +172,24 @@ class _$EpubNavigationHeadMetaImpl implements _EpubNavigationHeadMeta {
   _$$EpubNavigationHeadMetaImplCopyWith<_$EpubNavigationHeadMetaImpl>
       get copyWith => __$$EpubNavigationHeadMetaImplCopyWithImpl<
           _$EpubNavigationHeadMetaImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EpubNavigationHeadMetaImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _EpubNavigationHeadMeta implements EpubNavigationHeadMeta {
+abstract class _EpubNavigationHeadMeta extends EpubNavigationHeadMeta {
   const factory _EpubNavigationHeadMeta(
       {final String? name,
       final String? content,
       final String? scheme}) = _$EpubNavigationHeadMetaImpl;
+  const _EpubNavigationHeadMeta._() : super._();
+
+  factory _EpubNavigationHeadMeta.fromJson(Map<String, dynamic> json) =
+      _$EpubNavigationHeadMetaImpl.fromJson;
 
   @override
   String? get name;

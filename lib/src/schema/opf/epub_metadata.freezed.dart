@@ -668,11 +668,18 @@ abstract class _EpubMetadata implements EpubMetadata {
       throw _privateConstructorUsedError;
 }
 
+Link _$LinkFromJson(Map<String, dynamic> json) {
+  return _Link.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Link {
   String get href => throw _privateConstructorUsedError;
   String? get rel => throw _privateConstructorUsedError;
   String? get refines => throw _privateConstructorUsedError;
+
+  /// Serializes this Link to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Link
   /// with the given fields replaced by the non-null parameter values.
@@ -768,9 +775,12 @@ class __$$LinkImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$LinkImpl extends _Link {
+  const _$LinkImpl({required this.href, this.rel, this.refines}) : super._();
 
-class _$LinkImpl implements _Link {
-  const _$LinkImpl({required this.href, this.rel, this.refines});
+  factory _$LinkImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LinkImplFromJson(json);
 
   @override
   final String href;
@@ -794,6 +804,7 @@ class _$LinkImpl implements _Link {
             (identical(other.refines, refines) || other.refines == refines));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, href, rel, refines);
 
@@ -804,13 +815,23 @@ class _$LinkImpl implements _Link {
   @pragma('vm:prefer-inline')
   _$$LinkImplCopyWith<_$LinkImpl> get copyWith =>
       __$$LinkImplCopyWithImpl<_$LinkImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LinkImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _Link implements Link {
+abstract class _Link extends Link {
   const factory _Link(
       {required final String href,
       final String? rel,
       final String? refines}) = _$LinkImpl;
+  const _Link._() : super._();
+
+  factory _Link.fromJson(Map<String, dynamic> json) = _$LinkImpl.fromJson;
 
   @override
   String get href;

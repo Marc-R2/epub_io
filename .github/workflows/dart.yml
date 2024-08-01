@@ -25,6 +25,41 @@ jobs:
         with:
           sdk: "3.4.3"
 
+      - name: Prepare new content
+        run: |
+          mkdir ../new-content
+          rsync -av --exclude '.git' . ../new-content
+
+      - name: Setup generated-files branch
+        run: |
+          git fetch origin
+          git checkout -B generated-files origin/generated-files || git checkout --orphan generated-files
+          git pull
+
+      - name: Set up Git
+        # Take the user from the original commit and wrap it with "GitHub Actions Bot extends <user>"
+        # Match the email to the user's email
+        run: |
+          git config user.name "GitHub Actions Bot extends $(git log -1 $GITHUB_SHA --pretty=format:'%an')"
+          git config user.email "$(git log -1 $GITHUB_SHA --pretty=format:'%ae')"
+
+      - name: Merge with empty commit for history preservation
+        run: |
+          git merge --allow-unrelated-histories -s ours ${{ github.sha }} -m "Merge for history preservation"
+
+      - name: Remove old content
+        run: |
+          git rm -rf . || true
+          git clean -fdx
+
+      - name: Copy new content
+        run: |
+          cp -a ../new-content/. ./
+
+      - name: Override .gitignore for generated files
+        run: |
+          mv lib/.gitignore lib/.gitignore.backup || true
+
       # Try to restore downloaded Epub-Files for tests
       - name: Restore cached Epub-Downloads for tests
         id: restore-epub-downloads
@@ -70,50 +105,12 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: true
 
-      # Temporarily remove .gitignore to include generated files
-      - name: Override .gitignore for generated files
-        run: |
-          mv lib/.gitignore lib/.gitignore.backup
-
-      - name: Prepare directory for generated files
-        run: |
-          mkdir -p ../tmp/repo
-          rsync -av --exclude '.git' . ../tmp/repo/
-          git clean -fdx
-
-      - name: Checkout generated-files branch
-        run: |
-          git fetch origin
-          git checkout -B generated-files origin/generated-files || git checkout --orphan generated-files
-
-      - name: Remove all files in generated-files branch
-        run: |
-          git rm -rf . || true
-          git clean -fdx
-
-      - name: Add new current files
-        run: |
-          cp -a ../tmp/repo/. ./ || echo "No files to copy"
-
-      - name: Set up Git
-        # Take the user from the original commit and wrap it with "GitHub Actions Bot extends <user>"
-        # Match the email to the user's email
-        run: |
-          git config user.name "GitHub Actions Bot extends $(git log -1 $GITHUB_SHA --pretty=format:'%an')"
-          git config user.email "$(git log -1 $GITHUB_SHA --pretty=format:'%ae')"
-
-      - name: Check Git status
-        run: |
-          git status
-          git log -n 1
-          git branch -a
-
       - name: Commit and push generated files
         if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         run: |
           git add .
           git status
-          git diff --cached --exit-code || git commit -m "Update generated files"
+          git diff --cached --exit-code || git commit --allow-empty -m "Update generated files"
           git push origin generated-files --verbose
 
       - name: Handle merge conflicts
