@@ -75,25 +75,17 @@ jobs:
         run: |
           mv lib/.gitignore lib/.gitignore.backup
 
-      - name: Prepare directory for generated files
+      - name: Prepare new content
         run: |
-          mkdir -p ../tmp/repo
-          rsync -av --exclude '.git' . ../tmp/repo/
-          git clean -fdx
+          mkdir ../new-content
+          cp -a ../tmp/repo/. ../new-content/
 
-      - name: Checkout generated-files branch
+      - name: Setup generated-files branch
         run: |
           git fetch origin
           git checkout -B generated-files origin/generated-files || git checkout --orphan generated-files
-
-      - name: Remove all files in generated-files branch
-        run: |
           git rm -rf . || true
           git clean -fdx
-
-      - name: Add new current files
-        run: |
-          cp -a ../tmp/repo/. ./ || echo "No files to copy"
 
       - name: Set up Git
         # Take the user from the original commit and wrap it with "GitHub Actions Bot extends <user>"
@@ -102,18 +94,20 @@ jobs:
           git config user.name "GitHub Actions Bot extends $(git log -1 $GITHUB_SHA --pretty=format:'%an')"
           git config user.email "$(git log -1 $GITHUB_SHA --pretty=format:'%ae')"
 
-      - name: Check Git status
+      - name: Merge with empty commit for history preservation
         run: |
-          git status
-          git log -n 1
-          git branch -a
+          git merge --allow-unrelated-histories -s ours ${{ github.sha }} -m "Merge for history preservation"
+
+      - name: Copy new content
+        run: |
+          cp -a ../new-content/. ./
 
       - name: Commit and push generated files
         if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         run: |
           git add .
           git status
-          git diff --cached --exit-code || git commit -m "Update generated files"
+          git diff --cached --exit-code || git commit --allow-empty -m "Update generated files"
           git push origin generated-files --verbose
 
       - name: Handle merge conflicts
