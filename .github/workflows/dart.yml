@@ -92,7 +92,7 @@ jobs:
 
       - name: Add new current files
         run: |
-          cp -r ../tmp/repo ./ || echo "No files to copy"
+          cp -r ../tmp/repo/* ./ || echo "No files to copy"
 
       - name: Set up Git
         # Take the user from the original commit and wrap it with "GitHub Actions Bot extends <user>"
