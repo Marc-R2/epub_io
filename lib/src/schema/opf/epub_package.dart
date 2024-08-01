@@ -30,8 +30,8 @@ class EpubPackage with _$EpubPackage {
 @freezed
 class MediaType with _$MediaType, XmlWrite {
   const factory MediaType({
-    String? mediaType,
-    String? handler,
+    @JsonKey(name: 'media-type') String? mediaType,
+    @JsonKey(name: 'handler') String? handler,
   }) = _MediaType;
 
   factory MediaType.fromJson(Map<String, dynamic> json) =>
