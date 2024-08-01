@@ -3,9 +3,11 @@ import 'package:epub_io/src/schema/opf/epub_manifest.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata.dart';
 import 'package:epub_io/src/schema/opf/epub_spine.dart';
 import 'package:epub_io/src/schema/opf/epub_version.dart';
+import 'package:epub_io/src/xml_write.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'epub_package.freezed.dart';
+part 'epub_package.g.dart';
 
 @freezed
 class EpubPackage with _$EpubPackage {
@@ -26,11 +28,16 @@ class EpubPackage with _$EpubPackage {
 }
 
 @freezed
-class MediaType with _$MediaType {
+class MediaType with _$MediaType, XmlWrite {
   const factory MediaType({
-    String? mediaType,
-    String? handler,
+    @JsonKey(name: 'media-type') String? mediaType,
+    @JsonKey(name: 'handler') String? handler,
   }) = _MediaType;
+
+  factory MediaType.fromJson(Map<String, dynamic> json) =>
+      _$MediaTypeFromJson(json);
+
+  const MediaType._();
 }
 
 @freezed

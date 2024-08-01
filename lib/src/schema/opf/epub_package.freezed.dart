@@ -477,10 +477,19 @@ abstract class _EpubPackage implements EpubPackage {
       throw _privateConstructorUsedError;
 }
 
+MediaType _$MediaTypeFromJson(Map<String, dynamic> json) {
+  return _MediaType.fromJson(json);
+}
+
 /// @nodoc
 mixin _$MediaType {
+  @JsonKey(name: 'media-type')
   String? get mediaType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'handler')
   String? get handler => throw _privateConstructorUsedError;
+
+  /// Serializes this MediaType to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of MediaType
   /// with the given fields replaced by the non-null parameter values.
@@ -494,7 +503,9 @@ abstract class $MediaTypeCopyWith<$Res> {
   factory $MediaTypeCopyWith(MediaType value, $Res Function(MediaType) then) =
       _$MediaTypeCopyWithImpl<$Res, MediaType>;
   @useResult
-  $Res call({String? mediaType, String? handler});
+  $Res call(
+      {@JsonKey(name: 'media-type') String? mediaType,
+      @JsonKey(name: 'handler') String? handler});
 }
 
 /// @nodoc
@@ -536,7 +547,9 @@ abstract class _$$MediaTypeImplCopyWith<$Res>
       __$$MediaTypeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? mediaType, String? handler});
+  $Res call(
+      {@JsonKey(name: 'media-type') String? mediaType,
+      @JsonKey(name: 'handler') String? handler});
 }
 
 /// @nodoc
@@ -569,13 +582,21 @@ class __$$MediaTypeImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$MediaTypeImpl extends _MediaType {
+  const _$MediaTypeImpl(
+      {@JsonKey(name: 'media-type') this.mediaType,
+      @JsonKey(name: 'handler') this.handler})
+      : super._();
 
-class _$MediaTypeImpl implements _MediaType {
-  const _$MediaTypeImpl({this.mediaType, this.handler});
+  factory _$MediaTypeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaTypeImplFromJson(json);
 
   @override
+  @JsonKey(name: 'media-type')
   final String? mediaType;
   @override
+  @JsonKey(name: 'handler')
   final String? handler;
 
   @override
@@ -593,6 +614,7 @@ class _$MediaTypeImpl implements _MediaType {
             (identical(other.handler, handler) || other.handler == handler));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, mediaType, handler);
 
@@ -603,15 +625,29 @@ class _$MediaTypeImpl implements _MediaType {
   @pragma('vm:prefer-inline')
   _$$MediaTypeImplCopyWith<_$MediaTypeImpl> get copyWith =>
       __$$MediaTypeImplCopyWithImpl<_$MediaTypeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MediaTypeImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _MediaType implements MediaType {
-  const factory _MediaType({final String? mediaType, final String? handler}) =
-      _$MediaTypeImpl;
+abstract class _MediaType extends MediaType {
+  const factory _MediaType(
+      {@JsonKey(name: 'media-type') final String? mediaType,
+      @JsonKey(name: 'handler') final String? handler}) = _$MediaTypeImpl;
+  const _MediaType._() : super._();
+
+  factory _MediaType.fromJson(Map<String, dynamic> json) =
+      _$MediaTypeImpl.fromJson;
 
   @override
+  @JsonKey(name: 'media-type')
   String? get mediaType;
   @override
+  @JsonKey(name: 'handler')
   String? get handler;
 
   /// Create a copy of MediaType
