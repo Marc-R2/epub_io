@@ -78,7 +78,7 @@ jobs:
       - name: Prepare new content
         run: |
           mkdir ../new-content
-          cp -a ../tmp/repo/. ../new-content/
+          rsync -av --exclude '.git' . ../new-content
 
       - name: Setup generated-files branch
         run: |
