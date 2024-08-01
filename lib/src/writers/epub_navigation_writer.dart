@@ -3,6 +3,7 @@ import 'package:epub_io/src/schema/navigation/epub_navigation_doc_title.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_head.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_map.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 class EpubNavigationWriter {
@@ -10,22 +11,22 @@ class EpubNavigationWriter {
 
   static String writeNavigation(EpubNavigation navigation) {
     final builder = XmlBuilder();
-    builder.processing('xml', 'version="1.0"');
 
-    builder.element(
-      'ncx',
-      attributes: {
-        'version': '2005-1',
-        'lang': 'en',
-      },
-      nest: () {
-        builder.namespace(_namespace);
-
-        writeNavigationHead(builder, navigation.head!);
-        writeNavigationDocTitle(builder, navigation.docTitle!);
-        writeNavigationMap(builder, navigation.navMap!);
-      },
-    );
+    builder
+      ..processing('xml', 'version="1.0"')
+      ..element(
+        'ncx',
+        attributes: {
+          'version': '2005-1',
+          'lang': 'en',
+        },
+        namespace: _namespace,
+        nest: () {
+          writeNavigationHead(builder, navigation.head!);
+          writeNavigationDocTitle(builder, navigation.docTitle!);
+          writeNavigationMap(builder, navigation.navMap!);
+        },
+      );
 
     return builder.buildDocument().toXmlString();
   }
@@ -36,25 +37,14 @@ class EpubNavigationWriter {
   ) {
     builder.element(
       'docTitle',
-      nest: () {
-        for (final element in title.titles) {
-          builder.text(element);
-        }
-      },
+      nest: () => title.titles.forEach(builder.text),
     );
   }
 
   static void writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
     builder.element(
       'head',
-      nest: () {
-        for (final item in head.metadata) {
-          builder.element(
-            'meta',
-            attributes: {'content': item.content!, 'name': item.name!},
-          );
-        }
-      },
+      nest: () => builder.writeXmls('meta', head.metadata),
     );
   }
 
@@ -83,14 +73,10 @@ class EpubNavigationWriter {
         for (final element in point.navigationLabels) {
           builder.element(
             'navLabel',
-            nest: () {
-              builder.element(
-                'text',
-                nest: () {
-                  builder.text(element.text!);
-                },
-              );
-            },
+            nest: () => builder.element(
+              'text',
+              nest: () => builder.text(element.text!),
+            ),
           );
         }
         builder.element('content', attributes: {'src': point.content!.source!});
