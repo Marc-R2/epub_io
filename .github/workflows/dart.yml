@@ -78,13 +78,13 @@ jobs:
       - name: Prepare directory for generated files
         run: |
           mkdir -p ../tmp/repo
-          cp -r . ../tmp/repo/
+          rsync -av --exclude '.git' . ../tmp/repo/
           git clean -fdx
 
       - name: Checkout generated-files branch
         run: |
           git fetch origin
-          git checkout -B generated-files origin/generated-files
+          git checkout -B generated-files origin/generated-files || git checkout --orphan generated-files
 
       - name: Remove all files in generated-files branch
         run: |
