@@ -3,9 +3,11 @@ import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
+import 'package:epub_io/src/xml_write.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'epub_metadata.freezed.dart';
+part 'epub_metadata.g.dart';
 
 @freezed
 class EpubMetadata with _$EpubMetadata {
@@ -35,10 +37,14 @@ class EpubMetadata with _$EpubMetadata {
 }
 
 @freezed
-class Link with _$Link {
+class Link with _$Link, XmlWrite {
   const factory Link({
     required String href,
     String? rel,
     String? refines,
   }) = _Link;
+
+  factory Link.fromJson(Map<String, dynamic> json) => _$LinkFromJson(json);
+
+  const Link._();
 }

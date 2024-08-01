@@ -36,4 +36,11 @@ extension XmlWriter on XmlBuilder {
       writeXml(name, xmlWrite, nameSpace: nameSpace);
     }
   }
+
+  void nests(String name, Iterable<Object?>? nests, {NameSpace? nameSpace}) {
+    if (nests == null) return;
+    for (final nest in nests) {
+      elementOr(name, nest: nest, namespace: nameSpace);
+    }
+  }
 }
