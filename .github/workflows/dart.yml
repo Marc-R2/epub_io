@@ -84,7 +84,7 @@ jobs:
       - name: Checkout generated-files branch
         run: |
           git fetch origin
-          git checkout -b generated-files origin/generated-files || git checkout -b generated-files
+          git checkout -B generated-files origin/generated-files
 
       - name: Remove all files in generated-files branch
         run: |
@@ -112,8 +112,9 @@ jobs:
         if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         run: |
           git add .
-          git commit -m "Update generated files"
-          git push -f origin generated-files --verbose
+          git status
+          git diff --cached --exit-code || git commit -m "Update generated files"
+          git push origin generated-files --verbose
 
       - name: Handle merge conflicts
         if: failure()
