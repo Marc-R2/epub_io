@@ -75,11 +75,11 @@ jobs:
         run: |
           mv lib/.gitignore lib/.gitignore.backup
 
-      - name: move current directory to temporary directory outside the current
+      - name: Prepare directory for generated files
         run: |
           mkdir -p ../tmp/repo
-          cp -r ./ ../tmp/repo
-          rm -rf ./
+          cp -r ./* ../tmp/repo/
+          git clean -fdx
 
       - name: Checkout generated-files branch
         run: |
@@ -92,8 +92,7 @@ jobs:
 
       - name: Add new current files
         run: |
-          cp -r ../tmp/repo ./
-          rm -rf ../tmp/repo
+          cp -r ../tmp/repo ./ || echo "No files to copy"
 
       - name: Commit and push generated files
         # if success and source branch is master/main
