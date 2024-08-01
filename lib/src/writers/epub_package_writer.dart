@@ -4,6 +4,7 @@ import 'package:epub_io/src/writers/epub_guide_writer.dart';
 import 'package:epub_io/src/writers/epub_manifest_writer.dart';
 import 'package:epub_io/src/writers/epub_metadata_writer.dart';
 import 'package:epub_io/src/writers/epub_spine_writer.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
 
 extension NameSpaceObj on XmlBuilder {
@@ -63,17 +64,7 @@ class EpubPackageWriter {
           builder.element(
             'bindings',
             namespace: nameSpace.uri,
-            nest: () {
-              for (final binding in package.bindings!) {
-                builder.element(
-                  'mediaType',
-                  attributes: {
-                    'media-type': binding.mediaType!,
-                    'handler': binding.handler!,
-                  },
-                );
-              }
-            },
+            nest: () => builder.writeXmls('mediaType', package.bindings),
           );
         }
       },
