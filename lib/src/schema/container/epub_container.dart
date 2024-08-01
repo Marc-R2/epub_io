@@ -1,7 +1,9 @@
 import 'package:epub_io/src/utils/zip_path_utils.dart';
+import 'package:epub_io/src/xml_write.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'epub_container.freezed.dart';
+part 'epub_container.g.dart';
 
 @freezed
 class EpubContainer with _$EpubContainer {
@@ -31,9 +33,14 @@ class EpubContainerXML with _$EpubContainerXML {
 }
 
 @freezed
-class EpubContainerRootFile with _$EpubContainerRootFile {
+class EpubContainerRootFile with _$EpubContainerRootFile, XmlWrite {
   const factory EpubContainerRootFile({
-    required String fullPath,
-    String? mediaType,
+    @JsonKey(name: 'full-path') required String fullPath,
+    @JsonKey(name: 'media-type') String? mediaType,
   }) = _EpubContainerRootFile;
+
+  factory EpubContainerRootFile.fromJson(Map<String, dynamic> json) =>
+      _$EpubContainerRootFileFromJson(json);
+
+  const EpubContainerRootFile._();
 }
