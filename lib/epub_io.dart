@@ -8,6 +8,7 @@ export 'src/entities/epub_content_file.dart';
 export 'src/entities/epub_content_type.dart';
 export 'src/entities/epub_schema.dart';
 export 'src/entities/epub_text_content_file.dart';
+export 'src/epub_archive.dart';
 export 'src/epub_reader.dart';
 export 'src/epub_writer.dart';
 export 'src/ref_entities/epub_book_ref.dart';

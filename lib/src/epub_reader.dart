@@ -4,17 +4,10 @@ import 'dart:io';
 // TODO(Marc-R2): archive_io is not compatible with web
 // provide a version based on platform to support the web
 import 'package:archive/archive_io.dart';
-import 'package:epub_io/src/entities/epub_book.dart';
-import 'package:epub_io/src/entities/epub_byte_content_file.dart';
-import 'package:epub_io/src/entities/epub_chapter.dart';
-import 'package:epub_io/src/entities/epub_content.dart';
-import 'package:epub_io/src/entities/epub_content_file.dart';
-import 'package:epub_io/src/entities/epub_text_content_file.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
-import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
@@ -73,7 +66,8 @@ class EpubReader {
   }
 
   static Future<EpubBookRef> openBookWithArchive(Archive archive) async {
-    final schema = await SchemaReader.readSchema(archive);
+    final epubArchive = EpubArchive(archive);
+    final schema = await SchemaReader.readSchema(epubArchive);
 
     final title = schema.package!.metadata!.titles
         .firstWhere((String name) => true, orElse: () => '');
