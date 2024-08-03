@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 import 'print_objects.dart';
 
 void main() {
-  const fileName = 'test/res/lord-byron_don-juan.epub';
+  const fileName = 'assets/alicesAdventuresUnderGround.epub';
   final fullPath = path.join(io.Directory.current.path, fileName);
   final targetFile = io.File(fullPath);
   final resultFile = io.File('$fullPath.zip');
@@ -40,7 +40,7 @@ void main() {
     // resultFile.writeAsBytesSync(written!);
     // resultFile2.writeAsBytesSync(written);
     print('Result written to ${resultFile.path}');
-    unzip(written);
+    // unzip(written);
 
     final bookRoundTrip = await EpubReader.fromBytes(written).readBookFromRef();
 
