@@ -16,13 +16,13 @@ void main() {
   late EpubBookRef epubRef;
 
   setUpAll(() async {
-    if (!(await targetFile.exists())) {
+    if (!targetFile.existsSync()) {
       throw Exception('Specified epub file not found: $fullPath');
     }
 
     final bytes = await targetFile.readAsBytes();
 
-    epubRef = await EpubReader.openBook(bytes);
+    epubRef = await EpubReader.fromBytes(bytes).asRef();
   });
 
   group('EpubReader', () {

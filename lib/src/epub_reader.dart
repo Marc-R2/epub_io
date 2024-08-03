@@ -4,21 +4,11 @@ import 'dart:io';
 // TODO(Marc-R2): archive_io is not compatible with web
 // provide a version based on platform to support the web
 import 'package:archive/archive_io.dart';
-import 'package:epub_io/src/entities/epub_book.dart';
-import 'package:epub_io/src/entities/epub_byte_content_file.dart';
-import 'package:epub_io/src/entities/epub_chapter.dart';
-import 'package:epub_io/src/entities/epub_content.dart';
-import 'package:epub_io/src/entities/epub_content_file.dart';
-import 'package:epub_io/src/entities/epub_text_content_file.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
-import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 
 /// A class that provides the primary interface to read Epub files.
 ///
@@ -39,82 +29,54 @@ import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 /// String genres = metadata.Subjects.join(', ');
 /// ```
 class EpubReader {
-  static Future<EpubBookRef> openBookStream(File file) async =>
-      openBookStreamPath(file.absolute.path);
+  EpubReader(Archive archive) : archive = EpubArchive(archive);
 
-  static Future<EpubBookRef> openBookStreamPath(String path) async {
-    final inputStream = InputFileStream(path);
-    final archive = ZipDecoder().decodeBuffer(inputStream);
-    return openBookWithArchive(archive);
+  factory EpubReader.fromBytes(List<int> bytes) =>
+      EpubReader(ZipDecoder().decodeBytes(bytes));
+
+  factory EpubReader.fromPath(String path, {bool stream = true}) {
+    if (!stream) return EpubReader.fromFile(File(path), stream: false);
+    return EpubReader(ZipDecoder().decodeBuffer(InputFileStream(path)));
   }
 
-  /// Loads basics metadata.
-  ///
-  /// Opens the book asynchronously without reading its main content.
-  /// Holds the handle to the EPUB file.
-  ///
-  /// Argument [bytes] should be the bytes of
-  /// the epub file you have loaded with something like the [dart:io] package's
-  /// [readAsBytes()].
-  ///
-  /// This is a fast and convenient way to get the most important information
-  /// about the book, notably the [Title], [Author] and [AuthorList].
-  /// Additional information is loaded in the [Schema] property such as the
-  /// Epub version, Publishers, Languages and more.
-  static Future<EpubBookRef> openBook(FutureOr<List<int>> bytes) async {
-    List<int> loadedBytes;
-    if (bytes is Future) {
-      loadedBytes = await bytes;
-    } else {
-      loadedBytes = bytes;
-    }
-
-    final epubArchive = ZipDecoder().decodeBytes(loadedBytes);
-    return openBookWithArchive(epubArchive);
+  factory EpubReader.fromFile(File file, {bool stream = true}) {
+    if (!stream) return EpubReader.fromBytes(file.readAsBytesSync());
+    return EpubReader.fromPath(file.absolute.path, stream: stream);
   }
 
-  static Future<EpubBookRef> openBookWithArchive(Archive archive) async {
-    final schema = await SchemaReader.readSchema(archive);
+  final EpubArchive archive;
 
-    final title = schema.package!.metadata!.titles
-        .firstWhere((String name) => true, orElse: () => '');
-    final authors = schema.package!.metadata!.creators
-        .map((EpubMetadataCreator creator) => creator.creator)
-        .whereType<String>()
-        .toList();
-    final author = authors.join(', ');
+  Future<EpubSchema>? _schema;
 
-    final bookRef = EpubBookRef(
+  Future<EpubSchema> get schema async =>
+      _schema ??= SchemaReader.readSchema(archive);
+
+  Future<EpubMetadata> get metadata async => (await schema).package!.metadata!;
+
+  Future<String?> get title async => (await metadata)
+      .titles
+      .firstWhere((String name) => true, orElse: () => '');
+
+  Future<List<EpubMetadataCreator>> get authors async =>
+      (await metadata).creators;
+
+  Future<String> get authorString async => (await authors).join(', ');
+
+  Future<EpubBookRef> asRef() async {
+    final ref = EpubBookRef(
       epubArchive: archive,
-      title: title,
-      author: author,
-      authors: authors,
-      schema: schema,
+      title: await title,
+      authors: await authors,
+      schema: await schema,
     );
 
-    final content = ContentReader.parseContentMap(bookRef);
-
-    return bookRef.copyWith(content: content);
+    final contentRef = ContentReader.parseContentMap(ref);
+    return ref.copyWith(content: contentRef);
   }
 
-  static Future<EpubBook> readBookStream(File file) async {
-    final epubBookRef = await openBookStream(file);
-    return readBookFromRef(epubBookRef);
-  }
+  Future<EpubBook> readBookFromRef() async {
+    final epubBookRef = await asRef();
 
-  static Future<EpubBook> readBookStreamPath(String path) async {
-    final epubBookRef = await openBookStreamPath(path);
-    return readBookFromRef(epubBookRef);
-  }
-
-  /// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
-  static Future<EpubBook> readBook(FutureOr<List<int>> bytes) async {
-    final loadedBytes = await bytes;
-    final epubBookRef = await openBook(loadedBytes);
-    return readBookFromRef(epubBookRef);
-  }
-
-  static Future<EpubBook> readBookFromRef(EpubBookRef epubBookRef) async {
     final content = await readContent(epubBookRef.content!);
     final coverImage = await epubBookRef.readCover();
     final chapterRefs = epubBookRef.getChapters();
@@ -128,11 +90,11 @@ class EpubReader {
   }
 
   static Future<EpubContent> readContent(EpubContentRef contentRef) async {
-    final html = await readTextContentFiles(contentRef.html);
-    final css = await readTextContentFiles(contentRef.css);
-    final images = await readByteContentFiles(contentRef.images);
-    final fonts = await readByteContentFiles(contentRef.fonts);
-    final allFiles = <String, EpubContentFile>{};
+    final html = await readContentFiles(contentRef.html);
+    final css = await readContentFiles(contentRef.css);
+    final images = await readContentFiles(contentRef.images);
+    final fonts = await readContentFiles(contentRef.fonts);
+    final allFiles = <String, EpubContentFile<dynamic>>{};
 
     html.forEach((key, value) => allFiles[key] = value);
     css.forEach((key, value) => allFiles[key] = value);
@@ -141,84 +103,28 @@ class EpubReader {
 
     await Future.forEach(
       contentRef.allFiles.keys.where((key) => !allFiles.containsKey(key)),
-      (key) async =>
-          allFiles[key] = await readContentFile(contentRef.allFiles[key]!),
+      (key) async => allFiles[key] = await contentRef.allFiles[key]!.read(),
     );
 
     return EpubContent(
-      html: html,
-      css: css,
-      images: images,
-      fonts: fonts,
+      // TODO(Marc-R2): find a solution to avoid TypeCasts
+      html: html.cast<String, EpubTextContentFile>(),
+      css: css.cast<String, EpubTextContentFile>(),
+      images: images.cast<String, EpubByteContentFile>(),
+      fonts: fonts.cast<String, EpubByteContentFile>(),
       allFiles: allFiles,
     );
   }
 
-  static Future<EpubContentFile> readContentFile(
-    EpubContentFileRef<dynamic> contentFileRef,
+  static Future<Map<String, EpubContentFile<T>>> readContentFiles<T>(
+    Map<String, EpubContentFileRef<T>> fileRefs,
   ) async {
-    final content = await contentFileRef.readContent();
-
-    if (content is String) {
-      return EpubTextContentFile(
-        fileName: contentFileRef.fileName,
-        contentType: contentFileRef.contentType,
-        contentMimeType: contentFileRef.contentMimeType,
-        content: content,
-      );
-    } else if (content is List<int>) {
-      return EpubByteContentFile(
-        fileName: contentFileRef.fileName,
-        contentType: contentFileRef.contentType,
-        contentMimeType: contentFileRef.contentMimeType,
-        content: content,
-      );
-    } else {
-      throw Exception('Unknown content type');
-    }
-  }
-
-  static Future<Map<String, EpubTextContentFile>> readTextContentFiles(
-    Map<String, EpubTextContentFileRef> textContentFileRefs,
-  ) async {
-    final result = <String, EpubTextContentFile>{};
-
-    await Future.forEach(textContentFileRefs.keys, (String key) async {
-      final value = textContentFileRefs[key]!;
-      final content = await value.readContent();
-      final textContentFile = EpubTextContentFile(
-        fileName: value.fileName,
-        contentType: value.contentType,
-        contentMimeType: value.contentMimeType,
-        content: content,
-      );
-      result[key] = textContentFile;
-    });
-    return result;
-  }
-
-  static Future<Map<String, EpubByteContentFile>> readByteContentFiles(
-    Map<String, EpubByteContentFileRef> byteContentFileRefs,
-  ) async {
-    final result = <String, EpubByteContentFile>{};
-    await Future.forEach(byteContentFileRefs.keys, (String key) async {
-      result[key] = await readByteContentFile(byteContentFileRefs[key]!);
-    });
-    return result;
-  }
-
-  static Future<EpubByteContentFile> readByteContentFile(
-    EpubByteContentFileRef contentFileRef,
-  ) async {
-    final content = await contentFileRef.readContent();
-    final result = EpubByteContentFile(
-      fileName: contentFileRef.fileName,
-      contentType: contentFileRef.contentType,
-      contentMimeType: contentFileRef.contentMimeType,
-      content: content,
+    final res = <String, EpubContentFile<T>>{};
+    await Future.forEach(
+      fileRefs.entries,
+      (entry) async => res[entry.key] = await entry.value.read(),
     );
-
-    return result;
+    return res;
   }
 
   static Future<List<EpubChapter<dynamic>>> readChapters(

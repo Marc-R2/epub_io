@@ -1,26 +1,19 @@
 import 'dart:async';
 
-import 'package:archive/archive.dart';
-import 'package:epub_io/src/entities/epub_book.dart';
-import 'package:epub_io/src/entities/epub_chapter.dart';
-import 'package:epub_io/src/entities/epub_content.dart';
-import 'package:epub_io/src/entities/epub_schema.dart';
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/chapter_reader.dart';
-import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image/image.dart';
 
 part 'epub_book_ref.freezed.dart';
 
 @freezed
 class EpubBookRef with _$EpubBookRef {
   const factory EpubBookRef({
-    required Archive epubArchive,
+    required EpubArchive epubArchive,
     String? title,
-    String? author,
-    @Default([]) List<String> authors,
+    @Default([]) List<EpubMetadataCreator> authors,
     EpubSchema? schema,
     EpubContentRef? content,
   }) = _EpubBookRef;
@@ -34,6 +27,13 @@ class EpubBookRef with _$EpubBookRef {
 
   Future<Image?> readCover() => BookCoverReader.readBookCoverImage(this);
 
+  String? get author {
+    if (authors.isEmpty) return null;
+    return authors.map((author) => author.creator).join(', ');
+  }
+
+  // EpubContentRef? get content => ContentReader.parseContentMap(this);
+
   EpubBook asEpubBook({
     required EpubContent content,
     required List<EpubChapter<dynamic>> chapters,
@@ -41,7 +41,6 @@ class EpubBookRef with _$EpubBookRef {
   }) {
     return EpubBook(
       title: title,
-      author: author,
       authors: authors,
       schema: schema,
       content: content,

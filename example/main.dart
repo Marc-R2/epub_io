@@ -2,7 +2,6 @@
 
 import 'dart:io' as io;
 
-import 'package:collection/collection.dart';
 import 'package:epub_io/epub_io.dart';
 import 'package:path/path.dart' as path;
 
@@ -18,19 +17,20 @@ void main(List<String> args) async {
   final List<int> bytes = await targetFile.readAsBytes();
 
   // Opens a book and reads all of its content into the memory
-  final epubBook = await EpubReader.readBook(bytes);
+  final epubBook = EpubReader.fromBytes(bytes);
 
   // COMMON PROPERTIES
 
   // Book's title
-  final title = epubBook.title;
+  final title = await epubBook.title;
 
   // Book's authors (comma separated list)
-  final author = epubBook.author;
+  final author = epubBook.authorString;
 
   // Book's authors (list of authors names)
-  final authors = epubBook.authors;
+  final authors = await epubBook.authors;
 
+  /*
   // Book's cover image (null if there is no cover)
   final coverImage = epubBook.coverImage;
 
@@ -121,5 +121,5 @@ void main(List<String> args) async {
   if (written != null) {
     // Read the book into a new object!
     final newBook = await EpubReader.readBook(written);
-  }
+  } */
 }

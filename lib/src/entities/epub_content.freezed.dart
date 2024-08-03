@@ -24,7 +24,7 @@ mixin _$EpubContent {
       throw _privateConstructorUsedError;
   Map<String, EpubByteContentFile> get fonts =>
       throw _privateConstructorUsedError;
-  Map<String, EpubContentFile> get allFiles =>
+  Map<String, EpubContentFile<dynamic>> get allFiles =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of EpubContent
@@ -45,7 +45,7 @@ abstract class $EpubContentCopyWith<$Res> {
       Map<String, EpubTextContentFile> css,
       Map<String, EpubByteContentFile> images,
       Map<String, EpubByteContentFile> fonts,
-      Map<String, EpubContentFile> allFiles});
+      Map<String, EpubContentFile<dynamic>> allFiles});
 }
 
 /// @nodoc
@@ -89,7 +89,7 @@ class _$EpubContentCopyWithImpl<$Res, $Val extends EpubContent>
       allFiles: null == allFiles
           ? _value.allFiles
           : allFiles // ignore: cast_nullable_to_non_nullable
-              as Map<String, EpubContentFile>,
+              as Map<String, EpubContentFile<dynamic>>,
     ) as $Val);
   }
 }
@@ -107,7 +107,7 @@ abstract class _$$EpubContentImplCopyWith<$Res>
       Map<String, EpubTextContentFile> css,
       Map<String, EpubByteContentFile> images,
       Map<String, EpubByteContentFile> fonts,
-      Map<String, EpubContentFile> allFiles});
+      Map<String, EpubContentFile<dynamic>> allFiles});
 }
 
 /// @nodoc
@@ -149,7 +149,7 @@ class __$$EpubContentImplCopyWithImpl<$Res>
       allFiles: null == allFiles
           ? _value._allFiles
           : allFiles // ignore: cast_nullable_to_non_nullable
-              as Map<String, EpubContentFile>,
+              as Map<String, EpubContentFile<dynamic>>,
     ));
   }
 }
@@ -158,16 +158,11 @@ class __$$EpubContentImplCopyWithImpl<$Res>
 
 class _$EpubContentImpl implements _EpubContent {
   const _$EpubContentImpl(
-      {final Map<String, EpubTextContentFile> html =
-          const <String, EpubTextContentFile>{},
-      final Map<String, EpubTextContentFile> css =
-          const <String, EpubTextContentFile>{},
-      final Map<String, EpubByteContentFile> images =
-          const <String, EpubByteContentFile>{},
-      final Map<String, EpubByteContentFile> fonts =
-          const <String, EpubByteContentFile>{},
-      final Map<String, EpubContentFile> allFiles =
-          const <String, EpubContentFile>{}})
+      {final Map<String, EpubTextContentFile> html = const {},
+      final Map<String, EpubTextContentFile> css = const {},
+      final Map<String, EpubByteContentFile> images = const {},
+      final Map<String, EpubByteContentFile> fonts = const {},
+      final Map<String, EpubContentFile<dynamic>> allFiles = const {}})
       : _html = html,
         _css = css,
         _images = images,
@@ -210,10 +205,10 @@ class _$EpubContentImpl implements _EpubContent {
     return EqualUnmodifiableMapView(_fonts);
   }
 
-  final Map<String, EpubContentFile> _allFiles;
+  final Map<String, EpubContentFile<dynamic>> _allFiles;
   @override
   @JsonKey()
-  Map<String, EpubContentFile> get allFiles {
+  Map<String, EpubContentFile<dynamic>> get allFiles {
     if (_allFiles is EqualUnmodifiableMapView) return _allFiles;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_allFiles);
@@ -256,11 +251,12 @@ class _$EpubContentImpl implements _EpubContent {
 
 abstract class _EpubContent implements EpubContent {
   const factory _EpubContent(
-      {final Map<String, EpubTextContentFile> html,
-      final Map<String, EpubTextContentFile> css,
-      final Map<String, EpubByteContentFile> images,
-      final Map<String, EpubByteContentFile> fonts,
-      final Map<String, EpubContentFile> allFiles}) = _$EpubContentImpl;
+          {final Map<String, EpubTextContentFile> html,
+          final Map<String, EpubTextContentFile> css,
+          final Map<String, EpubByteContentFile> images,
+          final Map<String, EpubByteContentFile> fonts,
+          final Map<String, EpubContentFile<dynamic>> allFiles}) =
+      _$EpubContentImpl;
 
   @override
   Map<String, EpubTextContentFile> get html;
@@ -271,7 +267,7 @@ abstract class _EpubContent implements EpubContent {
   @override
   Map<String, EpubByteContentFile> get fonts;
   @override
-  Map<String, EpubContentFile> get allFiles;
+  Map<String, EpubContentFile<dynamic>> get allFiles;
 
   /// Create a copy of EpubContent
   /// with the given fields replaced by the non-null parameter values.

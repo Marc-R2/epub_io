@@ -34,15 +34,15 @@ void main() {
   }
 
   test('Book Round Trip', () async {
-    final book = await EpubReader.readBook(bytes);
+    final book = await EpubReader.fromBytes(bytes).readBookFromRef();
 
-    final written = EpubWriter.writeBook(book);
+    final written = EpubWriter.writeBook(book)!;
     // resultFile.writeAsBytesSync(written!);
     // resultFile2.writeAsBytesSync(written);
     print('Result written to ${resultFile.path}');
     // unzip(written);
 
-    final bookRoundTrip = await EpubReader.readBook(Future.value(written));
+    final bookRoundTrip = await EpubReader.fromBytes(written).readBookFromRef();
 
     printHashCodes(book, bookRoundTrip);
 

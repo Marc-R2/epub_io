@@ -20,12 +20,9 @@ import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 import 'package:epub_io/src/schema/opf/epub_package.dart';
 import 'package:epub_io/src/schema/opf/epub_version.dart';
-import 'package:epub_io/src/utils/enum_from_string.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart' as xml;
-
-// ignore: omit_local_variable_types
 
 class NavigationReader {
   static String? _tocFileEntryPath;
@@ -470,7 +467,7 @@ class NavigationReader {
     String? classs;
     String? playOrder;
 
-    EpubNavigationPageTargetType? type;
+    late final EpubNavigationPageTargetType type;
 
     for (final attribute in navigationPageTargetNode.attributes) {
       final attributeValue = attribute.value;
@@ -480,21 +477,12 @@ class NavigationReader {
         case 'value':
           value = attributeValue;
         case 'type':
-          final converter = EnumFromString<EpubNavigationPageTargetType>(
-            EpubNavigationPageTargetType.values,
-          );
-          var type = converter.get(attributeValue);
-          type = type;
+          type = EpubNavigationPageTargetType.fromValue(attributeValue);
         case 'class':
           classs = attributeValue;
         case 'playorder':
           playOrder = attributeValue;
       }
-    }
-    if (type == EpubNavigationPageTargetType.undefined) {
-      throw Exception(
-        'Incorrect EPUB navigation page target: page target type is missing.',
-      );
     }
     final navigationLabels = <EpubNavigationLabel>[];
 
@@ -509,8 +497,7 @@ class NavigationReader {
               readNavigationLabel(navigationPageTargetChildNode);
           navigationLabels.add(navigationLabel);
         case 'content':
-          var content = readNavigationContent(navigationPageTargetChildNode);
-          content = content;
+          content = readNavigationContent(navigationPageTargetChildNode);
       }
     });
     if (navigationLabels.isEmpty) {

@@ -16,10 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubBookRef {
-  Archive get epubArchive => throw _privateConstructorUsedError;
+  EpubArchive get epubArchive => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
-  String? get author => throw _privateConstructorUsedError;
-  List<String> get authors => throw _privateConstructorUsedError;
+  List<EpubMetadataCreator> get authors => throw _privateConstructorUsedError;
   EpubSchema? get schema => throw _privateConstructorUsedError;
   EpubContentRef? get content => throw _privateConstructorUsedError;
 
@@ -37,10 +36,9 @@ abstract class $EpubBookRefCopyWith<$Res> {
       _$EpubBookRefCopyWithImpl<$Res, EpubBookRef>;
   @useResult
   $Res call(
-      {Archive epubArchive,
+      {EpubArchive epubArchive,
       String? title,
-      String? author,
-      List<String> authors,
+      List<EpubMetadataCreator> authors,
       EpubSchema? schema,
       EpubContentRef? content});
 
@@ -65,7 +63,6 @@ class _$EpubBookRefCopyWithImpl<$Res, $Val extends EpubBookRef>
   $Res call({
     Object? epubArchive = null,
     Object? title = freezed,
-    Object? author = freezed,
     Object? authors = null,
     Object? schema = freezed,
     Object? content = freezed,
@@ -74,19 +71,15 @@ class _$EpubBookRefCopyWithImpl<$Res, $Val extends EpubBookRef>
       epubArchive: null == epubArchive
           ? _value.epubArchive
           : epubArchive // ignore: cast_nullable_to_non_nullable
-              as Archive,
+              as EpubArchive,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      author: freezed == author
-          ? _value.author
-          : author // ignore: cast_nullable_to_non_nullable
-              as String?,
       authors: null == authors
           ? _value.authors
           : authors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<EpubMetadataCreator>,
       schema: freezed == schema
           ? _value.schema
           : schema // ignore: cast_nullable_to_non_nullable
@@ -136,10 +129,9 @@ abstract class _$$EpubBookRefImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Archive epubArchive,
+      {EpubArchive epubArchive,
       String? title,
-      String? author,
-      List<String> authors,
+      List<EpubMetadataCreator> authors,
       EpubSchema? schema,
       EpubContentRef? content});
 
@@ -164,7 +156,6 @@ class __$$EpubBookRefImplCopyWithImpl<$Res>
   $Res call({
     Object? epubArchive = null,
     Object? title = freezed,
-    Object? author = freezed,
     Object? authors = null,
     Object? schema = freezed,
     Object? content = freezed,
@@ -173,19 +164,15 @@ class __$$EpubBookRefImplCopyWithImpl<$Res>
       epubArchive: null == epubArchive
           ? _value.epubArchive
           : epubArchive // ignore: cast_nullable_to_non_nullable
-              as Archive,
+              as EpubArchive,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      author: freezed == author
-          ? _value.author
-          : author // ignore: cast_nullable_to_non_nullable
-              as String?,
       authors: null == authors
           ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<EpubMetadataCreator>,
       schema: freezed == schema
           ? _value.schema
           : schema // ignore: cast_nullable_to_non_nullable
@@ -204,23 +191,20 @@ class _$EpubBookRefImpl extends _EpubBookRef {
   const _$EpubBookRefImpl(
       {required this.epubArchive,
       this.title,
-      this.author,
-      final List<String> authors = const [],
+      final List<EpubMetadataCreator> authors = const [],
       this.schema,
       this.content})
       : _authors = authors,
         super._();
 
   @override
-  final Archive epubArchive;
+  final EpubArchive epubArchive;
   @override
   final String? title;
-  @override
-  final String? author;
-  final List<String> _authors;
+  final List<EpubMetadataCreator> _authors;
   @override
   @JsonKey()
-  List<String> get authors {
+  List<EpubMetadataCreator> get authors {
     if (_authors is EqualUnmodifiableListView) return _authors;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_authors);
@@ -233,7 +217,7 @@ class _$EpubBookRefImpl extends _EpubBookRef {
 
   @override
   String toString() {
-    return 'EpubBookRef(epubArchive: $epubArchive, title: $title, author: $author, authors: $authors, schema: $schema, content: $content)';
+    return 'EpubBookRef(epubArchive: $epubArchive, title: $title, authors: $authors, schema: $schema, content: $content)';
   }
 
   @override
@@ -241,24 +225,17 @@ class _$EpubBookRefImpl extends _EpubBookRef {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubBookRefImpl &&
-            const DeepCollectionEquality()
-                .equals(other.epubArchive, epubArchive) &&
+            (identical(other.epubArchive, epubArchive) ||
+                other.epubArchive == epubArchive) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.author, author) || other.author == author) &&
             const DeepCollectionEquality().equals(other._authors, _authors) &&
             (identical(other.schema, schema) || other.schema == schema) &&
             (identical(other.content, content) || other.content == content));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(epubArchive),
-      title,
-      author,
-      const DeepCollectionEquality().hash(_authors),
-      schema,
-      content);
+  int get hashCode => Object.hash(runtimeType, epubArchive, title,
+      const DeepCollectionEquality().hash(_authors), schema, content);
 
   /// Create a copy of EpubBookRef
   /// with the given fields replaced by the non-null parameter values.
@@ -271,22 +248,19 @@ class _$EpubBookRefImpl extends _EpubBookRef {
 
 abstract class _EpubBookRef extends EpubBookRef {
   const factory _EpubBookRef(
-      {required final Archive epubArchive,
+      {required final EpubArchive epubArchive,
       final String? title,
-      final String? author,
-      final List<String> authors,
+      final List<EpubMetadataCreator> authors,
       final EpubSchema? schema,
       final EpubContentRef? content}) = _$EpubBookRefImpl;
   const _EpubBookRef._() : super._();
 
   @override
-  Archive get epubArchive;
+  EpubArchive get epubArchive;
   @override
   String? get title;
   @override
-  String? get author;
-  @override
-  List<String> get authors;
+  List<EpubMetadataCreator> get authors;
   @override
   EpubSchema? get schema;
   @override

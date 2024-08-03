@@ -18,4 +18,12 @@ class EpubByteContentFileRef
 
   @override
   Future<List<int>> readContent() async => getContentStream();
+
+  @override
+  Future<EpubByteContentFile> read() async => EpubByteContentFile(
+        fileName: fileName,
+        contentType: contentType,
+        contentMimeType: contentMimeType,
+        content: await readContent(),
+      );
 }
