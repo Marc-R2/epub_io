@@ -60,7 +60,8 @@ class EpubReader {
   Future<List<EpubMetadataCreator>> get authors async =>
       (await metadata).creators;
 
-  Future<String> get authorString async => (await authors).join(', ');
+  Future<String> get authorString async =>
+      (await authors).map((e) => e.creator).join(', ');
 
   Future<EpubBookRef> asRef() async {
     final ref = EpubBookRef(
