@@ -7,7 +7,7 @@ import 'package:epub_io/src/readers/root_file_path_reader.dart';
 
 class SchemaReader {
   static Future<EpubSchema> readSchema(EpubArchive epubArchive) async {
-    final epubContainer = await RootFilePathReader.getContainer(epubArchive.archive);
+    final epubContainer = await RootFilePathReader.getContainer(epubArchive);
 
     final package = await PackageReader.readPackage(epubArchive.archive, epubContainer);
 

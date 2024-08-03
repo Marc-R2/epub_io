@@ -1,28 +1,18 @@
 import 'dart:async';
-import 'dart:convert' as convert;
 
-import 'package:archive/archive.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:xml/xml.dart' as xml;
 
 class RootFilePathReader {
-  static Future<EpubContainer> getContainer(Archive epubArchive) async {
-    const epubContainerFilePath = 'META-INF/container.xml';
+  static Future<EpubContainer> getContainer(EpubArchive epubArchive) async {
+    final epubContainerFilePath = EpubUri.parse('META-INF/container.xml');
 
-    ArchiveFile? getFileEntry(String path) =>
-        epubArchive.files.firstWhereOrNull((file) => file.name == path);
+    final containerFileEntry = epubArchive.getFile(epubContainerFilePath);
 
-    ArchiveFile getFileEntryOrThrow(String path) =>
-        getFileEntry(path) ??
-        (throw Exception('EPUB error: $path file not found in archive.'));
-
-    final containerFileEntry = getFileEntryOrThrow(epubContainerFilePath);
-
-    final containerDocument = xml.XmlDocument.parse(
-      // TODO(Marc-R2): unknown casting - check if it's correct
-      convert.utf8.decode(containerFileEntry.content as List<int>),
-    );
+    final containerDocument =
+        xml.XmlDocument.parse(containerFileEntry.contentUtf8);
 
     final containerXML = EpubContainerXML(
       xmlVersion: containerDocument.declaration?.version,
