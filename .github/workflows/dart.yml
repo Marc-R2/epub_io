@@ -5,7 +5,11 @@
 
 name: Dart
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
@@ -91,19 +95,6 @@ jobs:
           path: |
             test/res/**
           key: ${{ runner.os }}-epub-downloads
-
-      - name: Coverage information
-        run: |
-          dart pub global activate coverage
-          dart pub global run coverage:test_with_coverage --branch-coverage --function-coverage
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: unittests
-          files: ./coverage/lcov.info
-          fail_ci_if_error: true
 
       - name: Commit and push generated files
         if: success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
