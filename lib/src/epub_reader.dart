@@ -73,7 +73,7 @@ class EpubReader {
         .firstWhere((String name) => true, orElse: () => '');
 
     final bookRef = EpubBookRef(
-      epubArchive: archive,
+      epubArchive: epubArchive,
       title: title,
       authors: schema.package!.metadata!.creators,
       schema: schema,

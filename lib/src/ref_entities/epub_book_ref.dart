@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:archive/archive.dart';
 import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/chapter_reader.dart';
@@ -12,7 +11,7 @@ part 'epub_book_ref.freezed.dart';
 @freezed
 class EpubBookRef with _$EpubBookRef {
   const factory EpubBookRef({
-    required Archive epubArchive,
+    required EpubArchive epubArchive,
     String? title,
     @Default([]) List<EpubMetadataCreator> authors,
     EpubSchema? schema,
