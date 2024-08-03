@@ -6,7 +6,7 @@ part 'epub_byte_content_file.freezed.dart';
 @freezed
 class EpubByteContentFile
     with _$EpubByteContentFile
-    implements EpubContentFile {
+    implements EpubContentFile<List<int>> {
   const factory EpubByteContentFile({
     String? fileName,
     String? contentMimeType,

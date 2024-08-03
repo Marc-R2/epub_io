@@ -125,7 +125,7 @@ class EpubReader {
     final css = await readTextContentFiles(contentRef.css);
     final images = await readByteContentFiles(contentRef.images);
     final fonts = await readByteContentFiles(contentRef.fonts);
-    final allFiles = <String, EpubContentFile>{};
+    final allFiles = <String, EpubContentFile<dynamic>>{};
 
     html.forEach((key, value) => allFiles[key] = value);
     css.forEach((key, value) => allFiles[key] = value);
@@ -147,7 +147,7 @@ class EpubReader {
     );
   }
 
-  static Future<EpubContentFile> readContentFile(
+  static Future<EpubContentFile<dynamic>> readContentFile(
     EpubContentFileRef<dynamic> contentFileRef,
   ) async {
     final content = await contentFileRef.readContent();
