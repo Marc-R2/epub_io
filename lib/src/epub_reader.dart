@@ -18,7 +18,6 @@ import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 
 /// A class that provides the primary interface to read Epub files.
 ///
@@ -78,17 +77,11 @@ class EpubReader {
 
     final title = schema.package!.metadata!.titles
         .firstWhere((String name) => true, orElse: () => '');
-    final authors = schema.package!.metadata!.creators
-        .map((EpubMetadataCreator creator) => creator.creator)
-        .whereType<String>()
-        .toList();
-    final author = authors.join(', ');
 
     final bookRef = EpubBookRef(
       epubArchive: archive,
       title: title,
-      author: author,
-      authors: authors,
+      authors: schema.package!.metadata!.creators,
       schema: schema,
     );
 
