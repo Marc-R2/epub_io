@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 import 'print_objects.dart';
 
 void main() {
-  const fileName = 'assets/alicesAdventuresUnderGround.epub';
+  const fileName = 'test/res/lord-byron_don-juan.epub';
   final fullPath = path.join(io.Directory.current.path, fileName);
   final targetFile = io.File(fullPath);
   final resultFile = io.File('$fullPath.zip');
@@ -34,15 +34,15 @@ void main() {
   }
 
   test('Book Round Trip', () async {
-    final book = await EpubReader.readBook(bytes);
+    final book = await EpubReader.fromBytes(bytes).readBookFromRef();
 
-    final written = EpubWriter.writeBook(book);
+    final written = EpubWriter.writeBook(book)!;
     // resultFile.writeAsBytesSync(written!);
     // resultFile2.writeAsBytesSync(written);
     print('Result written to ${resultFile.path}');
-    // unzip(written);
+    unzip(written);
 
-    final bookRoundTrip = await EpubReader.readBook(Future.value(written));
+    final bookRoundTrip = await EpubReader.fromBytes(written).readBookFromRef();
 
     printHashCodes(book, bookRoundTrip);
 

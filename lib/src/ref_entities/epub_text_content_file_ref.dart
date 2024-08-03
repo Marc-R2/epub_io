@@ -46,4 +46,12 @@ class EpubTextContentFileRef
     if (charset == null) return null;
     return convert.Encoding.getByName(charset.name);
   }
+
+  @override
+  Future<EpubTextContentFile> read() async => EpubTextContentFile(
+        fileName: fileName,
+        contentType: contentType,
+        contentMimeType: contentMimeType,
+        content: await readContent(),
+      );
 }

@@ -23,4 +23,6 @@ mixin EpubContentFileRef<T> {
   List<int> getContentStream() => getContentFileEntry().content;
 
   Future<T> readContent();
+
+  Future<EpubContentFile<T>> read();
 }

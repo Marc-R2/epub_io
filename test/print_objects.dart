@@ -14,12 +14,47 @@ void printBook(ObjectCompare<EpubBook> book) {
     ..line('Author', (b) => b.author)
     ..line('Authors', (b) => b.authors, showObj: true);
   printSchema(book.line('Schema', (b) => b.schema));
-  book
-    ..line('Content', (b) => b.content)
-    ..line('CoverImage', (b) => b.coverImage);
+  printContent(book.line('Content', (b) => b.content));
+  book.line('CoverImage', (b) => b.coverImage);
   book.lines('Chapters', (b) => b.chapters)
     ..line('length', (b) => b?.length, showObj: true)
-    ..forEach();
+    ..forEach(printEpubChapter);
+}
+
+void printContent(ObjectCompare<EpubContent?> content) {
+  content.map('html', (b) => b?.html)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubContentFile);
+  content.map('css', (b) => b?.css)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubContentFile);
+  content.map('images', (b) => b?.images)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubContentFile);
+  content.map('fonts', (b) => b?.fonts)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubContentFile);
+  content.map('allFiles', (b) => b?.allFiles)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubContentFile);
+}
+
+void printEpubContentFile(ObjectCompare<EpubContentFile<dynamic>?> file) {
+  file
+    ..line('FileName', (b) => b?.fileName)
+    ..line('ContentMimeType', (b) => b?.contentMimeType)
+    ..line('ContentType', (b) => b?.contentType)
+    ..line('Content', (b) => b?.content);
+}
+
+void printEpubChapter(ObjectCompare<EpubChapter<dynamic>?> chapter) {
+  chapter
+    ..line('Title', (b) => b?.title)
+    ..line('contentFileName', (b) => b?.contentFileName)
+    ..line('Content', (b) => b?.content);
+  chapter.lines('SubChapters', (b) => b?.subChapters)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printEpubChapter);
 }
 
 void printSchema(ObjectCompare<EpubSchema?> schema) {
@@ -85,11 +120,11 @@ void printMetadata(ObjectCompare<EpubMetadata?> metadata) {
     ..line('identifiers', (b) => b?.identifiers)
     ..line('sources', (b) => b?.sources)
     ..line('languages', (b) => b?.languages)
-    ..line('relations', (b) => b?.relations)..line(
-      'coverages', (b) => b?.coverages)..line(
-      'rights', (b) => b?.rights, showObj: true)..line(
-      'xmlnsDc', (b) => b?.xmlnsDc, showObj: true)..line(
-      'xmlnsOpf', (b) => b?.xmlnsOpf, showObj: true);
+    ..line('relations', (b) => b?.relations)
+    ..line('coverages', (b) => b?.coverages)
+    ..line('rights', (b) => b?.rights, showObj: true)
+    ..line('xmlnsDc', (b) => b?.xmlnsDc, showObj: true)
+    ..line('xmlnsOpf', (b) => b?.xmlnsOpf, showObj: true);
   printMetaItems(metadata.lines('metaItems', (b) => b?.metaItems));
   printLinks(metadata.lines('links', (b) => b?.links));
 }
@@ -118,8 +153,9 @@ void printMetaItem(ObjectCompare<EpubMetadataMeta?> metaItem) {
     ..line('name', (b) => b?.name)
     ..line('content', (b) => b?.content, showObj: true)
     ..line('id', (b) => b?.id)
-    ..line('refines', (b) => b?.refines)..line(
-      'property', (b) => b?.property)..line('scheme', (b) => b?.scheme);
+    ..line('refines', (b) => b?.refines)
+    ..line('property', (b) => b?.property)
+    ..line('scheme', (b) => b?.scheme);
   metaItem.map('attributes', (b) => b?.attributes, showObj: true)
     ..line('length', (b) => b?.length, showObj: true)
     ..forEach();

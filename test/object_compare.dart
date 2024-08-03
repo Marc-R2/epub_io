@@ -28,18 +28,22 @@ class ObjectCompare<T> {
 
     var useToString = '';
 
-    if (h.$1 != h.$2 && allowToString) {
+    final isIterable = b1 is Iterable && b2 is Iterable;
+
+    final equal = h.$1 == h.$2;
+
+    if (!equal && allowToString) {
       if (b1.toString() == b2.toString()) {
         h = (b1.toString().hashCode, b2.toString().hashCode);
         useToString = ' $yellow(toString)$reset';
       } else {
-        useToString = ' $red(tried toString)$reset';
+        useToString = ' ${isIterable ? yellow : red}(tried toString)$reset';
       }
     }
 
-    final show = (showObj && h.$1 != h.$2) ? ' $b1 $b2' : '';
+    final show = (showObj && !equal) ? ' $b1 $b2' : '';
 
-    final color = h.$1 == h.$2 ? green : red;
+    final color = equal ? green : isIterable ? yellow : red;
 
     final indent = '-' * (path.length + 1);
 

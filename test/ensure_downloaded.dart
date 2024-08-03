@@ -56,7 +56,7 @@ class EnsureDownloaded {
         await response.pipe(file.openWrite());
 
         // Check if the file is valid
-        await EpubReader.readBookStream(file);
+        await EpubReader.fromFile(file).readBookFromRef();
         if (file.existsSync() && file.lengthSync() > 128) return file;
         print(file.readAsStringSync());
         throw Exception('Downloaded file is empty or not readable');
@@ -80,9 +80,9 @@ class EnsureDownloaded {
       expect(file.existsSync(), isTrue);
 
       try {
-        final book = await EpubReader.readBookStream(file);
-        final written = EpubWriter.writeBook(book);
-        final bookRoundTrip = await EpubReader.readBook(Future.value(written));
+        final book = await EpubReader.fromFile(file).readBookFromRef();
+        final written = EpubWriter.writeBook(book)!;
+        final bookRoundTrip = await EpubReader.fromBytes(written).readBookFromRef();
 
         if (book.hashCode != bookRoundTrip.hashCode) {
           printHashCodes(book, bookRoundTrip);
