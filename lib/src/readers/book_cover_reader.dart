@@ -4,12 +4,17 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
+import 'package:epub_io/src/readers/lazy_object.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:image/image.dart' as images;
 
 mixin BookCoverReader implements SchemaReader, ContentRefReader {
+  late final _coverImage = LazyObject(readBookCoverImage);
+
+  Future<images.Image?> get coverImage async => _coverImage.value;
+
   static List<EpubMetadataMeta> metaItems(EpubSchema schema) =>
       schema.package?.metadata?.metaItems ?? [];
 
@@ -58,9 +63,4 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
       return null;
     }
   }
-
-  images.Image? _coverImage;
-
-  Future<images.Image?> get coverImage async =>
-      _coverImage ??= await readBookCoverImage();
 }
