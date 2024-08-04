@@ -1,4 +1,5 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/readers/lazy_object.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
@@ -6,6 +7,10 @@ import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 
 mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
+  late final _epubContentRef = LazyObject(parseContentMap);
+
+  Future<EpubContentRef>? get contentRef async => _epubContentRef.value;
+
   Future<T> getFileRef<T>(EpubManifestItem item) async =>
       getFileRefSync(item, await schema);
 
@@ -33,7 +38,7 @@ mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
     final images = <String, EpubByteContentFileRef>{};
     final fonts = <String, EpubByteContentFileRef>{};
     final allFiles = <String, EpubContentFileRef<dynamic>>{};
-    
+
     final schema = await this.schema;
 
     void processItem(EpubManifestItem item) {
@@ -68,9 +73,4 @@ mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
       allFiles: allFiles,
     );
   }
-
-  Future<EpubContentRef>? _epubContentRef;
-
-  Future<EpubContentRef>? get contentRef async =>
-      _epubContentRef ??= parseContentMap();
 }
