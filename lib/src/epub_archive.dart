@@ -1,6 +1,10 @@
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 
+mixin EpubArchiveReader {
+  EpubArchive get epubArchive;
+}
+
 class EpubUri {
   EpubUri(this.segments);
 

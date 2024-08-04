@@ -1,51 +1,62 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 
-class ContentReader {
-  static EpubContentRef parseContentMap(EpubBookRef bookRef) {
+mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
+  Future<T> getFileRef<T>(EpubManifestItem item) async =>
+      getFileRefSync(item, await schema);
+
+  T getFileRefSync<T>(EpubManifestItem item, EpubSchema schema) {
+    final fileName = item.href ?? '';
+    final contentMimeType = item.mediaType!;
+    final contentType = EpubContentType.fromMimeType(contentMimeType);
+
+    final constructor = switch (contentType.refContentType.refType) {
+      EpubfileRefType.text => EpubTextContentFileRef.new,
+      EpubfileRefType.byte => EpubByteContentFileRef.new,
+    };
+    return constructor(
+      epubArchive: epubArchive,
+      schema: schema,
+      fileName: fileName,
+      contentMimeType: contentMimeType,
+      contentType: contentType,
+    ) as T;
+  }
+
+  Future<EpubContentRef> parseContentMap() async {
     final html = <String, EpubTextContentFileRef>{};
     final css = <String, EpubTextContentFileRef>{};
     final images = <String, EpubByteContentFileRef>{};
     final fonts = <String, EpubByteContentFileRef>{};
     final allFiles = <String, EpubContentFileRef<dynamic>>{};
+    
+    final schema = await this.schema;
 
     void processItem(EpubManifestItem item) {
       final fileName = item.href ?? '';
       final contentMimeType = item.mediaType!;
       final contentType = EpubContentType.fromMimeType(contentMimeType);
 
-      T getFileRef<T>(EpubfileRefType refType) {
-        final constructor = switch (refType) {
-          EpubfileRefType.text => EpubTextContentFileRef.new,
-          EpubfileRefType.byte => EpubByteContentFileRef.new,
-        };
-        return constructor(
-          epubBookRef: bookRef,
-          fileName: fileName,
-          contentMimeType: contentMimeType,
-          contentType: contentType,
-        ) as T;
-      }
-
       switch (contentType.refContentType) {
         case EpubFileContentType.xhtml:
-          html[fileName] = getFileRef(contentType.refContentType.refType);
+          html[fileName] = getFileRefSync(item, schema);
         case EpubFileContentType.css:
-          css[fileName] = getFileRef(contentType.refContentType.refType);
+          css[fileName] = getFileRefSync(item, schema);
         case EpubFileContentType.image:
-          images[fileName] = getFileRef(contentType.refContentType.refType);
+          images[fileName] = getFileRefSync(item, schema);
         case EpubFileContentType.font:
-          fonts[fileName] = getFileRef(contentType.refContentType.refType);
+          fonts[fileName] = getFileRefSync(item, schema);
         case EpubFileContentType.other:
         // pass
       }
-      allFiles[fileName] = getFileRef(contentType.refContentType.refType);
+      allFiles[fileName] = getFileRefSync(item, schema);
     }
 
-    for (final manifestItem in bookRef.schema!.package!.manifest!.items) {
+    for (final manifestItem in schema.package!.manifest!.items) {
       processItem(manifestItem);
     }
 
@@ -57,4 +68,9 @@ class ContentReader {
       allFiles: allFiles,
     );
   }
+
+  Future<EpubContentRef>? _epubContentRef;
+
+  Future<EpubContentRef>? get contentRef async =>
+      _epubContentRef ??= parseContentMap();
 }

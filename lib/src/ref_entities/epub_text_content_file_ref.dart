@@ -12,7 +12,8 @@ part 'epub_text_content_file_ref.freezed.dart';
 class EpubTextContentFileRef
     with _$EpubTextContentFileRef, EpubContentFileRef<String> {
   const factory EpubTextContentFileRef({
-    required EpubBookRef epubBookRef,
+    required EpubArchive epubArchive,
+    required EpubSchema schema,
     String? fileName,
     String? contentMimeType,
     EpubContentType? contentType,

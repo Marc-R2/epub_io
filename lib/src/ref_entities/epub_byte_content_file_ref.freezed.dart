@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubByteContentFileRef {
-  EpubBookRef get epubBookRef => throw _privateConstructorUsedError;
+  EpubArchive get epubArchive => throw _privateConstructorUsedError;
+  EpubSchema get schema => throw _privateConstructorUsedError;
   String? get fileName => throw _privateConstructorUsedError;
   String? get contentMimeType => throw _privateConstructorUsedError;
   EpubContentType? get contentType => throw _privateConstructorUsedError;
@@ -35,12 +36,13 @@ abstract class $EpubByteContentFileRefCopyWith<$Res> {
       _$EpubByteContentFileRefCopyWithImpl<$Res, EpubByteContentFileRef>;
   @useResult
   $Res call(
-      {EpubBookRef epubBookRef,
+      {EpubArchive epubArchive,
+      EpubSchema schema,
       String? fileName,
       String? contentMimeType,
       EpubContentType? contentType});
 
-  $EpubBookRefCopyWith<$Res> get epubBookRef;
+  $EpubSchemaCopyWith<$Res> get schema;
 }
 
 /// @nodoc
@@ -59,16 +61,21 @@ class _$EpubByteContentFileRefCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? epubBookRef = null,
+    Object? epubArchive = null,
+    Object? schema = null,
     Object? fileName = freezed,
     Object? contentMimeType = freezed,
     Object? contentType = freezed,
   }) {
     return _then(_value.copyWith(
-      epubBookRef: null == epubBookRef
-          ? _value.epubBookRef
-          : epubBookRef // ignore: cast_nullable_to_non_nullable
-              as EpubBookRef,
+      epubArchive: null == epubArchive
+          ? _value.epubArchive
+          : epubArchive // ignore: cast_nullable_to_non_nullable
+              as EpubArchive,
+      schema: null == schema
+          ? _value.schema
+          : schema // ignore: cast_nullable_to_non_nullable
+              as EpubSchema,
       fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
@@ -88,9 +95,9 @@ class _$EpubByteContentFileRefCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubBookRefCopyWith<$Res> get epubBookRef {
-    return $EpubBookRefCopyWith<$Res>(_value.epubBookRef, (value) {
-      return _then(_value.copyWith(epubBookRef: value) as $Val);
+  $EpubSchemaCopyWith<$Res> get schema {
+    return $EpubSchemaCopyWith<$Res>(_value.schema, (value) {
+      return _then(_value.copyWith(schema: value) as $Val);
     });
   }
 }
@@ -105,13 +112,14 @@ abstract class _$$EpubByteContentFileRefImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {EpubBookRef epubBookRef,
+      {EpubArchive epubArchive,
+      EpubSchema schema,
       String? fileName,
       String? contentMimeType,
       EpubContentType? contentType});
 
   @override
-  $EpubBookRefCopyWith<$Res> get epubBookRef;
+  $EpubSchemaCopyWith<$Res> get schema;
 }
 
 /// @nodoc
@@ -129,16 +137,21 @@ class __$$EpubByteContentFileRefImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? epubBookRef = null,
+    Object? epubArchive = null,
+    Object? schema = null,
     Object? fileName = freezed,
     Object? contentMimeType = freezed,
     Object? contentType = freezed,
   }) {
     return _then(_$EpubByteContentFileRefImpl(
-      epubBookRef: null == epubBookRef
-          ? _value.epubBookRef
-          : epubBookRef // ignore: cast_nullable_to_non_nullable
-              as EpubBookRef,
+      epubArchive: null == epubArchive
+          ? _value.epubArchive
+          : epubArchive // ignore: cast_nullable_to_non_nullable
+              as EpubArchive,
+      schema: null == schema
+          ? _value.schema
+          : schema // ignore: cast_nullable_to_non_nullable
+              as EpubSchema,
       fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
@@ -159,14 +172,17 @@ class __$$EpubByteContentFileRefImplCopyWithImpl<$Res>
 
 class _$EpubByteContentFileRefImpl extends _EpubByteContentFileRef {
   const _$EpubByteContentFileRefImpl(
-      {required this.epubBookRef,
+      {required this.epubArchive,
+      required this.schema,
       this.fileName,
       this.contentMimeType,
       this.contentType})
       : super._();
 
   @override
-  final EpubBookRef epubBookRef;
+  final EpubArchive epubArchive;
+  @override
+  final EpubSchema schema;
   @override
   final String? fileName;
   @override
@@ -176,7 +192,7 @@ class _$EpubByteContentFileRefImpl extends _EpubByteContentFileRef {
 
   @override
   String toString() {
-    return 'EpubByteContentFileRef(epubBookRef: $epubBookRef, fileName: $fileName, contentMimeType: $contentMimeType, contentType: $contentType)';
+    return 'EpubByteContentFileRef(epubArchive: $epubArchive, schema: $schema, fileName: $fileName, contentMimeType: $contentMimeType, contentType: $contentType)';
   }
 
   @override
@@ -184,8 +200,9 @@ class _$EpubByteContentFileRefImpl extends _EpubByteContentFileRef {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubByteContentFileRefImpl &&
-            (identical(other.epubBookRef, epubBookRef) ||
-                other.epubBookRef == epubBookRef) &&
+            (identical(other.epubArchive, epubArchive) ||
+                other.epubArchive == epubArchive) &&
+            (identical(other.schema, schema) || other.schema == schema) &&
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
             (identical(other.contentMimeType, contentMimeType) ||
@@ -196,7 +213,7 @@ class _$EpubByteContentFileRefImpl extends _EpubByteContentFileRef {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, epubBookRef, fileName, contentMimeType, contentType);
+      runtimeType, epubArchive, schema, fileName, contentMimeType, contentType);
 
   /// Create a copy of EpubByteContentFileRef
   /// with the given fields replaced by the non-null parameter values.
@@ -210,14 +227,17 @@ class _$EpubByteContentFileRefImpl extends _EpubByteContentFileRef {
 
 abstract class _EpubByteContentFileRef extends EpubByteContentFileRef {
   const factory _EpubByteContentFileRef(
-      {required final EpubBookRef epubBookRef,
+      {required final EpubArchive epubArchive,
+      required final EpubSchema schema,
       final String? fileName,
       final String? contentMimeType,
       final EpubContentType? contentType}) = _$EpubByteContentFileRefImpl;
   const _EpubByteContentFileRef._() : super._();
 
   @override
-  EpubBookRef get epubBookRef;
+  EpubArchive get epubArchive;
+  @override
+  EpubSchema get schema;
   @override
   String? get fileName;
   @override
