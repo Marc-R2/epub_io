@@ -8,8 +8,6 @@ import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
-import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 
 /// A class that provides the primary interface to read Epub files.
 ///
@@ -30,7 +28,12 @@ import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 /// String genres = metadata.Subjects.join(', ');
 /// ```
 class EpubReader
-    with EpubArchiveReader, SchemaReader, ContentRefReader, BookCoverReader {
+    with
+        EpubArchiveReader,
+        SchemaReader,
+        ContentRefReader,
+        ContentReader,
+        BookCoverReader {
   EpubReader(Archive archive) : epubArchive = EpubArchive(archive);
 
   factory EpubReader.fromBytes(List<int> bytes) =>
@@ -71,53 +74,14 @@ class EpubReader
   Future<EpubBook> readBookFromRef() async {
     final epubBookRef = await asRef();
 
-    final content = await readContent(epubBookRef.content!);
     final chapterRefs = epubBookRef.getChapters();
     final chapters = await readChapters(chapterRefs);
 
     return epubBookRef.asEpubBook(
-      content: content,
+      content: await content,
       coverImage: await coverImage,
       chapters: chapters,
     );
-  }
-
-  static Future<EpubContent> readContent(EpubContentRef contentRef) async {
-    final html = await readContentFiles(contentRef.html);
-    final css = await readContentFiles(contentRef.css);
-    final images = await readContentFiles(contentRef.images);
-    final fonts = await readContentFiles(contentRef.fonts);
-    final allFiles = <String, EpubContentFile<dynamic>>{};
-
-    html.forEach((key, value) => allFiles[key] = value);
-    css.forEach((key, value) => allFiles[key] = value);
-    images.forEach((key, value) => allFiles[key] = value);
-    fonts.forEach((key, value) => allFiles[key] = value);
-
-    await Future.forEach(
-      contentRef.allFiles.keys.where((key) => !allFiles.containsKey(key)),
-      (key) async => allFiles[key] = await contentRef.allFiles[key]!.read(),
-    );
-
-    return EpubContent(
-      // TODO(Marc-R2): find a solution to avoid TypeCasts
-      html: html.cast<String, EpubTextContentFile>(),
-      css: css.cast<String, EpubTextContentFile>(),
-      images: images.cast<String, EpubByteContentFile>(),
-      fonts: fonts.cast<String, EpubByteContentFile>(),
-      allFiles: allFiles,
-    );
-  }
-
-  static Future<Map<String, EpubContentFile<T>>> readContentFiles<T>(
-    Map<String, EpubContentFileRef<T>> fileRefs,
-  ) async {
-    final res = <String, EpubContentFile<T>>{};
-    await Future.forEach(
-      fileRefs.entries,
-      (entry) async => res[entry.key] = await entry.value.read(),
-    );
-    return res;
   }
 
   static Future<List<EpubChapter<dynamic>>> readChapters(
