@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:epub_io/epub_io.dart';
 
 mixin EpubContentFileRef<T> {
-  EpubBookRef get epubBookRef;
+  EpubArchive get epubArchive;
+
+  EpubSchema get schema;
 
   String? get fileName;
 
@@ -12,9 +14,8 @@ mixin EpubContentFileRef<T> {
   String? get contentMimeType;
 
   EpubFile getContentFileEntry() {
-    final u =
-        EpubUri.parse(epubBookRef.schema!.epubContainer.contentDirectoryPath);
-    return epubBookRef.epubArchive.getFile(
+    final u = EpubUri.parse(schema.epubContainer.contentDirectoryPath);
+    return epubArchive.getFile(
       u.resolve(fileName!),
       allowByName: true,
     );

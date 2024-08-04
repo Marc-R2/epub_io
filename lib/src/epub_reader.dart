@@ -5,6 +5,7 @@ import 'dart:io';
 // provide a version based on platform to support the web
 import 'package:archive/archive_io.dart';
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
@@ -28,8 +29,9 @@ import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 /// var metadata = epub.Schema.Package.Metadata;
 /// String genres = metadata.Subjects.join(', ');
 /// ```
-class EpubReader {
-  EpubReader(Archive archive) : archive = EpubArchive(archive);
+class EpubReader
+    with EpubArchiveReader, SchemaReader, ContentRefReader, BookCoverReader {
+  EpubReader(Archive archive) : epubArchive = EpubArchive(archive);
 
   factory EpubReader.fromBytes(List<int> bytes) =>
       EpubReader(ZipDecoder().decodeBytes(bytes));
@@ -44,12 +46,7 @@ class EpubReader {
     return EpubReader.fromPath(file.absolute.path, stream: stream);
   }
 
-  final EpubArchive archive;
-
-  Future<EpubSchema>? _schema;
-
-  Future<EpubSchema> get schema async =>
-      _schema ??= SchemaReader.readSchema(archive);
+  final EpubArchive epubArchive;
 
   Future<EpubMetadata> get metadata async => (await schema).package!.metadata!;
 
@@ -63,29 +60,24 @@ class EpubReader {
   Future<String> get authorString async =>
       (await authors).map((e) => e.creator).join(', ');
 
-  Future<EpubBookRef> asRef() async {
-    final ref = EpubBookRef(
-      epubArchive: archive,
-      title: await title,
-      authors: await authors,
-      schema: await schema,
-    );
-
-    final contentRef = ContentReader.parseContentMap(ref);
-    return ref.copyWith(content: contentRef);
-  }
+  Future<EpubBookRef> asRef() async => EpubBookRef(
+        epubArchive: epubArchive,
+        title: await title,
+        authors: await authors,
+        schema: await schema,
+        content: await contentRef,
+      );
 
   Future<EpubBook> readBookFromRef() async {
     final epubBookRef = await asRef();
 
     final content = await readContent(epubBookRef.content!);
-    final coverImage = await epubBookRef.readCover();
     final chapterRefs = epubBookRef.getChapters();
     final chapters = await readChapters(chapterRefs);
 
     return epubBookRef.asEpubBook(
       content: content,
-      coverImage: coverImage,
+      coverImage: await coverImage,
       chapters: chapters,
     );
   }

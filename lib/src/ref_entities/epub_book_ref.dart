@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/chapter_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,10 +19,10 @@ class EpubBookRef with _$EpubBookRef {
 
   List<EpubChapterRef> getChapters() => ChapterReader.getChapters(this);
 
-  Future<List<int>> readCoverBytes() =>
-      BookCoverReader.readBookCoverAsBytes(this);
+  // Future<List<int>> readCoverBytes() =>
+  //     BookCoverReader.readBookCoverAsBytes(this);
 
-  Future<Image?> readCover() => BookCoverReader.readBookCoverImage(this);
+  // Future<Image?> readCover() => BookCoverReader.readBookCoverImage(this);
 
   String? get author {
     if (authors.isEmpty) return null;
