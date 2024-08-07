@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert' as convert;
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
@@ -39,9 +38,7 @@ mixin NavigationReader implements EpubArchiveReader {
       throw Exception('EPUB parsing error: TOC ID is empty.');
     }
 
-    final tocManifestItem = package.manifest?.items.firstWhereOrNull(
-      (item) => item.id?.toLowerCase() == tocId.toLowerCase(),
-    );
+    final tocManifestItem = package.manifest?.getItemById(tocId);
 
     if (tocManifestItem == null) {
       throw Exception(
@@ -53,19 +50,9 @@ mixin NavigationReader implements EpubArchiveReader {
       epubContainer.contentDirectoryPath,
       tocManifestItem.href,
     );
-    final tocFileEntry = epubArchive.archive.files.firstWhereOrNull(
-      (file) => file.name.toLowerCase() == _tocFileEntryPath?.toLowerCase(),
-    );
-    if (tocFileEntry == null) {
-      throw Exception(
-        'EPUB parsing error: TOC file $_tocFileEntryPath not found in archive.',
-      );
-    }
+    final tocFileEntry = epubArchive.getFile(EpubUri.parse(_tocFileEntryPath!));
 
-    final containerDocument = xml.XmlDocument.parse(
-      // TODO(Marc-R2): unknown casting - check if it's correct
-      convert.utf8.decode(tocFileEntry.content as List<int>),
-    );
+    final containerDocument = xml.XmlDocument.parse(tocFileEntry.contentUtf8);
 
     const ncxNamespace = 'http://www.daisy.org/z3986/2005/ncx/';
     final ncxNode = containerDocument
@@ -150,22 +137,14 @@ mixin NavigationReader implements EpubArchiveReader {
       epubContainer.contentDirectoryPath,
       tocManifestItem.href,
     );
-    final tocFileEntry = epubArchive.archive.files.firstWhereOrNull(
-      (file) => file.name.toLowerCase() == _tocFileEntryPath!.toLowerCase(),
-    );
-    if (tocFileEntry == null) {
-      throw Exception(
-        'EPUB parsing error: TOC file $_tocFileEntryPath not found in archive.',
-      );
-    }
+
+    final tocFileEntry = epubArchive.getFile(EpubUri.parse(_tocFileEntryPath!));
+
     //Get relative toc file path
     _tocFileEntryPath =
         '${((_tocFileEntryPath!.split('/')..removeLast())..removeAt(0)).join('/')}/';
 
-    final containerDocument = xml.XmlDocument.parse(
-      // TODO(Marc-R2): unknown casting - check if it's correct
-      convert.utf8.decode(tocFileEntry.content as List<int>),
-    );
+    final containerDocument = xml.XmlDocument.parse(tocFileEntry.contentUtf8);
 
     final headNode = containerDocument.findAllElements('head').firstOrNull;
     if (headNode == null) {

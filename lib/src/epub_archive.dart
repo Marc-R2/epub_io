@@ -1,3 +1,5 @@
+import 'dart:convert' as convert;
+
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 
@@ -33,7 +35,7 @@ class EpubFile {
   List<int> get content =>
       contentOrNull ?? (throw ArgumentError('Content not found: $uri'));
 
-  String get contentUtf8 => String.fromCharCodes(content);
+  String get contentUtf8 => convert.utf8.decode(content);
 }
 
 class EpubArchive {

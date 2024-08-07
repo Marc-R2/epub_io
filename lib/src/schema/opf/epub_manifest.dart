@@ -12,12 +12,26 @@ class EpubManifest with _$EpubManifest {
 
   const EpubManifest._();
 
-  EpubManifestItem? getItemByPropertyOrNull(String property) => items
-      .firstWhereOrNull((item) => item.properties?.contains(property) ?? false);
+  EpubManifestItem? getItemByOrNull(
+    bool? Function(EpubManifestItem item) predicate,
+  ) =>
+      items.firstWhereOrNull((item) => predicate.call(item) ?? false);
+
+  EpubManifestItem? getItemByPropertyOrNull(String property) =>
+      getItemByOrNull((item) => item.properties?.contains(property));
 
   EpubManifestItem getItemByProperty(String property) {
     final item = getItemByPropertyOrNull(property);
     if (item != null) return item;
     throw ArgumentError('Item not found: $property');
+  }
+
+  EpubManifestItem? getItemByIdOrNull(String id) =>
+      getItemByOrNull((item) => item.id == id);
+
+  EpubManifestItem getItemById(String id) {
+    final item = getItemByIdOrNull(id);
+    if (item != null) return item;
+    throw ArgumentError('Item not found: $id');
   }
 }
