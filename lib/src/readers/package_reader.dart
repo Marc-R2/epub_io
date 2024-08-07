@@ -65,69 +65,47 @@ class PackageReader {
 
   static EpubManifest readManifest(XmlElement manifestNode) {
     final items = <EpubManifestItem>[];
-    manifestNode.children
-        .whereType<XmlElement>()
-        .forEach((XmlElement manifestItemNode) {
-      if (manifestItemNode.name.local.toLowerCase() == 'item') {
-        String? id;
-        String? href;
-        String? mediaType;
-        String? mediaOverlay;
-        String? requiredNamespace;
-        String? requiredModules;
-        String? fallback;
-        String? fallbackStyle;
-        String? properties;
-        for (final manifestItemNodeAttribute in manifestItemNode.attributes) {
-          final attributeValue = manifestItemNodeAttribute.value;
-          switch (manifestItemNodeAttribute.name.local.toLowerCase()) {
-            case 'id':
-              id = attributeValue;
-            case 'href':
-              href = attributeValue;
-            case 'media-type':
-              mediaType = attributeValue;
-            case 'media-overlay':
-              mediaOverlay = attributeValue;
-            case 'required-namespace':
-              requiredNamespace = attributeValue;
-            case 'required-modules':
-              requiredModules = attributeValue;
-            case 'fallback':
-              fallback = attributeValue;
-            case 'fallback-style':
-              fallbackStyle = attributeValue;
-            case 'properties':
-              properties = attributeValue;
-          }
-        }
 
-        if (id == null || id.isEmpty) {
-          throw Exception('Incorrect EPUB manifest: item ID is missing');
+    final children = manifestNode.children.whereType<XmlElement>();
+    for (final manifestItemNode in children) {
+      if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
+      var item = const EpubManifestItem();
+      for (final manifestItemNodeAttribute in manifestItemNode.attributes) {
+        final attributeValue = manifestItemNodeAttribute.value;
+        switch (manifestItemNodeAttribute.name.local.toLowerCase()) {
+          case 'id':
+            item = item.copyWith(id: attributeValue);
+          case 'href':
+            item = item.copyWith(href: attributeValue);
+          case 'media-type':
+            item = item.copyWith(mediaType: attributeValue);
+          case 'media-overlay':
+            item = item.copyWith(mediaOverlay: attributeValue);
+          case 'required-namespace':
+            item = item.copyWith(requiredNamespace: attributeValue);
+          case 'required-modules':
+            item = item.copyWith(requiredModules: attributeValue);
+          case 'fallback':
+            item = item.copyWith(fallback: attributeValue);
+          case 'fallback-style':
+            item = item.copyWith(fallbackStyle: attributeValue);
+          case 'properties':
+            item = item.copyWith(properties: attributeValue.split(' ').toSet());
         }
-        if (href == null || href.isEmpty) {
-          throw Exception('Incorrect EPUB manifest: item href is missing');
-        }
-        if (mediaType == null || mediaType.isEmpty) {
-          throw Exception(
-            'Incorrect EPUB manifest: item media type is missing',
-          );
-        }
-        final manifestItem = EpubManifestItem(
-          id: id,
-          href: href,
-          mediaType: mediaType,
-          mediaOverlay: mediaOverlay,
-          requiredNamespace: requiredNamespace,
-          requiredModules: requiredModules,
-          fallback: fallback,
-          fallbackStyle: fallbackStyle,
-          properties: properties?.split(' ').toSet(),
-        );
-
-        items.add(manifestItem);
       }
-    });
+
+      if (item.id == null || item.id!.isEmpty) {
+        throw Exception('Incorrect EPUB manifest: item ID is missing');
+      }
+      if (item.href == null || item.href!.isEmpty) {
+        throw Exception('Incorrect EPUB manifest: item href is missing');
+      }
+      if (item.mediaType == null || item.mediaType!.isEmpty) {
+        throw Exception('Incorrect EPUB manifest: item media type is missing');
+      }
+
+      items.add(item);
+    }
     return EpubManifest(items: items);
   }
 
@@ -468,8 +446,7 @@ class PackageReader {
       prefix: prefix,
       xmlLang: xmlLang,
       bindings: bindings,
-      xmlVersion: containerDocument.declaration?.version,
-      xmlEncoding: containerDocument.declaration?.encoding,
+      xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
     );
   }
 

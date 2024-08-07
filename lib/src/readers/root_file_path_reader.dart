@@ -14,12 +14,6 @@ class RootFilePathReader {
     final containerDocument =
         xml.XmlDocument.parse(containerFileEntry.contentUtf8);
 
-    final containerXML = EpubContainerXML(
-      xmlVersion: containerDocument.declaration?.version,
-      xmlEncoding: containerDocument.declaration?.encoding,
-      xmlStandalone: containerDocument.declaration?.standalone,
-    );
-
     final containerElement = containerDocument
         .findElements('container')
         .firstWhereOrNull((xml.XmlElement? elem) => elem != null);
@@ -43,7 +37,7 @@ class RootFilePathReader {
     }
 
     return EpubContainer(
-      containerXML: containerXML,
+      xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
       xmlns: containerElement.getAttribute('xmlns'),
       version: containerElement.getAttribute('version'),
       rootFile: rootFiles.first,

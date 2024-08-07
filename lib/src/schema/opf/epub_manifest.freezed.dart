@@ -97,10 +97,11 @@ class __$$EpubManifestImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubManifestImpl implements _EpubManifest {
+class _$EpubManifestImpl extends _EpubManifest {
   const _$EpubManifestImpl(
       {final List<EpubManifestItem> items = const <EpubManifestItem>[]})
-      : _items = items;
+      : _items = items,
+        super._();
 
   final List<EpubManifestItem> _items;
   @override
@@ -137,9 +138,10 @@ class _$EpubManifestImpl implements _EpubManifest {
       __$$EpubManifestImplCopyWithImpl<_$EpubManifestImpl>(this, _$identity);
 }
 
-abstract class _EpubManifest implements EpubManifest {
+abstract class _EpubManifest extends EpubManifest {
   const factory _EpubManifest({final List<EpubManifestItem> items}) =
       _$EpubManifestImpl;
+  const _EpubManifest._() : super._();
 
   @override
   List<EpubManifestItem> get items;

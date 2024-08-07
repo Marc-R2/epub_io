@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$EpubPackage {
   NameSpace get nameSpace => throw _privateConstructorUsedError;
+  XMLInfo get xmlInfo => throw _privateConstructorUsedError;
   EpubVersion? get version => throw _privateConstructorUsedError;
   EpubMetadata? get metadata => throw _privateConstructorUsedError;
   EpubManifest? get manifest => throw _privateConstructorUsedError;
@@ -26,8 +27,6 @@ mixin _$EpubPackage {
   String? get uniqueIdentifier => throw _privateConstructorUsedError;
   String? get prefix => throw _privateConstructorUsedError;
   String? get xmlLang => throw _privateConstructorUsedError;
-  String? get xmlVersion => throw _privateConstructorUsedError;
-  String? get xmlEncoding => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubPackage
   /// with the given fields replaced by the non-null parameter values.
@@ -44,6 +43,7 @@ abstract class $EpubPackageCopyWith<$Res> {
   @useResult
   $Res call(
       {NameSpace nameSpace,
+      XMLInfo xmlInfo,
       EpubVersion? version,
       EpubMetadata? metadata,
       EpubManifest? manifest,
@@ -52,11 +52,10 @@ abstract class $EpubPackageCopyWith<$Res> {
       List<MediaType>? bindings,
       String? uniqueIdentifier,
       String? prefix,
-      String? xmlLang,
-      String? xmlVersion,
-      String? xmlEncoding});
+      String? xmlLang});
 
   $NameSpaceCopyWith<$Res> get nameSpace;
+  $XMLInfoCopyWith<$Res> get xmlInfo;
   $EpubMetadataCopyWith<$Res>? get metadata;
   $EpubManifestCopyWith<$Res>? get manifest;
   $EpubSpineCopyWith<$Res>? get spine;
@@ -79,6 +78,7 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   @override
   $Res call({
     Object? nameSpace = null,
+    Object? xmlInfo = null,
     Object? version = freezed,
     Object? metadata = freezed,
     Object? manifest = freezed,
@@ -88,14 +88,16 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
     Object? uniqueIdentifier = freezed,
     Object? prefix = freezed,
     Object? xmlLang = freezed,
-    Object? xmlVersion = freezed,
-    Object? xmlEncoding = freezed,
   }) {
     return _then(_value.copyWith(
       nameSpace: null == nameSpace
           ? _value.nameSpace
           : nameSpace // ignore: cast_nullable_to_non_nullable
               as NameSpace,
+      xmlInfo: null == xmlInfo
+          ? _value.xmlInfo
+          : xmlInfo // ignore: cast_nullable_to_non_nullable
+              as XMLInfo,
       version: freezed == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
@@ -132,14 +134,6 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
           ? _value.xmlLang
           : xmlLang // ignore: cast_nullable_to_non_nullable
               as String?,
-      xmlVersion: freezed == xmlVersion
-          ? _value.xmlVersion
-          : xmlVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      xmlEncoding: freezed == xmlEncoding
-          ? _value.xmlEncoding
-          : xmlEncoding // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 
@@ -150,6 +144,16 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   $NameSpaceCopyWith<$Res> get nameSpace {
     return $NameSpaceCopyWith<$Res>(_value.nameSpace, (value) {
       return _then(_value.copyWith(nameSpace: value) as $Val);
+    });
+  }
+
+  /// Create a copy of EpubPackage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $XMLInfoCopyWith<$Res> get xmlInfo {
+    return $XMLInfoCopyWith<$Res>(_value.xmlInfo, (value) {
+      return _then(_value.copyWith(xmlInfo: value) as $Val);
     });
   }
 
@@ -220,6 +224,7 @@ abstract class _$$EpubPackageImplCopyWith<$Res>
   @useResult
   $Res call(
       {NameSpace nameSpace,
+      XMLInfo xmlInfo,
       EpubVersion? version,
       EpubMetadata? metadata,
       EpubManifest? manifest,
@@ -228,12 +233,12 @@ abstract class _$$EpubPackageImplCopyWith<$Res>
       List<MediaType>? bindings,
       String? uniqueIdentifier,
       String? prefix,
-      String? xmlLang,
-      String? xmlVersion,
-      String? xmlEncoding});
+      String? xmlLang});
 
   @override
   $NameSpaceCopyWith<$Res> get nameSpace;
+  @override
+  $XMLInfoCopyWith<$Res> get xmlInfo;
   @override
   $EpubMetadataCopyWith<$Res>? get metadata;
   @override
@@ -258,6 +263,7 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? nameSpace = null,
+    Object? xmlInfo = null,
     Object? version = freezed,
     Object? metadata = freezed,
     Object? manifest = freezed,
@@ -267,14 +273,16 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
     Object? uniqueIdentifier = freezed,
     Object? prefix = freezed,
     Object? xmlLang = freezed,
-    Object? xmlVersion = freezed,
-    Object? xmlEncoding = freezed,
   }) {
     return _then(_$EpubPackageImpl(
       nameSpace: null == nameSpace
           ? _value.nameSpace
           : nameSpace // ignore: cast_nullable_to_non_nullable
               as NameSpace,
+      xmlInfo: null == xmlInfo
+          ? _value.xmlInfo
+          : xmlInfo // ignore: cast_nullable_to_non_nullable
+              as XMLInfo,
       version: freezed == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
@@ -311,14 +319,6 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
           ? _value.xmlLang
           : xmlLang // ignore: cast_nullable_to_non_nullable
               as String?,
-      xmlVersion: freezed == xmlVersion
-          ? _value.xmlVersion
-          : xmlVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      xmlEncoding: freezed == xmlEncoding
-          ? _value.xmlEncoding
-          : xmlEncoding // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -328,6 +328,7 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
 class _$EpubPackageImpl implements _EpubPackage {
   const _$EpubPackageImpl(
       {required this.nameSpace,
+      required this.xmlInfo,
       this.version,
       this.metadata,
       this.manifest,
@@ -336,13 +337,13 @@ class _$EpubPackageImpl implements _EpubPackage {
       final List<MediaType>? bindings,
       this.uniqueIdentifier,
       this.prefix,
-      this.xmlLang,
-      this.xmlVersion,
-      this.xmlEncoding})
+      this.xmlLang})
       : _bindings = bindings;
 
   @override
   final NameSpace nameSpace;
+  @override
+  final XMLInfo xmlInfo;
   @override
   final EpubVersion? version;
   @override
@@ -369,14 +370,10 @@ class _$EpubPackageImpl implements _EpubPackage {
   final String? prefix;
   @override
   final String? xmlLang;
-  @override
-  final String? xmlVersion;
-  @override
-  final String? xmlEncoding;
 
   @override
   String toString() {
-    return 'EpubPackage(nameSpace: $nameSpace, version: $version, metadata: $metadata, manifest: $manifest, spine: $spine, guide: $guide, bindings: $bindings, uniqueIdentifier: $uniqueIdentifier, prefix: $prefix, xmlLang: $xmlLang, xmlVersion: $xmlVersion, xmlEncoding: $xmlEncoding)';
+    return 'EpubPackage(nameSpace: $nameSpace, xmlInfo: $xmlInfo, version: $version, metadata: $metadata, manifest: $manifest, spine: $spine, guide: $guide, bindings: $bindings, uniqueIdentifier: $uniqueIdentifier, prefix: $prefix, xmlLang: $xmlLang)';
   }
 
   @override
@@ -386,6 +383,7 @@ class _$EpubPackageImpl implements _EpubPackage {
             other is _$EpubPackageImpl &&
             (identical(other.nameSpace, nameSpace) ||
                 other.nameSpace == nameSpace) &&
+            (identical(other.xmlInfo, xmlInfo) || other.xmlInfo == xmlInfo) &&
             (identical(other.version, version) || other.version == version) &&
             (identical(other.metadata, metadata) ||
                 other.metadata == metadata) &&
@@ -397,17 +395,14 @@ class _$EpubPackageImpl implements _EpubPackage {
             (identical(other.uniqueIdentifier, uniqueIdentifier) ||
                 other.uniqueIdentifier == uniqueIdentifier) &&
             (identical(other.prefix, prefix) || other.prefix == prefix) &&
-            (identical(other.xmlLang, xmlLang) || other.xmlLang == xmlLang) &&
-            (identical(other.xmlVersion, xmlVersion) ||
-                other.xmlVersion == xmlVersion) &&
-            (identical(other.xmlEncoding, xmlEncoding) ||
-                other.xmlEncoding == xmlEncoding));
+            (identical(other.xmlLang, xmlLang) || other.xmlLang == xmlLang));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       nameSpace,
+      xmlInfo,
       version,
       metadata,
       manifest,
@@ -416,9 +411,7 @@ class _$EpubPackageImpl implements _EpubPackage {
       const DeepCollectionEquality().hash(_bindings),
       uniqueIdentifier,
       prefix,
-      xmlLang,
-      xmlVersion,
-      xmlEncoding);
+      xmlLang);
 
   /// Create a copy of EpubPackage
   /// with the given fields replaced by the non-null parameter values.
@@ -432,6 +425,7 @@ class _$EpubPackageImpl implements _EpubPackage {
 abstract class _EpubPackage implements EpubPackage {
   const factory _EpubPackage(
       {required final NameSpace nameSpace,
+      required final XMLInfo xmlInfo,
       final EpubVersion? version,
       final EpubMetadata? metadata,
       final EpubManifest? manifest,
@@ -440,12 +434,12 @@ abstract class _EpubPackage implements EpubPackage {
       final List<MediaType>? bindings,
       final String? uniqueIdentifier,
       final String? prefix,
-      final String? xmlLang,
-      final String? xmlVersion,
-      final String? xmlEncoding}) = _$EpubPackageImpl;
+      final String? xmlLang}) = _$EpubPackageImpl;
 
   @override
   NameSpace get nameSpace;
+  @override
+  XMLInfo get xmlInfo;
   @override
   EpubVersion? get version;
   @override
@@ -464,10 +458,6 @@ abstract class _EpubPackage implements EpubPackage {
   String? get prefix;
   @override
   String? get xmlLang;
-  @override
-  String? get xmlVersion;
-  @override
-  String? get xmlEncoding;
 
   /// Create a copy of EpubPackage
   /// with the given fields replaced by the non-null parameter values.

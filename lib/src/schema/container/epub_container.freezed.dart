@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubContainer {
-  EpubContainerXML get containerXML => throw _privateConstructorUsedError;
+  XMLInfo get xmlInfo => throw _privateConstructorUsedError;
   EpubContainerRootFile get rootFile => throw _privateConstructorUsedError;
   String? get xmlns => throw _privateConstructorUsedError;
   String? get version => throw _privateConstructorUsedError;
@@ -37,13 +37,13 @@ abstract class $EpubContainerCopyWith<$Res> {
       _$EpubContainerCopyWithImpl<$Res, EpubContainer>;
   @useResult
   $Res call(
-      {EpubContainerXML containerXML,
+      {XMLInfo xmlInfo,
       EpubContainerRootFile rootFile,
       String? xmlns,
       String? version,
       List<EpubContainerRootFile>? rootFiles});
 
-  $EpubContainerXMLCopyWith<$Res> get containerXML;
+  $XMLInfoCopyWith<$Res> get xmlInfo;
   $EpubContainerRootFileCopyWith<$Res> get rootFile;
 }
 
@@ -62,17 +62,17 @@ class _$EpubContainerCopyWithImpl<$Res, $Val extends EpubContainer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? containerXML = null,
+    Object? xmlInfo = null,
     Object? rootFile = null,
     Object? xmlns = freezed,
     Object? version = freezed,
     Object? rootFiles = freezed,
   }) {
     return _then(_value.copyWith(
-      containerXML: null == containerXML
-          ? _value.containerXML
-          : containerXML // ignore: cast_nullable_to_non_nullable
-              as EpubContainerXML,
+      xmlInfo: null == xmlInfo
+          ? _value.xmlInfo
+          : xmlInfo // ignore: cast_nullable_to_non_nullable
+              as XMLInfo,
       rootFile: null == rootFile
           ? _value.rootFile
           : rootFile // ignore: cast_nullable_to_non_nullable
@@ -96,9 +96,9 @@ class _$EpubContainerCopyWithImpl<$Res, $Val extends EpubContainer>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubContainerXMLCopyWith<$Res> get containerXML {
-    return $EpubContainerXMLCopyWith<$Res>(_value.containerXML, (value) {
-      return _then(_value.copyWith(containerXML: value) as $Val);
+  $XMLInfoCopyWith<$Res> get xmlInfo {
+    return $XMLInfoCopyWith<$Res>(_value.xmlInfo, (value) {
+      return _then(_value.copyWith(xmlInfo: value) as $Val);
     });
   }
 
@@ -122,14 +122,14 @@ abstract class _$$EpubContainerImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {EpubContainerXML containerXML,
+      {XMLInfo xmlInfo,
       EpubContainerRootFile rootFile,
       String? xmlns,
       String? version,
       List<EpubContainerRootFile>? rootFiles});
 
   @override
-  $EpubContainerXMLCopyWith<$Res> get containerXML;
+  $XMLInfoCopyWith<$Res> get xmlInfo;
   @override
   $EpubContainerRootFileCopyWith<$Res> get rootFile;
 }
@@ -147,17 +147,17 @@ class __$$EpubContainerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? containerXML = null,
+    Object? xmlInfo = null,
     Object? rootFile = null,
     Object? xmlns = freezed,
     Object? version = freezed,
     Object? rootFiles = freezed,
   }) {
     return _then(_$EpubContainerImpl(
-      containerXML: null == containerXML
-          ? _value.containerXML
-          : containerXML // ignore: cast_nullable_to_non_nullable
-              as EpubContainerXML,
+      xmlInfo: null == xmlInfo
+          ? _value.xmlInfo
+          : xmlInfo // ignore: cast_nullable_to_non_nullable
+              as XMLInfo,
       rootFile: null == rootFile
           ? _value.rootFile
           : rootFile // ignore: cast_nullable_to_non_nullable
@@ -182,7 +182,7 @@ class __$$EpubContainerImplCopyWithImpl<$Res>
 
 class _$EpubContainerImpl extends _EpubContainer {
   const _$EpubContainerImpl(
-      {required this.containerXML,
+      {required this.xmlInfo,
       required this.rootFile,
       this.xmlns,
       this.version,
@@ -191,7 +191,7 @@ class _$EpubContainerImpl extends _EpubContainer {
         super._();
 
   @override
-  final EpubContainerXML containerXML;
+  final XMLInfo xmlInfo;
   @override
   final EpubContainerRootFile rootFile;
   @override
@@ -210,7 +210,7 @@ class _$EpubContainerImpl extends _EpubContainer {
 
   @override
   String toString() {
-    return 'EpubContainer(containerXML: $containerXML, rootFile: $rootFile, xmlns: $xmlns, version: $version, rootFiles: $rootFiles)';
+    return 'EpubContainer(xmlInfo: $xmlInfo, rootFile: $rootFile, xmlns: $xmlns, version: $version, rootFiles: $rootFiles)';
   }
 
   @override
@@ -218,8 +218,7 @@ class _$EpubContainerImpl extends _EpubContainer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubContainerImpl &&
-            (identical(other.containerXML, containerXML) ||
-                other.containerXML == containerXML) &&
+            (identical(other.xmlInfo, xmlInfo) || other.xmlInfo == xmlInfo) &&
             (identical(other.rootFile, rootFile) ||
                 other.rootFile == rootFile) &&
             (identical(other.xmlns, xmlns) || other.xmlns == xmlns) &&
@@ -229,7 +228,7 @@ class _$EpubContainerImpl extends _EpubContainer {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, containerXML, rootFile, xmlns,
+  int get hashCode => Object.hash(runtimeType, xmlInfo, rootFile, xmlns,
       version, const DeepCollectionEquality().hash(_rootFiles));
 
   /// Create a copy of EpubContainer
@@ -243,7 +242,7 @@ class _$EpubContainerImpl extends _EpubContainer {
 
 abstract class _EpubContainer extends EpubContainer {
   const factory _EpubContainer(
-      {required final EpubContainerXML containerXML,
+      {required final XMLInfo xmlInfo,
       required final EpubContainerRootFile rootFile,
       final String? xmlns,
       final String? version,
@@ -251,7 +250,7 @@ abstract class _EpubContainer extends EpubContainer {
   const _EpubContainer._() : super._();
 
   @override
-  EpubContainerXML get containerXML;
+  XMLInfo get xmlInfo;
   @override
   EpubContainerRootFile get rootFile;
   @override
@@ -270,38 +269,36 @@ abstract class _EpubContainer extends EpubContainer {
 }
 
 /// @nodoc
-mixin _$EpubContainerXML {
+mixin _$XMLInfo {
   String? get xmlVersion => throw _privateConstructorUsedError;
   String? get xmlEncoding => throw _privateConstructorUsedError;
   bool? get xmlStandalone => throw _privateConstructorUsedError;
 
-  /// Create a copy of EpubContainerXML
+  /// Create a copy of XMLInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $EpubContainerXMLCopyWith<EpubContainerXML> get copyWith =>
-      throw _privateConstructorUsedError;
+  $XMLInfoCopyWith<XMLInfo> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EpubContainerXMLCopyWith<$Res> {
-  factory $EpubContainerXMLCopyWith(
-          EpubContainerXML value, $Res Function(EpubContainerXML) then) =
-      _$EpubContainerXMLCopyWithImpl<$Res, EpubContainerXML>;
+abstract class $XMLInfoCopyWith<$Res> {
+  factory $XMLInfoCopyWith(XMLInfo value, $Res Function(XMLInfo) then) =
+      _$XMLInfoCopyWithImpl<$Res, XMLInfo>;
   @useResult
   $Res call({String? xmlVersion, String? xmlEncoding, bool? xmlStandalone});
 }
 
 /// @nodoc
-class _$EpubContainerXMLCopyWithImpl<$Res, $Val extends EpubContainerXML>
-    implements $EpubContainerXMLCopyWith<$Res> {
-  _$EpubContainerXMLCopyWithImpl(this._value, this._then);
+class _$XMLInfoCopyWithImpl<$Res, $Val extends XMLInfo>
+    implements $XMLInfoCopyWith<$Res> {
+  _$XMLInfoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of EpubContainerXML
+  /// Create a copy of XMLInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -328,25 +325,24 @@ class _$EpubContainerXMLCopyWithImpl<$Res, $Val extends EpubContainerXML>
 }
 
 /// @nodoc
-abstract class _$$EpubContainerXMLImplCopyWith<$Res>
-    implements $EpubContainerXMLCopyWith<$Res> {
-  factory _$$EpubContainerXMLImplCopyWith(_$EpubContainerXMLImpl value,
-          $Res Function(_$EpubContainerXMLImpl) then) =
-      __$$EpubContainerXMLImplCopyWithImpl<$Res>;
+abstract class _$$XMLInfoImplCopyWith<$Res> implements $XMLInfoCopyWith<$Res> {
+  factory _$$XMLInfoImplCopyWith(
+          _$XMLInfoImpl value, $Res Function(_$XMLInfoImpl) then) =
+      __$$XMLInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? xmlVersion, String? xmlEncoding, bool? xmlStandalone});
 }
 
 /// @nodoc
-class __$$EpubContainerXMLImplCopyWithImpl<$Res>
-    extends _$EpubContainerXMLCopyWithImpl<$Res, _$EpubContainerXMLImpl>
-    implements _$$EpubContainerXMLImplCopyWith<$Res> {
-  __$$EpubContainerXMLImplCopyWithImpl(_$EpubContainerXMLImpl _value,
-      $Res Function(_$EpubContainerXMLImpl) _then)
+class __$$XMLInfoImplCopyWithImpl<$Res>
+    extends _$XMLInfoCopyWithImpl<$Res, _$XMLInfoImpl>
+    implements _$$XMLInfoImplCopyWith<$Res> {
+  __$$XMLInfoImplCopyWithImpl(
+      _$XMLInfoImpl _value, $Res Function(_$XMLInfoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of EpubContainerXML
+  /// Create a copy of XMLInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -355,7 +351,7 @@ class __$$EpubContainerXMLImplCopyWithImpl<$Res>
     Object? xmlEncoding = freezed,
     Object? xmlStandalone = freezed,
   }) {
-    return _then(_$EpubContainerXMLImpl(
+    return _then(_$XMLInfoImpl(
       xmlVersion: freezed == xmlVersion
           ? _value.xmlVersion
           : xmlVersion // ignore: cast_nullable_to_non_nullable
@@ -374,9 +370,9 @@ class __$$EpubContainerXMLImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubContainerXMLImpl implements _EpubContainerXML {
-  const _$EpubContainerXMLImpl(
-      {this.xmlVersion, this.xmlEncoding, this.xmlStandalone});
+class _$XMLInfoImpl extends _XMLInfo {
+  const _$XMLInfoImpl({this.xmlVersion, this.xmlEncoding, this.xmlStandalone})
+      : super._();
 
   @override
   final String? xmlVersion;
@@ -387,14 +383,14 @@ class _$EpubContainerXMLImpl implements _EpubContainerXML {
 
   @override
   String toString() {
-    return 'EpubContainerXML(xmlVersion: $xmlVersion, xmlEncoding: $xmlEncoding, xmlStandalone: $xmlStandalone)';
+    return 'XMLInfo(xmlVersion: $xmlVersion, xmlEncoding: $xmlEncoding, xmlStandalone: $xmlStandalone)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EpubContainerXMLImpl &&
+            other is _$XMLInfoImpl &&
             (identical(other.xmlVersion, xmlVersion) ||
                 other.xmlVersion == xmlVersion) &&
             (identical(other.xmlEncoding, xmlEncoding) ||
@@ -407,21 +403,21 @@ class _$EpubContainerXMLImpl implements _EpubContainerXML {
   int get hashCode =>
       Object.hash(runtimeType, xmlVersion, xmlEncoding, xmlStandalone);
 
-  /// Create a copy of EpubContainerXML
+  /// Create a copy of XMLInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$EpubContainerXMLImplCopyWith<_$EpubContainerXMLImpl> get copyWith =>
-      __$$EpubContainerXMLImplCopyWithImpl<_$EpubContainerXMLImpl>(
-          this, _$identity);
+  _$$XMLInfoImplCopyWith<_$XMLInfoImpl> get copyWith =>
+      __$$XMLInfoImplCopyWithImpl<_$XMLInfoImpl>(this, _$identity);
 }
 
-abstract class _EpubContainerXML implements EpubContainerXML {
-  const factory _EpubContainerXML(
+abstract class _XMLInfo extends XMLInfo {
+  const factory _XMLInfo(
       {final String? xmlVersion,
       final String? xmlEncoding,
-      final bool? xmlStandalone}) = _$EpubContainerXMLImpl;
+      final bool? xmlStandalone}) = _$XMLInfoImpl;
+  const _XMLInfo._() : super._();
 
   @override
   String? get xmlVersion;
@@ -430,11 +426,11 @@ abstract class _EpubContainerXML implements EpubContainerXML {
   @override
   bool? get xmlStandalone;
 
-  /// Create a copy of EpubContainerXML
+  /// Create a copy of XMLInfo
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EpubContainerXMLImplCopyWith<_$EpubContainerXMLImpl> get copyWith =>
+  _$$XMLInfoImplCopyWith<_$XMLInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

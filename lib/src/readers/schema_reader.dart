@@ -6,7 +6,7 @@ import 'package:epub_io/src/readers/navigation_reader.dart';
 import 'package:epub_io/src/readers/package_reader.dart';
 import 'package:epub_io/src/readers/root_file_path_reader.dart';
 
-mixin SchemaReader implements EpubArchiveReader {
+mixin SchemaReader implements EpubArchiveReader, NavigationReader {
   late final _schema = LazyObject(readSchema);
 
   Future<EpubSchema> get schema async => _schema.value;
@@ -17,15 +17,9 @@ mixin SchemaReader implements EpubArchiveReader {
     final package =
         await PackageReader.readPackage(epubArchive.archive, epubContainer);
 
-    final navigation = await NavigationReader.readNavigation(
-      epubArchive.archive,
-      epubContainer,
-      package,
-    );
-
     return EpubSchema(
       package: package,
-      navigation: navigation,
+      navigation: await readNavigation(epubContainer, package),
       epubContainer: epubContainer,
     );
   }
