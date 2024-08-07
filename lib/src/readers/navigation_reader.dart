@@ -1,49 +1,36 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 
-import 'package:archive/archive.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/schema/container/epub_container.dart';
-import 'package:epub_io/src/schema/navigation/epub_metadata.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_doc_author.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_doc_title.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_head.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_head_meta.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_label.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_list.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_map.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_page_list.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_page_target_type.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
-import 'package:epub_io/src/schema/opf/epub_package.dart';
-import 'package:epub_io/src/schema/opf/epub_version.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart' as xml;
 
-class NavigationReader {
-  static String? _tocFileEntryPath;
+mixin NavigationReader implements EpubArchiveReader {
+  String? _tocFileEntryPath;
 
-  static Future<EpubNavigation> readNavigation(
-    Archive epubArchive,
+  Future<EpubNavigation> readNavigation(
     EpubContainer epubContainer,
     EpubPackage package,
   ) async {
     switch (package.version) {
       case EpubVersion.epub2:
-        return readNavigationV2(epubArchive, epubContainer, package);
+        return readNavigationV2(epubContainer, package);
       case EpubVersion.epub3:
-        return readNavigationV3(epubArchive, epubContainer, package);
+        return readNavigationV3(epubContainer, package);
       case null:
         throw Exception('Unknown EPUB version.');
     }
   }
 
-  static Future<EpubNavigation> readNavigationV2(
-    Archive epubArchive,
+  Future<EpubNavigation> readNavigationV2(
     EpubContainer epubContainer,
     EpubPackage package,
   ) async {
@@ -66,7 +53,7 @@ class NavigationReader {
       epubContainer.contentDirectoryPath,
       tocManifestItem.href,
     );
-    final tocFileEntry = epubArchive.files.firstWhereOrNull(
+    final tocFileEntry = epubArchive.archive.files.firstWhereOrNull(
       (file) => file.name.toLowerCase() == _tocFileEntryPath?.toLowerCase(),
     );
     if (tocFileEntry == null) {
@@ -148,16 +135,11 @@ class NavigationReader {
     );
   }
 
-  static Future<EpubNavigation> readNavigationV3(
-    Archive epubArchive,
+  Future<EpubNavigation> readNavigationV3(
     EpubContainer epubContainer,
     EpubPackage package,
   ) async {
-    //Version 3
-
-    final tocManifestItem = package.manifest?.items.firstWhereOrNull(
-      (element) => element.properties?.contains('nav') ?? false,
-    );
+    final tocManifestItem = package.manifest?.getItemByProperty('nav');
     if (tocManifestItem == null) {
       throw Exception(
         'EPUB parsing error: TOC item, not found in EPUB manifest.',
@@ -168,7 +150,7 @@ class NavigationReader {
       epubContainer.contentDirectoryPath,
       tocManifestItem.href,
     );
-    final tocFileEntry = epubArchive.files.firstWhereOrNull(
+    final tocFileEntry = epubArchive.archive.files.firstWhereOrNull(
       (file) => file.name.toLowerCase() == _tocFileEntryPath!.toLowerCase(),
     );
     if (tocFileEntry == null) {
@@ -247,7 +229,7 @@ class NavigationReader {
     );
   }
 
-  static EpubNavigationContent readNavigationContentV3(
+  EpubNavigationContent readNavigationContentV3(
     xml.XmlElement navigationContentNode,
   ) {
     String? id;
@@ -446,7 +428,7 @@ class NavigationReader {
     return EpubNavigationMap(points: points);
   }
 
-  static EpubNavigationMap readNavigationMapV3(
+  EpubNavigationMap readNavigationMapV3(
     xml.XmlElement navigationMapNode,
   ) {
     final points = <EpubNavigationPoint>[];
@@ -599,7 +581,7 @@ class NavigationReader {
     );
   }
 
-  static EpubNavigationPoint readNavigationPointV3(
+  EpubNavigationPoint readNavigationPointV3(
     xml.XmlElement navigationPointNode,
   ) {
     String? id;
