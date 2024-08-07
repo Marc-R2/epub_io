@@ -1,3 +1,4 @@
+import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:epub_io/src/schema/opf/epub_guide.dart';
 import 'package:epub_io/src/schema/opf/epub_manifest.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata.dart';
@@ -13,6 +14,7 @@ part 'epub_package.g.dart';
 class EpubPackage with _$EpubPackage {
   const factory EpubPackage({
     required NameSpace nameSpace,
+    required XMLInfo xmlInfo,
     EpubVersion? version,
     EpubMetadata? metadata,
     EpubManifest? manifest,
@@ -22,8 +24,6 @@ class EpubPackage with _$EpubPackage {
     String? uniqueIdentifier,
     String? prefix,
     String? xmlLang,
-    String? xmlVersion,
-    String? xmlEncoding,
   }) = _EpubPackage;
 }
 

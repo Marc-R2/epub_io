@@ -76,8 +76,7 @@ void printPackage(ObjectCompare<EpubPackage?> package) {
     ..line('uniqueIdentifier', (b) => b?.uniqueIdentifier, showObj: true)
     ..line('prefix', (b) => b?.prefix, showObj: true)
     ..line('xmlLang', (b) => b?.xmlLang, showObj: true)
-    ..line('xmlVersion', (b) => b?.xmlVersion, showObj: true)
-    ..line('xmlEncoding', (b) => b?.xmlEncoding, showObj: true);
+    ..line('xmlVersion', (b) => b?.xmlInfo, showObj: true);
   printNameSpace(package.line('nameSpace', (b) => b?.nameSpace, showObj: true));
 }
 

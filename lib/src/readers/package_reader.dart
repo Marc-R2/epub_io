@@ -468,8 +468,7 @@ class PackageReader {
       prefix: prefix,
       xmlLang: xmlLang,
       bindings: bindings,
-      xmlVersion: containerDocument.declaration?.version,
-      xmlEncoding: containerDocument.declaration?.encoding,
+      xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
     );
   }
 

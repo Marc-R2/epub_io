@@ -1,6 +1,7 @@
 import 'dart:math' show Random;
 
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
@@ -9,6 +10,7 @@ import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 
 class RandomString {
   RandomString(this.rng);
+
   final Random rng;
 
   static const asciiStart = 33;
@@ -145,6 +147,7 @@ class RandomDataGenerator {
   EpubPackage randomEpubPackage() {
     return EpubPackage(
       nameSpace: const NameSpace(uri: 'lol,no'),
+      xmlInfo: const XMLInfo(),
       guide: randomEpubGuide(),
       manifest: randomEpubManifest(),
       metadata: randomEpubMetadata(),
