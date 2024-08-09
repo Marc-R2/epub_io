@@ -7,12 +7,21 @@ import 'package:epub_io/src/writers/epub_spine_writer.dart';
 import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
 
-extension NameSpaceObj on XmlBuilder {
-  void nameSpaceObj(NameSpace nameSpace) =>
-      namespace(nameSpace.uri, nameSpace.prefix);
-}
-
+/// The `EpubPackageWriter` class is responsible for generating the entire
+/// content of an EPUB package. It handles the creation of the core components
+/// of the EPUB, including metadata, manifest, spine, and guide.
 class EpubPackageWriter {
+  /// Generates the complete XML content for an EPUB package.
+  ///
+  /// This method constructs the XML structure for the package element, which
+  /// serves as the root element of the EPUB file. It includes metadata,
+  /// manifest, spine, and guide elements, utilizing the respective
+  /// writer classes to generate each section.
+  ///
+  /// - [package]: The `EpubPackage` object that contains all the necessary
+  ///   information for creating the EPUB package.
+  ///
+  /// Returns a formatted XML string representing the entire EPUB package.
   static String writeContent(EpubPackage package) {
     final builder = XmlBuilder();
 
@@ -63,6 +72,7 @@ class EpubPackageWriter {
 
     return builder.buildDocument().toXmlString(
           pretty: true,
+          // Make sure to preserve whitespace for text nodes.
           preserveWhitespace: (node) {
             if (node is! XmlElement || node.children.length != 1) return false;
             return node.children.first.nodeType == XmlNodeType.TEXT;
