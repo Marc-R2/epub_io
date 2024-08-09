@@ -7,16 +7,16 @@ mixin EpubContentFileRef<T> {
 
   EpubSchema get schema;
 
-  String? get fileName;
+  String get fileName;
 
-  EpubContentType? get contentType;
+  EpubContentType get contentType;
 
-  String? get contentMimeType;
+  String get contentMimeType;
 
   EpubFile getContentFileEntry() {
     final u = EpubUri.parse(schema.epubContainer.contentDirectoryPath);
     return epubArchive.getFile(
-      u.resolve(fileName!),
+      u.resolve(fileName),
       allowByName: true,
     );
   }

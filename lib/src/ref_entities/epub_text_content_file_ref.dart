@@ -14,9 +14,9 @@ class EpubTextContentFileRef
   const factory EpubTextContentFileRef({
     required EpubArchive epubArchive,
     required EpubSchema schema,
-    String? fileName,
-    String? contentMimeType,
-    EpubContentType? contentType,
+    required String fileName,
+    required String contentMimeType,
+    required EpubContentType contentType,
   }) = _EpubTextContentFileRef;
 
   const EpubTextContentFileRef._();
