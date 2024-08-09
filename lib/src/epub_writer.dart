@@ -8,12 +8,24 @@ import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:epub_io/src/writers/epub_container_writer.dart';
 import 'package:epub_io/src/writers/epub_package_writer.dart';
 
+/// The `EpubWriter` class is responsible for creating a ZIP archive
+/// of an `EpubBook` object and serializing it into a byte array
+/// that can be saved as an EPUB file.
 class EpubWriter {
-  // Creates a Zip Archive of an EpubBook
+  /// Creates a ZIP archive containing the entire content of an `EpubBook`.
+  ///
+  /// This method assembles the necessary files and metadata,
+  /// including the `mimetype`, `META-INF/container.xml`, content files,
+  /// and `content.opf`, and adds them to a ZIP archive.
+  ///
+  /// - [book]: The `EpubBook` object
+  ///   containing all the content and metadata of the EPUB.
+  ///
+  /// Returns an `Archive` object representing the EPUB file.
   static Archive _createArchive(EpubBook book) {
     final arch = Archive();
 
-    // Add simple metadata
+    // Add the EPUB mimetype as the first file in the archive (uncompressed)
     arch.addFile(
       ArchiveFile.noCompress(
         'mimetype',
@@ -22,7 +34,7 @@ class EpubWriter {
       ),
     );
 
-    // Generate the META-INF/container.xml file and add it to the Archive
+    // Generate the META-INF/container.xml file and add it to the archive
     final container = EpubContainerWriter.write(book.schema!.epubContainer);
     final containerBytes = convert.utf8.encode(container);
 
@@ -31,11 +43,10 @@ class EpubWriter {
         'META-INF/container.xml',
         containerBytes.length,
         containerBytes,
-        // ArchiveFile.DEFLATE,
       ),
     );
 
-    // Add all content to the archive
+    // Add all content files (byte and text) to the archive
     book.content!.allFiles.forEach((name, file) {
       List<int>? content;
 
@@ -53,12 +64,11 @@ class EpubWriter {
           )!,
           content!.length,
           content,
-          // ArchiveFile.DEFLATE,
         ),
       );
     });
 
-    // Generate the content.opf file and add it to the Archive
+    // Generate the content.opf file and add it to the archive
     final contentOpf = EpubPackageWriter.writeContent(book.schema!.package!);
     final contentOpfBytes = convert.utf8.encode(contentOpf);
 
@@ -67,14 +77,22 @@ class EpubWriter {
         book.schema!.epubContainer.rootFilePath,
         contentOpfBytes.length,
         contentOpfBytes,
-        // ArchiveFile.DEFLATE,
       ),
     );
 
     return arch;
   }
 
-  // Serializes the EpubBook into a byte array
+  /// Serializes the `EpubBook` object into a byte array
+  /// that represents the entire EPUB file.
+  ///
+  /// This method creates the archive by calling `_createArchive()`
+  /// and then encodes it using a ZIP encoder to produce the final byte array.
+  ///
+  /// - [book]: The `EpubBook` object containing
+  ///   all the content and metadata of the EPUB.
+  ///
+  /// Returns a `List<int>` representing the EPUB file as a byte array.
   static List<int>? writeBook(EpubBook book) {
     final arch = _createArchive(book);
 
