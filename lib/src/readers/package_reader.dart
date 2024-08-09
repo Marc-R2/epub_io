@@ -9,7 +9,17 @@ import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:xml/xml.dart';
 
+/// The `PackageReader` class provides methods to read and parse
+/// the various components of an EPUB package from its XML representation,
+/// such as metadata, manifest, spine, and guide.
 class PackageReader {
+  /// Parses the `<guide>` element from an XML document
+  /// and converts it into an [EpubGuide] object.
+  ///
+  /// - **[guideNode]**: The XML element representing the guide section.
+  ///
+  /// Returns an [EpubGuide] object containing
+  /// a list of [EpubGuideReference] items.
   static EpubGuide readGuide(XmlElement guideNode) {
     final items = <EpubGuideReference>[];
 
@@ -52,6 +62,13 @@ class PackageReader {
     return EpubGuide(items: items);
   }
 
+  /// Parses the `<manifest>` element from an XML document
+  /// and converts it into an [EpubManifest] object.
+  ///
+  /// - **[manifestNode]**: The XML element representing the manifest section.
+  ///
+  /// Returns an [EpubManifest] object containing
+  /// a list of [EpubManifestItem] items.
   static EpubManifest readManifest(XmlElement manifestNode) {
     final items = <EpubManifestItem>[];
 
@@ -92,6 +109,12 @@ class PackageReader {
     return EpubManifest(items: items);
   }
 
+  /// Parses a single `<link>` element within the `<metadata>` section
+  /// and returns a [Link] object.
+  ///
+  /// - **[manifestNode]**: The XML element representing a link in the metadata.
+  ///
+  /// Returns a [Link] object containing `href`, `rel`, and `refines` attributes
   static Link readMetadataLink(XmlElement manifestNode) {
     final href = manifestNode.getAttribute('href');
     final rel = manifestNode.getAttribute('rel');
@@ -100,6 +123,13 @@ class PackageReader {
     return Link(href: href!, rel: rel, refines: refines);
   }
 
+  /// Parses the `<metadata>` element from an XML document
+  /// and converts it into an [EpubMetadata] object.
+  ///
+  /// - **[metadataNode]**: The XML element representing the metadata section.
+  /// - **[epubVersion]**: The EPUB version (e.g., 2.0, 3.0).
+  ///
+  /// Returns an [EpubMetadata] object containing metadata information.
   static EpubMetadata readMetadata(
     XmlElement metadataNode,
     EpubVersion? epubVersion,
@@ -175,6 +205,13 @@ class PackageReader {
     );
   }
 
+  /// Parses a `<contributor>` element within the `<metadata>` section
+  /// and returns an [EpubMetadataContributor]`object.
+  ///
+  /// - **[metadataContributorNode]**: The XML element representing a contributor.
+  ///
+  /// Returns an [EpubMetadataContributor] object
+  /// containing the contributor's name, role, and file-as attributes.
   static EpubMetadataContributor readMetadataContributor(
     XmlElement metadataContributorNode,
   ) {
@@ -201,6 +238,13 @@ class PackageReader {
     );
   }
 
+  /// Parses a `<creator>` element within the `<metadata>` section
+  /// and returns an [EpubMetadataCreator] object.
+  ///
+  /// - **[metadataCreatorNode]**: The XML element representing a creator.
+  ///
+  /// Returns an [EpubMetadataCreator] object containing
+  /// the creator's name, role, and file-as attributes.
   static EpubMetadataCreator readMetadataCreator(
     XmlElement metadataCreatorNode,
   ) {
@@ -227,6 +271,13 @@ class PackageReader {
     );
   }
 
+  /// Parses a `<date>` element within the `<metadata>` section
+  /// and returns an [EpubMetadataDate] object.
+  ///
+  /// - **[metadataDateNode]**: The XML element representing a date.
+  ///
+  /// Returns an [EpubMetadataDate] object
+  /// containing the date and event attributes.
   static EpubMetadataDate readMetadataDate(XmlElement metadataDateNode) {
     String? event;
     String? date;
@@ -246,6 +297,13 @@ class PackageReader {
     );
   }
 
+  /// Parses an `<identifier>` element within the `<metadata>` section
+  /// and returns an [EpubMetadataIdentifier] object.
+  ///
+  /// - **[metadataIdentifierNode]**: The XML element representing an identifier
+  ///
+  /// Returns an [EpubMetadataIdentifier] object containing
+  /// the identifier's ID, scheme, and value.
   static EpubMetadataIdentifier readMetadataIdentifier(
     XmlElement metadataIdentifierNode,
   ) {
@@ -272,6 +330,13 @@ class PackageReader {
     );
   }
 
+  /// Parses a `<meta>` element within the `<metadata>` section of an
+  /// EPUB 2.0 document and returns an [EpubMetadataMeta] object.
+  ///
+  /// - **[metadataMetaNode]**: The XML element representing a meta item.
+  ///
+  /// Returns an [EpubMetadataMeta] object containing
+  /// the meta item's name and content.
   static EpubMetadataMeta readMetadataMetaVersion2(
     XmlElement metadataMetaNode,
   ) {
@@ -293,6 +358,13 @@ class PackageReader {
     );
   }
 
+  /// Parses a `<meta>` element within the `<metadata>` section of an
+  /// EPUB 3.0 document and returns an `EpubMetadataMeta` object.
+  ///
+  /// - **[metadataMetaNode]**: The XML element representing a meta item.
+  ///
+  /// Returns an [EpubMetadataMeta] object containing the
+  /// meta item's various attributes.
   static EpubMetadataMeta readMetadataMetaVersion3(
     XmlElement metadataMetaNode,
   ) {
@@ -331,6 +403,15 @@ class PackageReader {
     );
   }
 
+  /// Reads and parses the `package.opf` file from the EPUB archive
+  /// to extract the package information.
+  ///
+  /// - **[epubArchive]**: The archive containing the EPUB file.
+  /// - **[container]**: The `EpubContainer` object that holds information
+  ///   about the EPUB's structure.
+  ///
+  /// Returns an [EpubPackage] object containing the metadata, manifest,
+  /// spine, guide, and other package information.
   static Future<EpubPackage> readPackage(
     EpubArchive epubArchive,
     EpubContainer container,
@@ -408,6 +489,13 @@ class PackageReader {
     );
   }
 
+  /// Parses the `<spine>` element from an XML document
+  /// and converts it into an [EpubSpine] object.
+  ///
+  /// - **[spineNode]**: The XML element representing the spine section.
+  ///
+  /// Returns an [EpubSpine] object containing
+  /// a list of [EpubSpineItemRef] items.
   static EpubSpine readSpine(XmlElement spineNode) {
     final items = <EpubSpineItemRef>[];
     final tableOfContents = spineNode.getAttribute('toc');
