@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/readers/content_reader.dart';
+import 'package:epub_io/src/readers/content_ref_reader.dart';
 import 'package:epub_io/src/readers/lazy_object.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
