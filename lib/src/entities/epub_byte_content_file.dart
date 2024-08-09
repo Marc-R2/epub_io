@@ -8,9 +8,9 @@ class EpubByteContentFile
     with _$EpubByteContentFile
     implements EpubContentFile<List<int>> {
   const factory EpubByteContentFile({
-    String? fileName,
-    String? contentMimeType,
-    EpubContentType? contentType,
-    List<int>? content,
+    required String fileName,
+    required String contentMimeType,
+    required EpubContentType contentType,
+    required List<int> content,
   }) = _EpubByteContentFile;
 }
