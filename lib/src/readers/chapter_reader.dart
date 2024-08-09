@@ -12,8 +12,8 @@ class ChapterReader {
   /// Returns a list of [EpubChapterRef] objects representing the chapters.
   /// If the navigation information is missing, an empty list is returned.
   static List<EpubChapterRef> getChapters(EpubBookRef bookRef) {
-    if (bookRef.schema!.navigation == null) return <EpubChapterRef>[];
-    return getChaptersImpl(bookRef, bookRef.schema!.navigation!.navMap!.points);
+    if (bookRef.schema.navigation == null) return <EpubChapterRef>[];
+    return getChaptersImpl(bookRef, bookRef.schema.navigation!.navMap!.points);
   }
 
   /// Recursively retrieves chapters

@@ -35,7 +35,7 @@ class EpubWriter {
     );
 
     // Generate the META-INF/container.xml file and add it to the archive
-    final container = EpubContainerWriter.write(book.schema!.epubContainer);
+    final container = EpubContainerWriter.write(book.schema.epubContainer);
     final containerBytes = convert.utf8.encode(container);
 
     arch.addFile(
@@ -47,7 +47,7 @@ class EpubWriter {
     );
 
     // Add all content files (byte and text) to the archive
-    book.content!.allFiles.forEach((name, file) {
+    book.content.allFiles.forEach((name, file) {
       List<int>? content;
 
       if (file is EpubByteContentFile) {
@@ -59,7 +59,7 @@ class EpubWriter {
       arch.addFile(
         ArchiveFile(
           ZipPathUtils.combine(
-            book.schema!.epubContainer.contentDirectoryPath,
+            book.schema.epubContainer.contentDirectoryPath,
             name,
           )!,
           content!.length,
@@ -69,12 +69,12 @@ class EpubWriter {
     });
 
     // Generate the content.opf file and add it to the archive
-    final contentOpf = EpubPackageWriter.writeContent(book.schema!.package!);
+    final contentOpf = EpubPackageWriter.writeContent(book.schema.package!);
     final contentOpfBytes = convert.utf8.encode(contentOpf);
 
     arch.addFile(
       ArchiveFile(
-        book.schema!.epubContainer.rootFilePath,
+        book.schema.epubContainer.rootFilePath,
         contentOpfBytes.length,
         contentOpfBytes,
       ),

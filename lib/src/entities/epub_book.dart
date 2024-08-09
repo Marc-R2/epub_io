@@ -20,17 +20,17 @@ class EpubBook with _$EpubBook {
   /// - **[chapters]**: A list of [EpubChapter] representing the
   ///   chapters of the book.
   const factory EpubBook({
+    /// The [EpubSchema] containing metadata and structural information.
+    required EpubSchema schema,
+
+    /// The [EpubContent] including text, images, and other resources.
+    required EpubContent content,
+
     /// The title of the EPUB book. Optional.
     String? title,
 
     /// A list of [EpubMetadataCreator] representing the authors of the book.
     @Default([]) List<EpubMetadataCreator> authors,
-
-    /// The [EpubSchema] containing metadata and structural information.
-    EpubSchema? schema,
-
-    /// The [EpubContent] including text, images, and other resources.
-    EpubContent? content,
 
     /// The cover image of the book as an [Image].
     Image? coverImage,
