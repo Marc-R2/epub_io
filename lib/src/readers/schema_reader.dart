@@ -14,8 +14,7 @@ mixin SchemaReader implements EpubArchiveReader, NavigationReader {
   Future<EpubSchema> readSchema() async {
     final epubContainer = await RootFilePathReader.getContainer(epubArchive);
 
-    final package =
-        await PackageReader.readPackage(epubArchive.archive, epubContainer);
+    final package = await PackageReader.readPackage(epubArchive, epubContainer);
 
     return EpubSchema(
       package: package,
