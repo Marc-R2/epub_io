@@ -20,9 +20,9 @@ EpubGuideReference _$EpubGuideReferenceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EpubGuideReference {
-  String? get type => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get href => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
-  String? get href => throw _privateConstructorUsedError;
 
   /// Serializes this EpubGuideReference to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $EpubGuideReferenceCopyWith<$Res> {
           EpubGuideReference value, $Res Function(EpubGuideReference) then) =
       _$EpubGuideReferenceCopyWithImpl<$Res, EpubGuideReference>;
   @useResult
-  $Res call({String? type, String? title, String? href});
+  $Res call({String type, String href, String? title});
 }
 
 /// @nodoc
@@ -58,22 +58,22 @@ class _$EpubGuideReferenceCopyWithImpl<$Res, $Val extends EpubGuideReference>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
+    Object? href = null,
     Object? title = freezed,
-    Object? href = freezed,
   }) {
     return _then(_value.copyWith(
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      href: null == href
+          ? _value.href
+          : href // ignore: cast_nullable_to_non_nullable
+              as String,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      href: freezed == href
-          ? _value.href
-          : href // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$EpubGuideReferenceImplCopyWith<$Res>
       __$$EpubGuideReferenceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? type, String? title, String? href});
+  $Res call({String type, String href, String? title});
 }
 
 /// @nodoc
@@ -103,22 +103,22 @@ class __$$EpubGuideReferenceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
+    Object? href = null,
     Object? title = freezed,
-    Object? href = freezed,
   }) {
     return _then(_$EpubGuideReferenceImpl(
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      href: null == href
+          ? _value.href
+          : href // ignore: cast_nullable_to_non_nullable
+              as String,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      href: freezed == href
-          ? _value.href
-          : href // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -127,22 +127,23 @@ class __$$EpubGuideReferenceImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$EpubGuideReferenceImpl extends _EpubGuideReference {
-  const _$EpubGuideReferenceImpl({this.type, this.title, this.href})
+  const _$EpubGuideReferenceImpl(
+      {required this.type, required this.href, this.title})
       : super._();
 
   factory _$EpubGuideReferenceImpl.fromJson(Map<String, dynamic> json) =>
       _$$EpubGuideReferenceImplFromJson(json);
 
   @override
-  final String? type;
+  final String type;
+  @override
+  final String href;
   @override
   final String? title;
-  @override
-  final String? href;
 
   @override
   String toString() {
-    return 'EpubGuideReference(type: $type, title: $title, href: $href)';
+    return 'EpubGuideReference(type: $type, href: $href, title: $title)';
   }
 
   @override
@@ -151,13 +152,13 @@ class _$EpubGuideReferenceImpl extends _EpubGuideReference {
         (other.runtimeType == runtimeType &&
             other is _$EpubGuideReferenceImpl &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.href, href) || other.href == href));
+            (identical(other.href, href) || other.href == href) &&
+            (identical(other.title, title) || other.title == title));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, type, title, href);
+  int get hashCode => Object.hash(runtimeType, type, href, title);
 
   /// Create a copy of EpubGuideReference
   /// with the given fields replaced by the non-null parameter values.
@@ -178,20 +179,20 @@ class _$EpubGuideReferenceImpl extends _EpubGuideReference {
 
 abstract class _EpubGuideReference extends EpubGuideReference {
   const factory _EpubGuideReference(
-      {final String? type,
-      final String? title,
-      final String? href}) = _$EpubGuideReferenceImpl;
+      {required final String type,
+      required final String href,
+      final String? title}) = _$EpubGuideReferenceImpl;
   const _EpubGuideReference._() : super._();
 
   factory _EpubGuideReference.fromJson(Map<String, dynamic> json) =
       _$EpubGuideReferenceImpl.fromJson;
 
   @override
-  String? get type;
+  String get type;
+  @override
+  String get href;
   @override
   String? get title;
-  @override
-  String? get href;
 
   /// Create a copy of EpubGuideReference
   /// with the given fields replaced by the non-null parameter values.

@@ -7,8 +7,8 @@ part 'epub_navigation_head_meta.g.dart';
 @freezed
 class EpubNavigationHeadMeta with _$EpubNavigationHeadMeta, XmlWrite {
   const factory EpubNavigationHeadMeta({
-    String? name,
-    String? content,
+    required String name,
+    required String content,
     String? scheme,
   }) = _EpubNavigationHeadMeta;
 

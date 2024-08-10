@@ -21,8 +21,8 @@ EpubNavigationHeadMeta _$EpubNavigationHeadMetaFromJson(
 
 /// @nodoc
 mixin _$EpubNavigationHeadMeta {
-  String? get name => throw _privateConstructorUsedError;
-  String? get content => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
   String? get scheme => throw _privateConstructorUsedError;
 
   /// Serializes this EpubNavigationHeadMeta to a JSON map.
@@ -41,7 +41,7 @@ abstract class $EpubNavigationHeadMetaCopyWith<$Res> {
           $Res Function(EpubNavigationHeadMeta) then) =
       _$EpubNavigationHeadMetaCopyWithImpl<$Res, EpubNavigationHeadMeta>;
   @useResult
-  $Res call({String? name, String? content, String? scheme});
+  $Res call({String name, String content, String? scheme});
 }
 
 /// @nodoc
@@ -60,19 +60,19 @@ class _$EpubNavigationHeadMetaCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? content = freezed,
+    Object? name = null,
+    Object? content = null,
     Object? scheme = freezed,
   }) {
     return _then(_value.copyWith(
-      name: freezed == name
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      content: freezed == content
+              as String,
+      content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       scheme: freezed == scheme
           ? _value.scheme
           : scheme // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$EpubNavigationHeadMetaImplCopyWith<$Res>
       __$$EpubNavigationHeadMetaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, String? content, String? scheme});
+  $Res call({String name, String content, String? scheme});
 }
 
 /// @nodoc
@@ -108,19 +108,19 @@ class __$$EpubNavigationHeadMetaImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? content = freezed,
+    Object? name = null,
+    Object? content = null,
     Object? scheme = freezed,
   }) {
     return _then(_$EpubNavigationHeadMetaImpl(
-      name: freezed == name
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      content: freezed == content
+              as String,
+      content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       scheme: freezed == scheme
           ? _value.scheme
           : scheme // ignore: cast_nullable_to_non_nullable
@@ -132,16 +132,17 @@ class __$$EpubNavigationHeadMetaImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$EpubNavigationHeadMetaImpl extends _EpubNavigationHeadMeta {
-  const _$EpubNavigationHeadMetaImpl({this.name, this.content, this.scheme})
+  const _$EpubNavigationHeadMetaImpl(
+      {required this.name, required this.content, this.scheme})
       : super._();
 
   factory _$EpubNavigationHeadMetaImpl.fromJson(Map<String, dynamic> json) =>
       _$$EpubNavigationHeadMetaImplFromJson(json);
 
   @override
-  final String? name;
+  final String name;
   @override
-  final String? content;
+  final String content;
   @override
   final String? scheme;
 
@@ -183,8 +184,8 @@ class _$EpubNavigationHeadMetaImpl extends _EpubNavigationHeadMeta {
 
 abstract class _EpubNavigationHeadMeta extends EpubNavigationHeadMeta {
   const factory _EpubNavigationHeadMeta(
-      {final String? name,
-      final String? content,
+      {required final String name,
+      required final String content,
       final String? scheme}) = _$EpubNavigationHeadMetaImpl;
   const _EpubNavigationHeadMeta._() : super._();
 
@@ -192,9 +193,9 @@ abstract class _EpubNavigationHeadMeta extends EpubNavigationHeadMeta {
       _$EpubNavigationHeadMetaImpl.fromJson;
 
   @override
-  String? get name;
+  String get name;
   @override
-  String? get content;
+  String get content;
   @override
   String? get scheme;
 

@@ -9,8 +9,8 @@ part of 'epub_navigation_head_meta.dart';
 _$EpubNavigationHeadMetaImpl _$$EpubNavigationHeadMetaImplFromJson(
         Map<String, dynamic> json) =>
     _$EpubNavigationHeadMetaImpl(
-      name: json['name'] as String?,
-      content: json['content'] as String?,
+      name: json['name'] as String,
+      content: json['content'] as String,
       scheme: json['scheme'] as String?,
     );
 

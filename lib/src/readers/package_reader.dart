@@ -75,36 +75,13 @@ class PackageReader {
     final children = manifestNode.children.whereType<XmlElement>();
     for (final manifestItemNode in children) {
       if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
-      var item = const EpubManifestItem();
-      for (final manifestItemNodeAttribute in manifestItemNode.attributes) {
-        final attributeValue = manifestItemNodeAttribute.value;
-        item = switch (manifestItemNodeAttribute.name.local.toLowerCase()) {
-          'id' => item.copyWith(id: attributeValue),
-          'href' => item.copyWith(href: attributeValue),
-          'media-type' => item.copyWith(mediaType: attributeValue),
-          'media-overlay' => item.copyWith(mediaOverlay: attributeValue),
-          'required-namespace' =>
-            item.copyWith(requiredNamespace: attributeValue),
-          'required-modules' => item.copyWith(requiredModules: attributeValue),
-          'fallback' => item.copyWith(fallback: attributeValue),
-          'fallback-style' => item.copyWith(fallbackStyle: attributeValue),
-          'properties' =>
-            item.copyWith(properties: attributeValue.split(' ').toSet()),
-          _ => item,
-        };
+      final itemMap = <String, dynamic>{};
+      for (final itemAttr in manifestItemNode.attributes) {
+        final key = itemAttr.name.local.toLowerCase();
+        itemMap[key] = itemAttr.value;
+        if (key == 'properties') itemMap[key] = itemAttr.value.split(' ');
       }
-
-      if (item.id == null || item.id!.isEmpty) {
-        throw Exception('Incorrect EPUB manifest: item ID is missing');
-      }
-      if (item.href == null || item.href!.isEmpty) {
-        throw Exception('Incorrect EPUB manifest: item href is missing');
-      }
-      if (item.mediaType == null || item.mediaType!.isEmpty) {
-        throw Exception('Incorrect EPUB manifest: item media type is missing');
-      }
-
-      items.add(item);
+      items.add(EpubManifestItem.fromJson(itemMap));
     }
     return EpubManifest(items: items);
   }

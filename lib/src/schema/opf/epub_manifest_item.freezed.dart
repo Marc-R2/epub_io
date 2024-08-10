@@ -14,17 +14,33 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+EpubManifestItem _$EpubManifestItemFromJson(Map<String, dynamic> json) {
+  return _EpubManifestItem.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EpubManifestItem {
-  String? get id => throw _privateConstructorUsedError;
-  String? get href => throw _privateConstructorUsedError;
-  String? get mediaType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id')
+  String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'href')
+  String get href => throw _privateConstructorUsedError;
+  @JsonKey(name: 'media-type')
+  String get mediaType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'media-overlay')
   String? get mediaOverlay => throw _privateConstructorUsedError;
+  @JsonKey(name: 'required-namespace')
   String? get requiredNamespace => throw _privateConstructorUsedError;
+  @JsonKey(name: 'required-modules')
   String? get requiredModules => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fallback')
   String? get fallback => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fallback-style')
   String? get fallbackStyle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'properties')
   Set<String>? get properties => throw _privateConstructorUsedError;
+
+  /// Serializes this EpubManifestItem to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubManifestItem
   /// with the given fields replaced by the non-null parameter values.
@@ -40,15 +56,15 @@ abstract class $EpubManifestItemCopyWith<$Res> {
       _$EpubManifestItemCopyWithImpl<$Res, EpubManifestItem>;
   @useResult
   $Res call(
-      {String? id,
-      String? href,
-      String? mediaType,
-      String? mediaOverlay,
-      String? requiredNamespace,
-      String? requiredModules,
-      String? fallback,
-      String? fallbackStyle,
-      Set<String>? properties});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'href') String href,
+      @JsonKey(name: 'media-type') String mediaType,
+      @JsonKey(name: 'media-overlay') String? mediaOverlay,
+      @JsonKey(name: 'required-namespace') String? requiredNamespace,
+      @JsonKey(name: 'required-modules') String? requiredModules,
+      @JsonKey(name: 'fallback') String? fallback,
+      @JsonKey(name: 'fallback-style') String? fallbackStyle,
+      @JsonKey(name: 'properties') Set<String>? properties});
 }
 
 /// @nodoc
@@ -66,9 +82,9 @@ class _$EpubManifestItemCopyWithImpl<$Res, $Val extends EpubManifestItem>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? href = freezed,
-    Object? mediaType = freezed,
+    Object? id = null,
+    Object? href = null,
+    Object? mediaType = null,
     Object? mediaOverlay = freezed,
     Object? requiredNamespace = freezed,
     Object? requiredModules = freezed,
@@ -77,18 +93,18 @@ class _$EpubManifestItemCopyWithImpl<$Res, $Val extends EpubManifestItem>
     Object? properties = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      href: freezed == href
+              as String,
+      href: null == href
           ? _value.href
           : href // ignore: cast_nullable_to_non_nullable
-              as String?,
-      mediaType: freezed == mediaType
+              as String,
+      mediaType: null == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       mediaOverlay: freezed == mediaOverlay
           ? _value.mediaOverlay
           : mediaOverlay // ignore: cast_nullable_to_non_nullable
@@ -126,15 +142,15 @@ abstract class _$$EpubManifestItemImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
-      String? href,
-      String? mediaType,
-      String? mediaOverlay,
-      String? requiredNamespace,
-      String? requiredModules,
-      String? fallback,
-      String? fallbackStyle,
-      Set<String>? properties});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'href') String href,
+      @JsonKey(name: 'media-type') String mediaType,
+      @JsonKey(name: 'media-overlay') String? mediaOverlay,
+      @JsonKey(name: 'required-namespace') String? requiredNamespace,
+      @JsonKey(name: 'required-modules') String? requiredModules,
+      @JsonKey(name: 'fallback') String? fallback,
+      @JsonKey(name: 'fallback-style') String? fallbackStyle,
+      @JsonKey(name: 'properties') Set<String>? properties});
 }
 
 /// @nodoc
@@ -150,9 +166,9 @@ class __$$EpubManifestItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? href = freezed,
-    Object? mediaType = freezed,
+    Object? id = null,
+    Object? href = null,
+    Object? mediaType = null,
     Object? mediaOverlay = freezed,
     Object? requiredNamespace = freezed,
     Object? requiredModules = freezed,
@@ -161,18 +177,18 @@ class __$$EpubManifestItemImplCopyWithImpl<$Res>
     Object? properties = freezed,
   }) {
     return _then(_$EpubManifestItemImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      href: freezed == href
+              as String,
+      href: null == href
           ? _value.href
           : href // ignore: cast_nullable_to_non_nullable
-              as String?,
-      mediaType: freezed == mediaType
+              as String,
+      mediaType: null == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       mediaOverlay: freezed == mediaOverlay
           ? _value.mediaOverlay
           : mediaOverlay // ignore: cast_nullable_to_non_nullable
@@ -202,38 +218,50 @@ class __$$EpubManifestItemImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$EpubManifestItemImpl implements _EpubManifestItem {
   const _$EpubManifestItemImpl(
-      {this.id,
-      this.href,
-      this.mediaType,
-      this.mediaOverlay,
-      this.requiredNamespace,
-      this.requiredModules,
-      this.fallback,
-      this.fallbackStyle,
-      final Set<String>? properties})
+      {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'href') required this.href,
+      @JsonKey(name: 'media-type') required this.mediaType,
+      @JsonKey(name: 'media-overlay') this.mediaOverlay,
+      @JsonKey(name: 'required-namespace') this.requiredNamespace,
+      @JsonKey(name: 'required-modules') this.requiredModules,
+      @JsonKey(name: 'fallback') this.fallback,
+      @JsonKey(name: 'fallback-style') this.fallbackStyle,
+      @JsonKey(name: 'properties') final Set<String>? properties})
       : _properties = properties;
 
+  factory _$EpubManifestItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EpubManifestItemImplFromJson(json);
+
   @override
-  final String? id;
+  @JsonKey(name: 'id')
+  final String id;
   @override
-  final String? href;
+  @JsonKey(name: 'href')
+  final String href;
   @override
-  final String? mediaType;
+  @JsonKey(name: 'media-type')
+  final String mediaType;
   @override
+  @JsonKey(name: 'media-overlay')
   final String? mediaOverlay;
   @override
+  @JsonKey(name: 'required-namespace')
   final String? requiredNamespace;
   @override
+  @JsonKey(name: 'required-modules')
   final String? requiredModules;
   @override
+  @JsonKey(name: 'fallback')
   final String? fallback;
   @override
+  @JsonKey(name: 'fallback-style')
   final String? fallbackStyle;
   final Set<String>? _properties;
   @override
+  @JsonKey(name: 'properties')
   Set<String>? get properties {
     final value = _properties;
     if (value == null) return null;
@@ -270,6 +298,7 @@ class _$EpubManifestItemImpl implements _EpubManifestItem {
                 .equals(other._properties, _properties));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -291,37 +320,57 @@ class _$EpubManifestItemImpl implements _EpubManifestItem {
   _$$EpubManifestItemImplCopyWith<_$EpubManifestItemImpl> get copyWith =>
       __$$EpubManifestItemImplCopyWithImpl<_$EpubManifestItemImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EpubManifestItemImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _EpubManifestItem implements EpubManifestItem {
   const factory _EpubManifestItem(
-      {final String? id,
-      final String? href,
-      final String? mediaType,
-      final String? mediaOverlay,
-      final String? requiredNamespace,
-      final String? requiredModules,
-      final String? fallback,
-      final String? fallbackStyle,
-      final Set<String>? properties}) = _$EpubManifestItemImpl;
+          {@JsonKey(name: 'id') required final String id,
+          @JsonKey(name: 'href') required final String href,
+          @JsonKey(name: 'media-type') required final String mediaType,
+          @JsonKey(name: 'media-overlay') final String? mediaOverlay,
+          @JsonKey(name: 'required-namespace') final String? requiredNamespace,
+          @JsonKey(name: 'required-modules') final String? requiredModules,
+          @JsonKey(name: 'fallback') final String? fallback,
+          @JsonKey(name: 'fallback-style') final String? fallbackStyle,
+          @JsonKey(name: 'properties') final Set<String>? properties}) =
+      _$EpubManifestItemImpl;
+
+  factory _EpubManifestItem.fromJson(Map<String, dynamic> json) =
+      _$EpubManifestItemImpl.fromJson;
 
   @override
-  String? get id;
+  @JsonKey(name: 'id')
+  String get id;
   @override
-  String? get href;
+  @JsonKey(name: 'href')
+  String get href;
   @override
-  String? get mediaType;
+  @JsonKey(name: 'media-type')
+  String get mediaType;
   @override
+  @JsonKey(name: 'media-overlay')
   String? get mediaOverlay;
   @override
+  @JsonKey(name: 'required-namespace')
   String? get requiredNamespace;
   @override
+  @JsonKey(name: 'required-modules')
   String? get requiredModules;
   @override
+  @JsonKey(name: 'fallback')
   String? get fallback;
   @override
+  @JsonKey(name: 'fallback-style')
   String? get fallbackStyle;
   @override
+  @JsonKey(name: 'properties')
   Set<String>? get properties;
 
   /// Create a copy of EpubManifestItem

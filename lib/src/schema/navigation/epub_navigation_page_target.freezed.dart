@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubNavigationPageTarget {
+  EpubNavigationPageTargetType get type => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get value => throw _privateConstructorUsedError;
-  EpubNavigationPageTargetType? get type => throw _privateConstructorUsedError;
   String? get classs => throw _privateConstructorUsedError;
   String? get playOrder => throw _privateConstructorUsedError;
   List<EpubNavigationLabel> get navigationLabels =>
@@ -39,9 +39,9 @@ abstract class $EpubNavigationPageTargetCopyWith<$Res> {
       _$EpubNavigationPageTargetCopyWithImpl<$Res, EpubNavigationPageTarget>;
   @useResult
   $Res call(
-      {String? id,
+      {EpubNavigationPageTargetType type,
+      String? id,
       String? value,
-      EpubNavigationPageTargetType? type,
       String? classs,
       String? playOrder,
       List<EpubNavigationLabel> navigationLabels,
@@ -66,15 +66,19 @@ class _$EpubNavigationPageTargetCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? id = freezed,
     Object? value = freezed,
-    Object? type = freezed,
     Object? classs = freezed,
     Object? playOrder = freezed,
     Object? navigationLabels = null,
     Object? content = freezed,
   }) {
     return _then(_value.copyWith(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationPageTargetType,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -83,10 +87,6 @@ class _$EpubNavigationPageTargetCopyWithImpl<$Res,
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationPageTargetType?,
       classs: freezed == classs
           ? _value.classs
           : classs // ignore: cast_nullable_to_non_nullable
@@ -131,9 +131,9 @@ abstract class _$$EpubNavigationPageTargetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {EpubNavigationPageTargetType type,
+      String? id,
       String? value,
-      EpubNavigationPageTargetType? type,
       String? classs,
       String? playOrder,
       List<EpubNavigationLabel> navigationLabels,
@@ -158,15 +158,19 @@ class __$$EpubNavigationPageTargetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? id = freezed,
     Object? value = freezed,
-    Object? type = freezed,
     Object? classs = freezed,
     Object? playOrder = freezed,
     Object? navigationLabels = null,
     Object? content = freezed,
   }) {
     return _then(_$EpubNavigationPageTargetImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationPageTargetType,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -175,10 +179,6 @@ class __$$EpubNavigationPageTargetImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationPageTargetType?,
       classs: freezed == classs
           ? _value.classs
           : classs // ignore: cast_nullable_to_non_nullable
@@ -203,22 +203,21 @@ class __$$EpubNavigationPageTargetImplCopyWithImpl<$Res>
 
 class _$EpubNavigationPageTargetImpl implements _EpubNavigationPageTarget {
   const _$EpubNavigationPageTargetImpl(
-      {this.id,
+      {required this.type,
+      this.id,
       this.value,
-      this.type,
       this.classs,
       this.playOrder,
-      final List<EpubNavigationLabel> navigationLabels =
-          const <EpubNavigationLabel>[],
+      final List<EpubNavigationLabel> navigationLabels = const [],
       this.content})
       : _navigationLabels = navigationLabels;
 
   @override
+  final EpubNavigationPageTargetType type;
+  @override
   final String? id;
   @override
   final String? value;
-  @override
-  final EpubNavigationPageTargetType? type;
   @override
   final String? classs;
   @override
@@ -238,7 +237,7 @@ class _$EpubNavigationPageTargetImpl implements _EpubNavigationPageTarget {
 
   @override
   String toString() {
-    return 'EpubNavigationPageTarget(id: $id, value: $value, type: $type, classs: $classs, playOrder: $playOrder, navigationLabels: $navigationLabels, content: $content)';
+    return 'EpubNavigationPageTarget(type: $type, id: $id, value: $value, classs: $classs, playOrder: $playOrder, navigationLabels: $navigationLabels, content: $content)';
   }
 
   @override
@@ -246,9 +245,9 @@ class _$EpubNavigationPageTargetImpl implements _EpubNavigationPageTarget {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubNavigationPageTargetImpl &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.classs, classs) || other.classs == classs) &&
             (identical(other.playOrder, playOrder) ||
                 other.playOrder == playOrder) &&
@@ -260,9 +259,9 @@ class _$EpubNavigationPageTargetImpl implements _EpubNavigationPageTarget {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      type,
       id,
       value,
-      type,
       classs,
       playOrder,
       const DeepCollectionEquality().hash(_navigationLabels),
@@ -280,20 +279,20 @@ class _$EpubNavigationPageTargetImpl implements _EpubNavigationPageTarget {
 
 abstract class _EpubNavigationPageTarget implements EpubNavigationPageTarget {
   const factory _EpubNavigationPageTarget(
-      {final String? id,
+      {required final EpubNavigationPageTargetType type,
+      final String? id,
       final String? value,
-      final EpubNavigationPageTargetType? type,
       final String? classs,
       final String? playOrder,
       final List<EpubNavigationLabel> navigationLabels,
       final EpubNavigationContent? content}) = _$EpubNavigationPageTargetImpl;
 
   @override
+  EpubNavigationPageTargetType get type;
+  @override
   String? get id;
   @override
   String? get value;
-  @override
-  EpubNavigationPageTargetType? get type;
   @override
   String? get classs;
   @override

@@ -61,7 +61,7 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
   ) {
     final manifest = schema.package.manifest?.items.firstWhereOrNull(
       (manifestItem) =>
-          manifestItem.id?.toLowerCase() == cover.content?.toLowerCase(),
+          manifestItem.id.toLowerCase() == cover.content?.toLowerCase(),
     );
     if (manifest != null) return manifest;
     throw Exception(

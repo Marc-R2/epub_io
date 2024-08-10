@@ -34,8 +34,8 @@ mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
   ///
   /// Returns the content file reference of type [T].
   T getFileRefSync<T>(EpubManifestItem item, EpubSchema schema) {
-    final fileName = item.href ?? '';
-    final contentMimeType = item.mediaType!;
+    final fileName = item.href;
+    final contentMimeType = item.mediaType;
     final contentType = EpubContentType.fromMimeType(contentMimeType);
 
     final constructor = switch (contentType.refContentType.refType) {
@@ -69,8 +69,8 @@ mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
 
     /// Processes each manifest item and categorizes the content files.
     void processItem(EpubManifestItem item) {
-      final fileName = item.href ?? '';
-      final contentMimeType = item.mediaType!;
+      final fileName = item.href;
+      final contentMimeType = item.mediaType;
       final contentType = EpubContentType.fromMimeType(contentMimeType);
 
       switch (contentType.refContentType) {

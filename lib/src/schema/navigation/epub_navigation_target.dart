@@ -7,12 +7,11 @@ part 'epub_navigation_target.freezed.dart';
 @freezed
 class EpubNavigationTarget with _$EpubNavigationTarget {
   const factory EpubNavigationTarget({
-    String? id,
+    required String id,
     String? classs,
     String? value,
     String? playOrder,
-    @Default(<EpubNavigationLabel>[])
-    List<EpubNavigationLabel> navigationLabels,
+    @Default([]) List<EpubNavigationLabel> navigationLabels,
     EpubNavigationContent? content,
   }) = _EpubNavigationTarget;
 }

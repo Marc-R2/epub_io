@@ -9,15 +9,15 @@ part of 'epub_guide_reference.dart';
 _$EpubGuideReferenceImpl _$$EpubGuideReferenceImplFromJson(
         Map<String, dynamic> json) =>
     _$EpubGuideReferenceImpl(
-      type: json['type'] as String?,
+      type: json['type'] as String,
+      href: json['href'] as String,
       title: json['title'] as String?,
-      href: json['href'] as String?,
     );
 
 Map<String, dynamic> _$$EpubGuideReferenceImplToJson(
         _$EpubGuideReferenceImpl instance) =>
     <String, dynamic>{
       'type': instance.type,
-      'title': instance.title,
       'href': instance.href,
+      'title': instance.title,
     };

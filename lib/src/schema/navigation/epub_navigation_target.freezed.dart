@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubNavigationTarget {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get classs => throw _privateConstructorUsedError;
   String? get value => throw _privateConstructorUsedError;
   String? get playOrder => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $EpubNavigationTargetCopyWith<$Res> {
       _$EpubNavigationTargetCopyWithImpl<$Res, EpubNavigationTarget>;
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       String? classs,
       String? value,
       String? playOrder,
@@ -64,7 +64,7 @@ class _$EpubNavigationTargetCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? classs = freezed,
     Object? value = freezed,
     Object? playOrder = freezed,
@@ -72,10 +72,10 @@ class _$EpubNavigationTargetCopyWithImpl<$Res,
     Object? content = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       classs: freezed == classs
           ? _value.classs
           : classs // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$EpubNavigationTargetImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       String? classs,
       String? value,
       String? playOrder,
@@ -147,7 +147,7 @@ class __$$EpubNavigationTargetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? classs = freezed,
     Object? value = freezed,
     Object? playOrder = freezed,
@@ -155,10 +155,10 @@ class __$$EpubNavigationTargetImplCopyWithImpl<$Res>
     Object? content = freezed,
   }) {
     return _then(_$EpubNavigationTargetImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       classs: freezed == classs
           ? _value.classs
           : classs // ignore: cast_nullable_to_non_nullable
@@ -187,17 +187,16 @@ class __$$EpubNavigationTargetImplCopyWithImpl<$Res>
 
 class _$EpubNavigationTargetImpl implements _EpubNavigationTarget {
   const _$EpubNavigationTargetImpl(
-      {this.id,
+      {required this.id,
       this.classs,
       this.value,
       this.playOrder,
-      final List<EpubNavigationLabel> navigationLabels =
-          const <EpubNavigationLabel>[],
+      final List<EpubNavigationLabel> navigationLabels = const [],
       this.content})
       : _navigationLabels = navigationLabels;
 
   @override
-  final String? id;
+  final String id;
   @override
   final String? classs;
   @override
@@ -254,7 +253,7 @@ class _$EpubNavigationTargetImpl implements _EpubNavigationTarget {
 
 abstract class _EpubNavigationTarget implements EpubNavigationTarget {
   const factory _EpubNavigationTarget(
-      {final String? id,
+      {required final String id,
       final String? classs,
       final String? value,
       final String? playOrder,
@@ -262,7 +261,7 @@ abstract class _EpubNavigationTarget implements EpubNavigationTarget {
       final EpubNavigationContent? content}) = _$EpubNavigationTargetImpl;
 
   @override
-  String? get id;
+  String get id;
   @override
   String? get classs;
   @override
