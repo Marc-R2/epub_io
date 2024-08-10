@@ -11,11 +11,11 @@ part 'epub_navigation.freezed.dart';
 @freezed
 class EpubNavigation with _$EpubNavigation {
   const factory EpubNavigation({
+    required EpubNavigationDocTitle docTitle,
+    required EpubNavigationMap navMap,
     EpubNavigationHead? head,
-    EpubNavigationDocTitle? docTitle,
     @Default(<EpubNavigationDocAuthor>[])
     List<EpubNavigationDocAuthor> docAuthors,
-    EpubNavigationMap? navMap,
     EpubNavigationPageList? pageList,
     @Default(<EpubNavigationList>[]) List<EpubNavigationList> navLists,
   }) = _EpubNavigation;

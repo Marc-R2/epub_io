@@ -38,12 +38,12 @@ class EpubNavigationWriter {
             )
             ..element(
               'docTitle',
-              nest: () => navigation.docTitle?.titles.forEach(builder.text),
+              nest: () => navigation.docTitle.titles.forEach(builder.text),
             )
             ..element(
               'navMap',
               nest: () {
-                for (final item in navigation.navMap!.points) {
+                for (final item in navigation.navMap.points) {
                   writeNavigationPoint(builder, item);
                 }
               },
