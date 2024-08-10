@@ -62,10 +62,18 @@ jobs:
         run: | 
           ls -la ./coverage
 
+      - name: Provide coverage reports as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: ./coverage
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unittests
-          files: ./coverage/lcov.info
+          directory: ./coverage
+          # files: ./coverage/lcov.info,./coverage/coverage.json
           fail_ci_if_error: true
+          verbose: true
