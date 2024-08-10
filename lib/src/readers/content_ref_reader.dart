@@ -88,7 +88,7 @@ mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
       allFiles[fileName] = getFileRefSync(item, schema);
     }
 
-    for (final manifestItem in schema.package!.manifest!.items) {
+    for (final manifestItem in schema.package.manifest!.items) {
       processItem(manifestItem);
     }
 

@@ -9,7 +9,7 @@ part 'epub_schema.freezed.dart';
 class EpubSchema with _$EpubSchema {
   const factory EpubSchema({
     required EpubContainer epubContainer,
-    EpubPackage? package,
-    EpubNavigation? navigation,
+    required EpubPackage package,
+    required EpubNavigation navigation,
   }) = _EpubSchema;
 }

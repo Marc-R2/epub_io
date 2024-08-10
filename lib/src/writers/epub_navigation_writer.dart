@@ -6,6 +6,7 @@ import 'package:xml/xml.dart' show XmlBuilder;
 /// The `EpubNavigationWriter` class is responsible for generating the NCX
 /// (Navigation Control file for XML) document used in EPUB files from the
 /// given navigation data model.
+// TODO(Marc-R2): [EpubNavigationWriter] is not used(?)
 class EpubNavigationWriter {
   /// The XML namespace for the NCX file.
   static const String _namespace = 'http://www.daisy.org/z3986/2005/ncx/';

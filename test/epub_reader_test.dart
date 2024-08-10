@@ -27,7 +27,7 @@ void main() {
 
   group('EpubReader', () {
     test('Epub version', () async {
-      expect(epubRef.schema.package?.version, equals(EpubVersion.epub2));
+      expect(epubRef.schema.package.version, equals(EpubVersion.epub2));
     });
 
     test('Chapters count', () async {

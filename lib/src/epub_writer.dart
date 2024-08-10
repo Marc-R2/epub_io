@@ -69,7 +69,7 @@ class EpubWriter {
     });
 
     // Generate the content.opf file and add it to the archive
-    final contentOpf = EpubPackageWriter.writeContent(book.schema.package!);
+    final contentOpf = EpubPackageWriter.writeContent(book.schema.package);
     final contentOpfBytes = convert.utf8.encode(contentOpf);
 
     arch.addFile(
