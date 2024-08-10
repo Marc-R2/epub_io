@@ -39,10 +39,9 @@ class RootFilePathReader {
     }
 
     final rootFiles = <EpubContainerRootFile>[];
-    final rootFileElements =
-        containerElement.children.whereType<xml.XmlElement>().where(
-              (element) => element.name.local == 'rootfiles',
-            );
+    final rootFileElements = containerElement.children
+        .whereType<xml.XmlElement>()
+        .where((element) => element.name.local == 'rootfiles');
 
     for (final rootFileElement in rootFileElements.expand((e) => e.children)) {
       if (rootFileElement is! xml.XmlElement) continue;

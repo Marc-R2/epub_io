@@ -11,9 +11,9 @@ class EpubContainer with _$EpubContainer {
   const factory EpubContainer({
     required XMLInfo xmlInfo,
     required EpubContainerRootFile rootFile,
+    required List<EpubContainerRootFile> rootFiles,
     String? xmlns,
     String? version,
-    List<EpubContainerRootFile>? rootFiles,
   }) = _EpubContainer;
 
   const EpubContainer._();
