@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubNavigation {
+  EpubNavigationDocTitle get docTitle => throw _privateConstructorUsedError;
+  EpubNavigationMap get navMap => throw _privateConstructorUsedError;
   EpubNavigationHead? get head => throw _privateConstructorUsedError;
-  EpubNavigationDocTitle? get docTitle => throw _privateConstructorUsedError;
   List<EpubNavigationDocAuthor> get docAuthors =>
       throw _privateConstructorUsedError;
-  EpubNavigationMap? get navMap => throw _privateConstructorUsedError;
   EpubNavigationPageList? get pageList => throw _privateConstructorUsedError;
   List<EpubNavigationList> get navLists => throw _privateConstructorUsedError;
 
@@ -38,16 +38,16 @@ abstract class $EpubNavigationCopyWith<$Res> {
       _$EpubNavigationCopyWithImpl<$Res, EpubNavigation>;
   @useResult
   $Res call(
-      {EpubNavigationHead? head,
-      EpubNavigationDocTitle? docTitle,
+      {EpubNavigationDocTitle docTitle,
+      EpubNavigationMap navMap,
+      EpubNavigationHead? head,
       List<EpubNavigationDocAuthor> docAuthors,
-      EpubNavigationMap? navMap,
       EpubNavigationPageList? pageList,
       List<EpubNavigationList> navLists});
 
+  $EpubNavigationDocTitleCopyWith<$Res> get docTitle;
+  $EpubNavigationMapCopyWith<$Res> get navMap;
   $EpubNavigationHeadCopyWith<$Res>? get head;
-  $EpubNavigationDocTitleCopyWith<$Res>? get docTitle;
-  $EpubNavigationMapCopyWith<$Res>? get navMap;
   $EpubNavigationPageListCopyWith<$Res>? get pageList;
 }
 
@@ -66,30 +66,30 @@ class _$EpubNavigationCopyWithImpl<$Res, $Val extends EpubNavigation>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? docTitle = null,
+    Object? navMap = null,
     Object? head = freezed,
-    Object? docTitle = freezed,
     Object? docAuthors = null,
-    Object? navMap = freezed,
     Object? pageList = freezed,
     Object? navLists = null,
   }) {
     return _then(_value.copyWith(
+      docTitle: null == docTitle
+          ? _value.docTitle
+          : docTitle // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationDocTitle,
+      navMap: null == navMap
+          ? _value.navMap
+          : navMap // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationMap,
       head: freezed == head
           ? _value.head
           : head // ignore: cast_nullable_to_non_nullable
               as EpubNavigationHead?,
-      docTitle: freezed == docTitle
-          ? _value.docTitle
-          : docTitle // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationDocTitle?,
       docAuthors: null == docAuthors
           ? _value.docAuthors
           : docAuthors // ignore: cast_nullable_to_non_nullable
               as List<EpubNavigationDocAuthor>,
-      navMap: freezed == navMap
-          ? _value.navMap
-          : navMap // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationMap?,
       pageList: freezed == pageList
           ? _value.pageList
           : pageList // ignore: cast_nullable_to_non_nullable
@@ -105,26 +105,8 @@ class _$EpubNavigationCopyWithImpl<$Res, $Val extends EpubNavigation>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubNavigationHeadCopyWith<$Res>? get head {
-    if (_value.head == null) {
-      return null;
-    }
-
-    return $EpubNavigationHeadCopyWith<$Res>(_value.head!, (value) {
-      return _then(_value.copyWith(head: value) as $Val);
-    });
-  }
-
-  /// Create a copy of EpubNavigation
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $EpubNavigationDocTitleCopyWith<$Res>? get docTitle {
-    if (_value.docTitle == null) {
-      return null;
-    }
-
-    return $EpubNavigationDocTitleCopyWith<$Res>(_value.docTitle!, (value) {
+  $EpubNavigationDocTitleCopyWith<$Res> get docTitle {
+    return $EpubNavigationDocTitleCopyWith<$Res>(_value.docTitle, (value) {
       return _then(_value.copyWith(docTitle: value) as $Val);
     });
   }
@@ -133,13 +115,23 @@ class _$EpubNavigationCopyWithImpl<$Res, $Val extends EpubNavigation>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubNavigationMapCopyWith<$Res>? get navMap {
-    if (_value.navMap == null) {
+  $EpubNavigationMapCopyWith<$Res> get navMap {
+    return $EpubNavigationMapCopyWith<$Res>(_value.navMap, (value) {
+      return _then(_value.copyWith(navMap: value) as $Val);
+    });
+  }
+
+  /// Create a copy of EpubNavigation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EpubNavigationHeadCopyWith<$Res>? get head {
+    if (_value.head == null) {
       return null;
     }
 
-    return $EpubNavigationMapCopyWith<$Res>(_value.navMap!, (value) {
-      return _then(_value.copyWith(navMap: value) as $Val);
+    return $EpubNavigationHeadCopyWith<$Res>(_value.head!, (value) {
+      return _then(_value.copyWith(head: value) as $Val);
     });
   }
 
@@ -167,19 +159,19 @@ abstract class _$$EpubNavigationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {EpubNavigationHead? head,
-      EpubNavigationDocTitle? docTitle,
+      {EpubNavigationDocTitle docTitle,
+      EpubNavigationMap navMap,
+      EpubNavigationHead? head,
       List<EpubNavigationDocAuthor> docAuthors,
-      EpubNavigationMap? navMap,
       EpubNavigationPageList? pageList,
       List<EpubNavigationList> navLists});
 
   @override
+  $EpubNavigationDocTitleCopyWith<$Res> get docTitle;
+  @override
+  $EpubNavigationMapCopyWith<$Res> get navMap;
+  @override
   $EpubNavigationHeadCopyWith<$Res>? get head;
-  @override
-  $EpubNavigationDocTitleCopyWith<$Res>? get docTitle;
-  @override
-  $EpubNavigationMapCopyWith<$Res>? get navMap;
   @override
   $EpubNavigationPageListCopyWith<$Res>? get pageList;
 }
@@ -197,30 +189,30 @@ class __$$EpubNavigationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? docTitle = null,
+    Object? navMap = null,
     Object? head = freezed,
-    Object? docTitle = freezed,
     Object? docAuthors = null,
-    Object? navMap = freezed,
     Object? pageList = freezed,
     Object? navLists = null,
   }) {
     return _then(_$EpubNavigationImpl(
+      docTitle: null == docTitle
+          ? _value.docTitle
+          : docTitle // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationDocTitle,
+      navMap: null == navMap
+          ? _value.navMap
+          : navMap // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationMap,
       head: freezed == head
           ? _value.head
           : head // ignore: cast_nullable_to_non_nullable
               as EpubNavigationHead?,
-      docTitle: freezed == docTitle
-          ? _value.docTitle
-          : docTitle // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationDocTitle?,
       docAuthors: null == docAuthors
           ? _value._docAuthors
           : docAuthors // ignore: cast_nullable_to_non_nullable
               as List<EpubNavigationDocAuthor>,
-      navMap: freezed == navMap
-          ? _value.navMap
-          : navMap // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationMap?,
       pageList: freezed == pageList
           ? _value.pageList
           : pageList // ignore: cast_nullable_to_non_nullable
@@ -237,20 +229,22 @@ class __$$EpubNavigationImplCopyWithImpl<$Res>
 
 class _$EpubNavigationImpl implements _EpubNavigation {
   const _$EpubNavigationImpl(
-      {this.head,
-      this.docTitle,
+      {required this.docTitle,
+      required this.navMap,
+      this.head,
       final List<EpubNavigationDocAuthor> docAuthors =
           const <EpubNavigationDocAuthor>[],
-      this.navMap,
       this.pageList,
       final List<EpubNavigationList> navLists = const <EpubNavigationList>[]})
       : _docAuthors = docAuthors,
         _navLists = navLists;
 
   @override
-  final EpubNavigationHead? head;
+  final EpubNavigationDocTitle docTitle;
   @override
-  final EpubNavigationDocTitle? docTitle;
+  final EpubNavigationMap navMap;
+  @override
+  final EpubNavigationHead? head;
   final List<EpubNavigationDocAuthor> _docAuthors;
   @override
   @JsonKey()
@@ -260,8 +254,6 @@ class _$EpubNavigationImpl implements _EpubNavigation {
     return EqualUnmodifiableListView(_docAuthors);
   }
 
-  @override
-  final EpubNavigationMap? navMap;
   @override
   final EpubNavigationPageList? pageList;
   final List<EpubNavigationList> _navLists;
@@ -275,7 +267,7 @@ class _$EpubNavigationImpl implements _EpubNavigation {
 
   @override
   String toString() {
-    return 'EpubNavigation(head: $head, docTitle: $docTitle, docAuthors: $docAuthors, navMap: $navMap, pageList: $pageList, navLists: $navLists)';
+    return 'EpubNavigation(docTitle: $docTitle, navMap: $navMap, head: $head, docAuthors: $docAuthors, pageList: $pageList, navLists: $navLists)';
   }
 
   @override
@@ -283,12 +275,12 @@ class _$EpubNavigationImpl implements _EpubNavigation {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubNavigationImpl &&
-            (identical(other.head, head) || other.head == head) &&
             (identical(other.docTitle, docTitle) ||
                 other.docTitle == docTitle) &&
+            (identical(other.navMap, navMap) || other.navMap == navMap) &&
+            (identical(other.head, head) || other.head == head) &&
             const DeepCollectionEquality()
                 .equals(other._docAuthors, _docAuthors) &&
-            (identical(other.navMap, navMap) || other.navMap == navMap) &&
             (identical(other.pageList, pageList) ||
                 other.pageList == pageList) &&
             const DeepCollectionEquality().equals(other._navLists, _navLists));
@@ -297,10 +289,10 @@ class _$EpubNavigationImpl implements _EpubNavigation {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      head,
       docTitle,
-      const DeepCollectionEquality().hash(_docAuthors),
       navMap,
+      head,
+      const DeepCollectionEquality().hash(_docAuthors),
       pageList,
       const DeepCollectionEquality().hash(_navLists));
 
@@ -316,21 +308,21 @@ class _$EpubNavigationImpl implements _EpubNavigation {
 
 abstract class _EpubNavigation implements EpubNavigation {
   const factory _EpubNavigation(
-      {final EpubNavigationHead? head,
-      final EpubNavigationDocTitle? docTitle,
+      {required final EpubNavigationDocTitle docTitle,
+      required final EpubNavigationMap navMap,
+      final EpubNavigationHead? head,
       final List<EpubNavigationDocAuthor> docAuthors,
-      final EpubNavigationMap? navMap,
       final EpubNavigationPageList? pageList,
       final List<EpubNavigationList> navLists}) = _$EpubNavigationImpl;
 
   @override
+  EpubNavigationDocTitle get docTitle;
+  @override
+  EpubNavigationMap get navMap;
+  @override
   EpubNavigationHead? get head;
   @override
-  EpubNavigationDocTitle? get docTitle;
-  @override
   List<EpubNavigationDocAuthor> get docAuthors;
-  @override
-  EpubNavigationMap? get navMap;
   @override
   EpubNavigationPageList? get pageList;
   @override

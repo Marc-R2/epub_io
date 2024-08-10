@@ -8,10 +8,10 @@ part 'epub_content.freezed.dart';
 @freezed
 class EpubContent with _$EpubContent {
   const factory EpubContent({
-    @Default({}) Map<String, EpubTextContentFile> html,
-    @Default({}) Map<String, EpubTextContentFile> css,
-    @Default({}) Map<String, EpubByteContentFile> images,
-    @Default({}) Map<String, EpubByteContentFile> fonts,
-    @Default({}) Map<String, EpubContentFile<dynamic>> allFiles,
+    required Map<String, EpubTextContentFile> html,
+    required Map<String, EpubTextContentFile> css,
+    required Map<String, EpubByteContentFile> images,
+    required Map<String, EpubByteContentFile> fonts,
+    required Map<String, EpubContentFile<dynamic>> allFiles,
   }) = _EpubContent;
 }

@@ -7,6 +7,7 @@ import 'package:archive/archive_io.dart';
 import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
+import 'package:epub_io/src/readers/content_ref_reader.dart';
 import 'package:epub_io/src/readers/navigation_reader.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 
@@ -53,7 +54,7 @@ class EpubReader
 
   final EpubArchive epubArchive;
 
-  Future<EpubMetadata> get metadata async => (await schema).package!.metadata!;
+  Future<EpubMetadata> get metadata async => (await schema).package.metadata!;
 
   Future<String?> get title async => (await metadata)
       .titles

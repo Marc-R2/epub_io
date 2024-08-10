@@ -16,10 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubByteContentFile {
-  String? get fileName => throw _privateConstructorUsedError;
-  String? get contentMimeType => throw _privateConstructorUsedError;
-  EpubContentType? get contentType => throw _privateConstructorUsedError;
-  List<int>? get content => throw _privateConstructorUsedError;
+  String get fileName => throw _privateConstructorUsedError;
+  String get contentMimeType => throw _privateConstructorUsedError;
+  EpubContentType get contentType => throw _privateConstructorUsedError;
+  List<int> get content => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubByteContentFile
   /// with the given fields replaced by the non-null parameter values.
@@ -35,10 +35,10 @@ abstract class $EpubByteContentFileCopyWith<$Res> {
       _$EpubByteContentFileCopyWithImpl<$Res, EpubByteContentFile>;
   @useResult
   $Res call(
-      {String? fileName,
-      String? contentMimeType,
-      EpubContentType? contentType,
-      List<int>? content});
+      {String fileName,
+      String contentMimeType,
+      EpubContentType contentType,
+      List<int> content});
 }
 
 /// @nodoc
@@ -56,28 +56,28 @@ class _$EpubByteContentFileCopyWithImpl<$Res, $Val extends EpubByteContentFile>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fileName = freezed,
-    Object? contentMimeType = freezed,
-    Object? contentType = freezed,
-    Object? content = freezed,
+    Object? fileName = null,
+    Object? contentMimeType = null,
+    Object? contentType = null,
+    Object? content = null,
   }) {
     return _then(_value.copyWith(
-      fileName: freezed == fileName
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentMimeType: freezed == contentMimeType
+              as String,
+      contentMimeType: null == contentMimeType
           ? _value.contentMimeType
           : contentMimeType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: freezed == contentType
+              as String,
+      contentType: null == contentType
           ? _value.contentType
           : contentType // ignore: cast_nullable_to_non_nullable
-              as EpubContentType?,
-      content: freezed == content
+              as EpubContentType,
+      content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as List<int>,
     ) as $Val);
   }
 }
@@ -91,10 +91,10 @@ abstract class _$$EpubByteContentFileImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? fileName,
-      String? contentMimeType,
-      EpubContentType? contentType,
-      List<int>? content});
+      {String fileName,
+      String contentMimeType,
+      EpubContentType contentType,
+      List<int> content});
 }
 
 /// @nodoc
@@ -110,28 +110,28 @@ class __$$EpubByteContentFileImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fileName = freezed,
-    Object? contentMimeType = freezed,
-    Object? contentType = freezed,
-    Object? content = freezed,
+    Object? fileName = null,
+    Object? contentMimeType = null,
+    Object? contentType = null,
+    Object? content = null,
   }) {
     return _then(_$EpubByteContentFileImpl(
-      fileName: freezed == fileName
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentMimeType: freezed == contentMimeType
+              as String,
+      contentMimeType: null == contentMimeType
           ? _value.contentMimeType
           : contentMimeType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: freezed == contentType
+              as String,
+      contentType: null == contentType
           ? _value.contentType
           : contentType // ignore: cast_nullable_to_non_nullable
-              as EpubContentType?,
-      content: freezed == content
+              as EpubContentType,
+      content: null == content
           ? _value._content
           : content // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
+              as List<int>,
     ));
   }
 }
@@ -140,26 +140,24 @@ class __$$EpubByteContentFileImplCopyWithImpl<$Res>
 
 class _$EpubByteContentFileImpl implements _EpubByteContentFile {
   const _$EpubByteContentFileImpl(
-      {this.fileName,
-      this.contentMimeType,
-      this.contentType,
-      final List<int>? content})
+      {required this.fileName,
+      required this.contentMimeType,
+      required this.contentType,
+      required final List<int> content})
       : _content = content;
 
   @override
-  final String? fileName;
+  final String fileName;
   @override
-  final String? contentMimeType;
+  final String contentMimeType;
   @override
-  final EpubContentType? contentType;
-  final List<int>? _content;
+  final EpubContentType contentType;
+  final List<int> _content;
   @override
-  List<int>? get content {
-    final value = _content;
-    if (value == null) return null;
+  List<int> get content {
     if (_content is EqualUnmodifiableListView) return _content;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_content);
   }
 
   @override
@@ -197,19 +195,19 @@ class _$EpubByteContentFileImpl implements _EpubByteContentFile {
 
 abstract class _EpubByteContentFile implements EpubByteContentFile {
   const factory _EpubByteContentFile(
-      {final String? fileName,
-      final String? contentMimeType,
-      final EpubContentType? contentType,
-      final List<int>? content}) = _$EpubByteContentFileImpl;
+      {required final String fileName,
+      required final String contentMimeType,
+      required final EpubContentType contentType,
+      required final List<int> content}) = _$EpubByteContentFileImpl;
 
   @override
-  String? get fileName;
+  String get fileName;
   @override
-  String? get contentMimeType;
+  String get contentMimeType;
   @override
-  EpubContentType? get contentType;
+  EpubContentType get contentType;
   @override
-  List<int>? get content;
+  List<int> get content;
 
   /// Create a copy of EpubByteContentFile
   /// with the given fields replaced by the non-null parameter values.

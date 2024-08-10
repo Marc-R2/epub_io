@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubNavigationLabel {
-  String? get text => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubNavigationLabel
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +31,7 @@ abstract class $EpubNavigationLabelCopyWith<$Res> {
           EpubNavigationLabel value, $Res Function(EpubNavigationLabel) then) =
       _$EpubNavigationLabelCopyWithImpl<$Res, EpubNavigationLabel>;
   @useResult
-  $Res call({String? text});
+  $Res call({String text});
 }
 
 /// @nodoc
@@ -49,13 +49,13 @@ class _$EpubNavigationLabelCopyWithImpl<$Res, $Val extends EpubNavigationLabel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_value.copyWith(
-      text: freezed == text
+      text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -68,7 +68,7 @@ abstract class _$$EpubNavigationLabelImplCopyWith<$Res>
       __$$EpubNavigationLabelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? text});
+  $Res call({String text});
 }
 
 /// @nodoc
@@ -84,13 +84,13 @@ class __$$EpubNavigationLabelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$EpubNavigationLabelImpl(
-      text: freezed == text
+      text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -98,10 +98,10 @@ class __$$EpubNavigationLabelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EpubNavigationLabelImpl implements _EpubNavigationLabel {
-  const _$EpubNavigationLabelImpl({this.text});
+  const _$EpubNavigationLabelImpl({required this.text});
 
   @override
-  final String? text;
+  final String text;
 
   @override
   String toString() {
@@ -130,11 +130,11 @@ class _$EpubNavigationLabelImpl implements _EpubNavigationLabel {
 }
 
 abstract class _EpubNavigationLabel implements EpubNavigationLabel {
-  const factory _EpubNavigationLabel({final String? text}) =
+  const factory _EpubNavigationLabel({required final String text}) =
       _$EpubNavigationLabelImpl;
 
   @override
-  String? get text;
+  String get text;
 
   /// Create a copy of EpubNavigationLabel
   /// with the given fields replaced by the non-null parameter values.

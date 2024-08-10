@@ -1,50 +1,60 @@
 import 'package:epub_io/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_chapter_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/schema/navigation/epub_navigation_point.dart';
 
+/// The [ChapterReader] class provides functionality
+/// to extract chapters from an EPUB book.
 class ChapterReader {
-  static List<EpubChapterRef> getChapters(EpubBookRef bookRef) {
-    if (bookRef.schema!.navigation == null) {
-      return <EpubChapterRef>[];
-    }
-    return getChaptersImpl(bookRef, bookRef.schema!.navigation!.navMap!.points);
-  }
+  /// Retrieves a list of chapters from the given [EpubBookRef].
+  ///
+  /// - **[bookRef]**: A reference to the EPUB book ([EpubBookRef]).
+  ///
+  /// Returns a list of [EpubChapterRef] objects representing the chapters.
+  /// If the navigation information is missing, an empty list is returned.
+  static List<EpubChapterRef> getChapters(EpubBookRef bookRef) =>
+      getChaptersImpl(bookRef, bookRef.schema.navigation.navMap.points);
 
+  /// Recursively retrieves chapters
+  /// from the given list of [EpubNavigationPoint].
+  ///
+  /// - **[bookRef]**: A reference to the EPUB book ([EpubBookRef]).
+  /// - **[navigationPoints]**: A list of navigation points
+  ///   ([EpubNavigationPoint]) from which chapters are extracted.
+  ///
+  /// Returns a list of [EpubChapterRef] objects representing the chapters.
   static List<EpubChapterRef> getChaptersImpl(
     EpubBookRef bookRef,
     List<EpubNavigationPoint> navigationPoints,
   ) {
     final result = <EpubChapterRef>[];
-    // navigationPoints.forEach((EpubNavigationPoint navigationPoint) {
+
     for (final navigationPoint in navigationPoints) {
       String? contentFileName;
       String? anchor;
-      if (navigationPoint.content?.source == null) continue;
+      if (navigationPoint.content.source == null) continue;
       final contentSourceAnchorCharIndex =
-          navigationPoint.content!.source!.indexOf('#');
+          navigationPoint.content.source!.indexOf('#');
       if (contentSourceAnchorCharIndex == -1) {
-        contentFileName = navigationPoint.content!.source;
+        contentFileName = navigationPoint.content.source;
         anchor = null;
       } else {
-        contentFileName = navigationPoint.content!.source!
+        contentFileName = navigationPoint.content.source!
             .substring(0, contentSourceAnchorCharIndex);
-        anchor = navigationPoint.content!.source!
+        anchor = navigationPoint.content.source!
             .substring(contentSourceAnchorCharIndex + 1);
       }
-      // contentFileName = Uri.decodeFull(contentFileName!);
-      EpubContentFileRef<dynamic>? htmlContentFileRef;
+
+      // Ensure the content file exists in the book
       if (!bookRef.content!.allFiles.containsKey(contentFileName)) {
         throw Exception(
           'Incorrect EPUB manifest: item with href = "$contentFileName" is missing.',
         );
       }
 
-      htmlContentFileRef = bookRef.content!.allFiles[contentFileName];
       final chapterRef = EpubChapterRef(
-        epubContentFileRef: htmlContentFileRef,
+        epubContentFileRef: bookRef.content!.allFiles[contentFileName]!,
         title: navigationPoint.navigationLabels.first.text,
-        contentFileName: contentFileName,
+        contentFileName: contentFileName!,
         anchor: anchor,
         subChapters:
             getChaptersImpl(bookRef, navigationPoint.childNavigationPoints),

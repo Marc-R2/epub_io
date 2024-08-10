@@ -2,7 +2,20 @@ import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
+/// The `EpubMetadataWriter` class is responsible for generating the metadata
+/// section of an EPUB file from the provided metadata object.
 class EpubMetadataWriter {
+  /// Writes the metadata section of the EPUB file.
+  ///
+  /// This method generates the XML structure for the metadata element,
+  /// including information such as title, creator, identifier, and more.
+  /// The metadata is written according
+  /// to the specified EPUB version and namespace.
+  ///
+  /// - [builder]: The `XmlBuilder` used to construct the XML structure.
+  /// - [meta]: The `EpubMetadata` object containing metadata details.
+  /// - [version]: The `EpubVersion` specifying the EPUB version.
+  /// - [nameSpace]: The `NameSpace` object specifying the XML namespace.
   static void writeMetadata(
     XmlBuilder builder,
     EpubMetadata? meta,

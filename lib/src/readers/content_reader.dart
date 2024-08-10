@@ -1,85 +1,25 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/readers/content_ref_reader.dart';
 import 'package:epub_io/src/readers/lazy_object.dart';
-import 'package:epub_io/src/readers/schema_reader.dart';
-import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_io/src/ref_entities/epub_content_ref.dart';
-import 'package:epub_io/src/ref_entities/epub_text_content_file_ref.dart';
 
-mixin ContentRefReader implements EpubArchiveReader, SchemaReader {
-  late final _epubContentRef = LazyObject(parseContentMap);
-
-  Future<EpubContentRef> get contentRef async => _epubContentRef.value;
-
-  Future<T> getFileRef<T>(EpubManifestItem item) async =>
-      getFileRefSync(item, await schema);
-
-  T getFileRefSync<T>(EpubManifestItem item, EpubSchema schema) {
-    final fileName = item.href ?? '';
-    final contentMimeType = item.mediaType!;
-    final contentType = EpubContentType.fromMimeType(contentMimeType);
-
-    final constructor = switch (contentType.refContentType.refType) {
-      EpubfileRefType.text => EpubTextContentFileRef.new,
-      EpubfileRefType.byte => EpubByteContentFileRef.new,
-    };
-    return constructor(
-      epubArchive: epubArchive,
-      schema: schema,
-      fileName: fileName,
-      contentMimeType: contentMimeType,
-      contentType: contentType,
-    ) as T;
-  }
-
-  Future<EpubContentRef> parseContentMap() async {
-    final html = <String, EpubTextContentFileRef>{};
-    final css = <String, EpubTextContentFileRef>{};
-    final images = <String, EpubByteContentFileRef>{};
-    final fonts = <String, EpubByteContentFileRef>{};
-    final allFiles = <String, EpubContentFileRef<dynamic>>{};
-
-    final schema = await this.schema;
-
-    void processItem(EpubManifestItem item) {
-      final fileName = item.href ?? '';
-      final contentMimeType = item.mediaType!;
-      final contentType = EpubContentType.fromMimeType(contentMimeType);
-
-      switch (contentType.refContentType) {
-        case EpubFileContentType.xhtml:
-          html[fileName] = getFileRefSync(item, schema);
-        case EpubFileContentType.css:
-          css[fileName] = getFileRefSync(item, schema);
-        case EpubFileContentType.image:
-          images[fileName] = getFileRefSync(item, schema);
-        case EpubFileContentType.font:
-          fonts[fileName] = getFileRefSync(item, schema);
-        case EpubFileContentType.other:
-        // pass
-      }
-      allFiles[fileName] = getFileRefSync(item, schema);
-    }
-
-    for (final manifestItem in schema.package!.manifest!.items) {
-      processItem(manifestItem);
-    }
-
-    return EpubContentRef(
-      html: html,
-      css: css,
-      images: images,
-      fonts: fonts,
-      allFiles: allFiles,
-    );
-  }
-}
-
+/// The [ContentReader] mixin extends [ContentRefReader] to provide methods
+/// for reading and returning the actual content files from an EPUB archive.
 mixin ContentReader implements ContentRefReader {
+  /// Lazily initialized [EpubContent] object that represents the
+  /// content of the EPUB file.
   late final _epubContent = LazyObject(readContent);
 
+  /// Asynchronously retrieves the parsed content ([EpubContent]).
   Future<EpubContent> get content async => _epubContent.value;
 
+  /// Reads and parses the content files from the EPUB archive.
+  ///
+  /// This method reads the content files referenced by [EpubContentRef]
+  /// and organizes them into categories like HTML, CSS, images, and fonts.
+  ///
+  /// Returns a future that resolves to an [EpubContent] object.
   Future<EpubContent> readContent() async {
     final contentRef = await this.contentRef;
 
@@ -89,11 +29,13 @@ mixin ContentReader implements ContentRefReader {
     final fonts = await readContentFiles(contentRef.fonts);
     final allFiles = <String, EpubContentFile<dynamic>>{};
 
+    // Aggregate all content files into the allFiles map.
     html.forEach((key, value) => allFiles[key] = value);
     css.forEach((key, value) => allFiles[key] = value);
     images.forEach((key, value) => allFiles[key] = value);
     fonts.forEach((key, value) => allFiles[key] = value);
 
+    // Read and add any additional files not included in the main categories.
     await Future.forEach(
       contentRef.allFiles.keys.where((key) => !allFiles.containsKey(key)),
       (key) async => allFiles[key] = await contentRef.allFiles[key]!.read(),
@@ -109,6 +51,14 @@ mixin ContentReader implements ContentRefReader {
     );
   }
 
+  /// Reads a set of content files and returns them as a map
+  /// of file paths to content objects.
+  ///
+  /// - **[T]**: The type of content file to read.
+  /// - **[fileRefs]**: A map of file paths to [EpubContentFileRef] objects.
+  ///
+  /// Returns a future that resolves to a map
+  /// of file paths to [EpubContentFile] objects.
   Future<Map<String, EpubContentFile<T>>> readContentFiles<T>(
     Map<String, EpubContentFileRef<T>> fileRefs,
   ) async {

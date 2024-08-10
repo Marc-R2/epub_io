@@ -8,9 +8,9 @@ class EpubTextContentFile
     with _$EpubTextContentFile
     implements EpubContentFile<String> {
   const factory EpubTextContentFile({
-    String? fileName,
-    String? contentMimeType,
-    EpubContentType? contentType,
-    String? content,
+    required String fileName,
+    required String contentMimeType,
+    required EpubContentType contentType,
+    required String content,
   }) = _EpubTextContentFile;
 }

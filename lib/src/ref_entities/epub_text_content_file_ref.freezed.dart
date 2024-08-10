@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EpubTextContentFileRef {
   EpubArchive get epubArchive => throw _privateConstructorUsedError;
   EpubSchema get schema => throw _privateConstructorUsedError;
-  String? get fileName => throw _privateConstructorUsedError;
-  String? get contentMimeType => throw _privateConstructorUsedError;
-  EpubContentType? get contentType => throw _privateConstructorUsedError;
+  String get fileName => throw _privateConstructorUsedError;
+  String get contentMimeType => throw _privateConstructorUsedError;
+  EpubContentType get contentType => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubTextContentFileRef
   /// with the given fields replaced by the non-null parameter values.
@@ -38,9 +38,9 @@ abstract class $EpubTextContentFileRefCopyWith<$Res> {
   $Res call(
       {EpubArchive epubArchive,
       EpubSchema schema,
-      String? fileName,
-      String? contentMimeType,
-      EpubContentType? contentType});
+      String fileName,
+      String contentMimeType,
+      EpubContentType contentType});
 
   $EpubSchemaCopyWith<$Res> get schema;
 }
@@ -63,9 +63,9 @@ class _$EpubTextContentFileRefCopyWithImpl<$Res,
   $Res call({
     Object? epubArchive = null,
     Object? schema = null,
-    Object? fileName = freezed,
-    Object? contentMimeType = freezed,
-    Object? contentType = freezed,
+    Object? fileName = null,
+    Object? contentMimeType = null,
+    Object? contentType = null,
   }) {
     return _then(_value.copyWith(
       epubArchive: null == epubArchive
@@ -76,18 +76,18 @@ class _$EpubTextContentFileRefCopyWithImpl<$Res,
           ? _value.schema
           : schema // ignore: cast_nullable_to_non_nullable
               as EpubSchema,
-      fileName: freezed == fileName
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentMimeType: freezed == contentMimeType
+              as String,
+      contentMimeType: null == contentMimeType
           ? _value.contentMimeType
           : contentMimeType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: freezed == contentType
+              as String,
+      contentType: null == contentType
           ? _value.contentType
           : contentType // ignore: cast_nullable_to_non_nullable
-              as EpubContentType?,
+              as EpubContentType,
     ) as $Val);
   }
 
@@ -114,9 +114,9 @@ abstract class _$$EpubTextContentFileRefImplCopyWith<$Res>
   $Res call(
       {EpubArchive epubArchive,
       EpubSchema schema,
-      String? fileName,
-      String? contentMimeType,
-      EpubContentType? contentType});
+      String fileName,
+      String contentMimeType,
+      EpubContentType contentType});
 
   @override
   $EpubSchemaCopyWith<$Res> get schema;
@@ -139,9 +139,9 @@ class __$$EpubTextContentFileRefImplCopyWithImpl<$Res>
   $Res call({
     Object? epubArchive = null,
     Object? schema = null,
-    Object? fileName = freezed,
-    Object? contentMimeType = freezed,
-    Object? contentType = freezed,
+    Object? fileName = null,
+    Object? contentMimeType = null,
+    Object? contentType = null,
   }) {
     return _then(_$EpubTextContentFileRefImpl(
       epubArchive: null == epubArchive
@@ -152,18 +152,18 @@ class __$$EpubTextContentFileRefImplCopyWithImpl<$Res>
           ? _value.schema
           : schema // ignore: cast_nullable_to_non_nullable
               as EpubSchema,
-      fileName: freezed == fileName
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentMimeType: freezed == contentMimeType
+              as String,
+      contentMimeType: null == contentMimeType
           ? _value.contentMimeType
           : contentMimeType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: freezed == contentType
+              as String,
+      contentType: null == contentType
           ? _value.contentType
           : contentType // ignore: cast_nullable_to_non_nullable
-              as EpubContentType?,
+              as EpubContentType,
     ));
   }
 }
@@ -174,9 +174,9 @@ class _$EpubTextContentFileRefImpl extends _EpubTextContentFileRef {
   const _$EpubTextContentFileRefImpl(
       {required this.epubArchive,
       required this.schema,
-      this.fileName,
-      this.contentMimeType,
-      this.contentType})
+      required this.fileName,
+      required this.contentMimeType,
+      required this.contentType})
       : super._();
 
   @override
@@ -184,11 +184,11 @@ class _$EpubTextContentFileRefImpl extends _EpubTextContentFileRef {
   @override
   final EpubSchema schema;
   @override
-  final String? fileName;
+  final String fileName;
   @override
-  final String? contentMimeType;
+  final String contentMimeType;
   @override
-  final EpubContentType? contentType;
+  final EpubContentType contentType;
 
   @override
   String toString() {
@@ -227,11 +227,12 @@ class _$EpubTextContentFileRefImpl extends _EpubTextContentFileRef {
 
 abstract class _EpubTextContentFileRef extends EpubTextContentFileRef {
   const factory _EpubTextContentFileRef(
-      {required final EpubArchive epubArchive,
-      required final EpubSchema schema,
-      final String? fileName,
-      final String? contentMimeType,
-      final EpubContentType? contentType}) = _$EpubTextContentFileRefImpl;
+          {required final EpubArchive epubArchive,
+          required final EpubSchema schema,
+          required final String fileName,
+          required final String contentMimeType,
+          required final EpubContentType contentType}) =
+      _$EpubTextContentFileRefImpl;
   const _EpubTextContentFileRef._() : super._();
 
   @override
@@ -239,11 +240,11 @@ abstract class _EpubTextContentFileRef extends EpubTextContentFileRef {
   @override
   EpubSchema get schema;
   @override
-  String? get fileName;
+  String get fileName;
   @override
-  String? get contentMimeType;
+  String get contentMimeType;
   @override
-  EpubContentType? get contentType;
+  EpubContentType get contentType;
 
   /// Create a copy of EpubTextContentFileRef
   /// with the given fields replaced by the non-null parameter values.

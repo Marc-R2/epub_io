@@ -10,9 +10,9 @@ class EpubByteContentFileRef
   const factory EpubByteContentFileRef({
     required EpubArchive epubArchive,
     required EpubSchema schema,
-    String? fileName,
-    String? contentMimeType,
-    EpubContentType? contentType,
+    required String fileName,
+    required String contentMimeType,
+    required EpubContentType contentType,
   }) = _EpubByteContentFileRef;
 
   const EpubByteContentFileRef._();

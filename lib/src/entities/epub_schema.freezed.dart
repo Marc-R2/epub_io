@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$EpubSchema {
   EpubContainer get epubContainer => throw _privateConstructorUsedError;
-  EpubPackage? get package => throw _privateConstructorUsedError;
-  EpubNavigation? get navigation => throw _privateConstructorUsedError;
+  EpubPackage get package => throw _privateConstructorUsedError;
+  EpubNavigation get navigation => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubSchema
   /// with the given fields replaced by the non-null parameter values.
@@ -35,12 +35,12 @@ abstract class $EpubSchemaCopyWith<$Res> {
   @useResult
   $Res call(
       {EpubContainer epubContainer,
-      EpubPackage? package,
-      EpubNavigation? navigation});
+      EpubPackage package,
+      EpubNavigation navigation});
 
   $EpubContainerCopyWith<$Res> get epubContainer;
-  $EpubPackageCopyWith<$Res>? get package;
-  $EpubNavigationCopyWith<$Res>? get navigation;
+  $EpubPackageCopyWith<$Res> get package;
+  $EpubNavigationCopyWith<$Res> get navigation;
 }
 
 /// @nodoc
@@ -59,22 +59,22 @@ class _$EpubSchemaCopyWithImpl<$Res, $Val extends EpubSchema>
   @override
   $Res call({
     Object? epubContainer = null,
-    Object? package = freezed,
-    Object? navigation = freezed,
+    Object? package = null,
+    Object? navigation = null,
   }) {
     return _then(_value.copyWith(
       epubContainer: null == epubContainer
           ? _value.epubContainer
           : epubContainer // ignore: cast_nullable_to_non_nullable
               as EpubContainer,
-      package: freezed == package
+      package: null == package
           ? _value.package
           : package // ignore: cast_nullable_to_non_nullable
-              as EpubPackage?,
-      navigation: freezed == navigation
+              as EpubPackage,
+      navigation: null == navigation
           ? _value.navigation
           : navigation // ignore: cast_nullable_to_non_nullable
-              as EpubNavigation?,
+              as EpubNavigation,
     ) as $Val);
   }
 
@@ -92,12 +92,8 @@ class _$EpubSchemaCopyWithImpl<$Res, $Val extends EpubSchema>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubPackageCopyWith<$Res>? get package {
-    if (_value.package == null) {
-      return null;
-    }
-
-    return $EpubPackageCopyWith<$Res>(_value.package!, (value) {
+  $EpubPackageCopyWith<$Res> get package {
+    return $EpubPackageCopyWith<$Res>(_value.package, (value) {
       return _then(_value.copyWith(package: value) as $Val);
     });
   }
@@ -106,12 +102,8 @@ class _$EpubSchemaCopyWithImpl<$Res, $Val extends EpubSchema>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubNavigationCopyWith<$Res>? get navigation {
-    if (_value.navigation == null) {
-      return null;
-    }
-
-    return $EpubNavigationCopyWith<$Res>(_value.navigation!, (value) {
+  $EpubNavigationCopyWith<$Res> get navigation {
+    return $EpubNavigationCopyWith<$Res>(_value.navigation, (value) {
       return _then(_value.copyWith(navigation: value) as $Val);
     });
   }
@@ -127,15 +119,15 @@ abstract class _$$EpubSchemaImplCopyWith<$Res>
   @useResult
   $Res call(
       {EpubContainer epubContainer,
-      EpubPackage? package,
-      EpubNavigation? navigation});
+      EpubPackage package,
+      EpubNavigation navigation});
 
   @override
   $EpubContainerCopyWith<$Res> get epubContainer;
   @override
-  $EpubPackageCopyWith<$Res>? get package;
+  $EpubPackageCopyWith<$Res> get package;
   @override
-  $EpubNavigationCopyWith<$Res>? get navigation;
+  $EpubNavigationCopyWith<$Res> get navigation;
 }
 
 /// @nodoc
@@ -152,22 +144,22 @@ class __$$EpubSchemaImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? epubContainer = null,
-    Object? package = freezed,
-    Object? navigation = freezed,
+    Object? package = null,
+    Object? navigation = null,
   }) {
     return _then(_$EpubSchemaImpl(
       epubContainer: null == epubContainer
           ? _value.epubContainer
           : epubContainer // ignore: cast_nullable_to_non_nullable
               as EpubContainer,
-      package: freezed == package
+      package: null == package
           ? _value.package
           : package // ignore: cast_nullable_to_non_nullable
-              as EpubPackage?,
-      navigation: freezed == navigation
+              as EpubPackage,
+      navigation: null == navigation
           ? _value.navigation
           : navigation // ignore: cast_nullable_to_non_nullable
-              as EpubNavigation?,
+              as EpubNavigation,
     ));
   }
 }
@@ -176,14 +168,16 @@ class __$$EpubSchemaImplCopyWithImpl<$Res>
 
 class _$EpubSchemaImpl implements _EpubSchema {
   const _$EpubSchemaImpl(
-      {required this.epubContainer, this.package, this.navigation});
+      {required this.epubContainer,
+      required this.package,
+      required this.navigation});
 
   @override
   final EpubContainer epubContainer;
   @override
-  final EpubPackage? package;
+  final EpubPackage package;
   @override
-  final EpubNavigation? navigation;
+  final EpubNavigation navigation;
 
   @override
   String toString() {
@@ -218,15 +212,15 @@ class _$EpubSchemaImpl implements _EpubSchema {
 abstract class _EpubSchema implements EpubSchema {
   const factory _EpubSchema(
       {required final EpubContainer epubContainer,
-      final EpubPackage? package,
-      final EpubNavigation? navigation}) = _$EpubSchemaImpl;
+      required final EpubPackage package,
+      required final EpubNavigation navigation}) = _$EpubSchemaImpl;
 
   @override
   EpubContainer get epubContainer;
   @override
-  EpubPackage? get package;
+  EpubPackage get package;
   @override
-  EpubNavigation? get navigation;
+  EpubNavigation get navigation;
 
   /// Create a copy of EpubSchema
   /// with the given fields replaced by the non-null parameter values.

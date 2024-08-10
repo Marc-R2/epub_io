@@ -555,7 +555,7 @@ mixin NavigationReader implements EpubArchiveReader {
       classs: classs,
       playOrder: playOrder,
       navigationLabels: navigationLabels,
-      content: content,
+      content: content!,
       childNavigationPoints: childNavigationPoints,
     );
   }
@@ -606,7 +606,7 @@ mixin NavigationReader implements EpubArchiveReader {
       classs: classs,
       playOrder: playOrder,
       navigationLabels: navigationLabels,
-      content: content,
+      content: content!,
       childNavigationPoints: childNavigationPoints,
     );
   }

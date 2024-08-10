@@ -7,11 +7,11 @@ part 'epub_navigation_point.freezed.dart';
 @freezed
 class EpubNavigationPoint with _$EpubNavigationPoint {
   const factory EpubNavigationPoint({
+    required List<EpubNavigationLabel> navigationLabels,
+    required EpubNavigationContent content,
     String? id,
     String? classs,
     String? playOrder,
-    @Default([]) List<EpubNavigationLabel> navigationLabels,
-    EpubNavigationContent? content,
     @Default([]) List<EpubNavigationPoint> childNavigationPoints,
   }) = _EpubNavigationPoint;
 }

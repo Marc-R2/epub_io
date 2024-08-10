@@ -9,9 +9,9 @@ part 'epub_book_ref.freezed.dart';
 class EpubBookRef with _$EpubBookRef {
   const factory EpubBookRef({
     required EpubArchive epubArchive,
+    required EpubSchema schema,
     String? title,
     @Default([]) List<EpubMetadataCreator> authors,
-    EpubSchema? schema,
     EpubContentRef? content,
   }) = _EpubBookRef;
 

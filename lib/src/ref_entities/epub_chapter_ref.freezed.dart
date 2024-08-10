@@ -16,12 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubChapterRef {
-  EpubContentFileRef<dynamic>? get epubContentFileRef =>
+  EpubContentFileRef<dynamic> get epubContentFileRef =>
       throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  String? get contentFileName => throw _privateConstructorUsedError;
-  String? get anchor => throw _privateConstructorUsedError;
+  String get contentFileName => throw _privateConstructorUsedError;
   List<EpubChapterRef> get subChapters => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String? get anchor => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubChapterRef
   /// with the given fields replaced by the non-null parameter values.
@@ -37,11 +37,11 @@ abstract class $EpubChapterRefCopyWith<$Res> {
       _$EpubChapterRefCopyWithImpl<$Res, EpubChapterRef>;
   @useResult
   $Res call(
-      {EpubContentFileRef<dynamic>? epubContentFileRef,
-      String? title,
-      String? contentFileName,
-      String? anchor,
-      List<EpubChapterRef> subChapters});
+      {EpubContentFileRef<dynamic> epubContentFileRef,
+      String contentFileName,
+      List<EpubChapterRef> subChapters,
+      String title,
+      String? anchor});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$EpubChapterRefCopyWithImpl<$Res, $Val extends EpubChapterRef>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? epubContentFileRef = freezed,
-    Object? title = freezed,
-    Object? contentFileName = freezed,
-    Object? anchor = freezed,
+    Object? epubContentFileRef = null,
+    Object? contentFileName = null,
     Object? subChapters = null,
+    Object? title = null,
+    Object? anchor = freezed,
   }) {
     return _then(_value.copyWith(
-      epubContentFileRef: freezed == epubContentFileRef
+      epubContentFileRef: null == epubContentFileRef
           ? _value.epubContentFileRef
           : epubContentFileRef // ignore: cast_nullable_to_non_nullable
-              as EpubContentFileRef<dynamic>?,
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentFileName: freezed == contentFileName
+              as EpubContentFileRef<dynamic>,
+      contentFileName: null == contentFileName
           ? _value.contentFileName
           : contentFileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      anchor: freezed == anchor
-          ? _value.anchor
-          : anchor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       subChapters: null == subChapters
           ? _value.subChapters
           : subChapters // ignore: cast_nullable_to_non_nullable
               as List<EpubChapterRef>,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      anchor: freezed == anchor
+          ? _value.anchor
+          : anchor // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$EpubChapterRefImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {EpubContentFileRef<dynamic>? epubContentFileRef,
-      String? title,
-      String? contentFileName,
-      String? anchor,
-      List<EpubChapterRef> subChapters});
+      {EpubContentFileRef<dynamic> epubContentFileRef,
+      String contentFileName,
+      List<EpubChapterRef> subChapters,
+      String title,
+      String? anchor});
 }
 
 /// @nodoc
@@ -119,33 +119,33 @@ class __$$EpubChapterRefImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? epubContentFileRef = freezed,
-    Object? title = freezed,
-    Object? contentFileName = freezed,
-    Object? anchor = freezed,
+    Object? epubContentFileRef = null,
+    Object? contentFileName = null,
     Object? subChapters = null,
+    Object? title = null,
+    Object? anchor = freezed,
   }) {
     return _then(_$EpubChapterRefImpl(
-      epubContentFileRef: freezed == epubContentFileRef
+      epubContentFileRef: null == epubContentFileRef
           ? _value.epubContentFileRef
           : epubContentFileRef // ignore: cast_nullable_to_non_nullable
-              as EpubContentFileRef<dynamic>?,
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentFileName: freezed == contentFileName
+              as EpubContentFileRef<dynamic>,
+      contentFileName: null == contentFileName
           ? _value.contentFileName
           : contentFileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      anchor: freezed == anchor
-          ? _value.anchor
-          : anchor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       subChapters: null == subChapters
           ? _value._subChapters
           : subChapters // ignore: cast_nullable_to_non_nullable
               as List<EpubChapterRef>,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      anchor: freezed == anchor
+          ? _value.anchor
+          : anchor // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -154,25 +154,20 @@ class __$$EpubChapterRefImplCopyWithImpl<$Res>
 
 class _$EpubChapterRefImpl extends _EpubChapterRef {
   const _$EpubChapterRefImpl(
-      {this.epubContentFileRef,
-      this.title,
-      this.contentFileName,
-      this.anchor,
-      final List<EpubChapterRef> subChapters = const []})
+      {required this.epubContentFileRef,
+      required this.contentFileName,
+      required final List<EpubChapterRef> subChapters,
+      required this.title,
+      this.anchor})
       : _subChapters = subChapters,
         super._();
 
   @override
-  final EpubContentFileRef<dynamic>? epubContentFileRef;
+  final EpubContentFileRef<dynamic> epubContentFileRef;
   @override
-  final String? title;
-  @override
-  final String? contentFileName;
-  @override
-  final String? anchor;
+  final String contentFileName;
   final List<EpubChapterRef> _subChapters;
   @override
-  @JsonKey()
   List<EpubChapterRef> get subChapters {
     if (_subChapters is EqualUnmodifiableListView) return _subChapters;
     // ignore: implicit_dynamic_type
@@ -180,8 +175,13 @@ class _$EpubChapterRefImpl extends _EpubChapterRef {
   }
 
   @override
+  final String title;
+  @override
+  final String? anchor;
+
+  @override
   String toString() {
-    return 'EpubChapterRef(epubContentFileRef: $epubContentFileRef, title: $title, contentFileName: $contentFileName, anchor: $anchor, subChapters: $subChapters)';
+    return 'EpubChapterRef(epubContentFileRef: $epubContentFileRef, contentFileName: $contentFileName, subChapters: $subChapters, title: $title, anchor: $anchor)';
   }
 
   @override
@@ -191,22 +191,22 @@ class _$EpubChapterRefImpl extends _EpubChapterRef {
             other is _$EpubChapterRefImpl &&
             (identical(other.epubContentFileRef, epubContentFileRef) ||
                 other.epubContentFileRef == epubContentFileRef) &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.contentFileName, contentFileName) ||
                 other.contentFileName == contentFileName) &&
-            (identical(other.anchor, anchor) || other.anchor == anchor) &&
             const DeepCollectionEquality()
-                .equals(other._subChapters, _subChapters));
+                .equals(other._subChapters, _subChapters) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.anchor, anchor) || other.anchor == anchor));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       epubContentFileRef,
-      title,
       contentFileName,
-      anchor,
-      const DeepCollectionEquality().hash(_subChapters));
+      const DeepCollectionEquality().hash(_subChapters),
+      title,
+      anchor);
 
   /// Create a copy of EpubChapterRef
   /// with the given fields replaced by the non-null parameter values.
@@ -220,23 +220,23 @@ class _$EpubChapterRefImpl extends _EpubChapterRef {
 
 abstract class _EpubChapterRef extends EpubChapterRef {
   const factory _EpubChapterRef(
-      {final EpubContentFileRef<dynamic>? epubContentFileRef,
-      final String? title,
-      final String? contentFileName,
-      final String? anchor,
-      final List<EpubChapterRef> subChapters}) = _$EpubChapterRefImpl;
+      {required final EpubContentFileRef<dynamic> epubContentFileRef,
+      required final String contentFileName,
+      required final List<EpubChapterRef> subChapters,
+      required final String title,
+      final String? anchor}) = _$EpubChapterRefImpl;
   const _EpubChapterRef._() : super._();
 
   @override
-  EpubContentFileRef<dynamic>? get epubContentFileRef;
+  EpubContentFileRef<dynamic> get epubContentFileRef;
   @override
-  String? get title;
-  @override
-  String? get contentFileName;
-  @override
-  String? get anchor;
+  String get contentFileName;
   @override
   List<EpubChapterRef> get subChapters;
+  @override
+  String get title;
+  @override
+  String? get anchor;
 
   /// Create a copy of EpubChapterRef
   /// with the given fields replaced by the non-null parameter values.

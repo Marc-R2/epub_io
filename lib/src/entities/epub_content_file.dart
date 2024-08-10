@@ -1,11 +1,11 @@
 import 'package:epub_io/src/entities/epub_content_type.dart';
 
 abstract class EpubContentFile<T> {
-  String? get fileName;
+  String get fileName;
 
-  EpubContentType? get contentType;
+  EpubContentType get contentType;
 
-  String? get contentMimeType;
+  String get contentMimeType;
 
-  T? get content;
+  T get content;
 }

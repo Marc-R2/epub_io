@@ -158,16 +158,11 @@ class __$$EpubContentRefImplCopyWithImpl<$Res>
 
 class _$EpubContentRefImpl extends _EpubContentRef {
   const _$EpubContentRefImpl(
-      {final Map<String, EpubTextContentFileRef> html =
-          const <String, EpubTextContentFileRef>{},
-      final Map<String, EpubTextContentFileRef> css =
-          const <String, EpubTextContentFileRef>{},
-      final Map<String, EpubByteContentFileRef> images =
-          const <String, EpubByteContentFileRef>{},
-      final Map<String, EpubByteContentFileRef> fonts =
-          const <String, EpubByteContentFileRef>{},
-      final Map<String, EpubContentFileRef<dynamic>> allFiles =
-          const <String, EpubContentFileRef<dynamic>>{}})
+      {required final Map<String, EpubTextContentFileRef> html,
+      required final Map<String, EpubTextContentFileRef> css,
+      required final Map<String, EpubByteContentFileRef> images,
+      required final Map<String, EpubByteContentFileRef> fonts,
+      required final Map<String, EpubContentFileRef<dynamic>> allFiles})
       : _html = html,
         _css = css,
         _images = images,
@@ -177,7 +172,6 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
   final Map<String, EpubTextContentFileRef> _html;
   @override
-  @JsonKey()
   Map<String, EpubTextContentFileRef> get html {
     if (_html is EqualUnmodifiableMapView) return _html;
     // ignore: implicit_dynamic_type
@@ -186,7 +180,6 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
   final Map<String, EpubTextContentFileRef> _css;
   @override
-  @JsonKey()
   Map<String, EpubTextContentFileRef> get css {
     if (_css is EqualUnmodifiableMapView) return _css;
     // ignore: implicit_dynamic_type
@@ -195,7 +188,6 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
   final Map<String, EpubByteContentFileRef> _images;
   @override
-  @JsonKey()
   Map<String, EpubByteContentFileRef> get images {
     if (_images is EqualUnmodifiableMapView) return _images;
     // ignore: implicit_dynamic_type
@@ -204,7 +196,6 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
   final Map<String, EpubByteContentFileRef> _fonts;
   @override
-  @JsonKey()
   Map<String, EpubByteContentFileRef> get fonts {
     if (_fonts is EqualUnmodifiableMapView) return _fonts;
     // ignore: implicit_dynamic_type
@@ -213,7 +204,6 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
   final Map<String, EpubContentFileRef<dynamic>> _allFiles;
   @override
-  @JsonKey()
   Map<String, EpubContentFileRef<dynamic>> get allFiles {
     if (_allFiles is EqualUnmodifiableMapView) return _allFiles;
     // ignore: implicit_dynamic_type
@@ -258,11 +248,11 @@ class _$EpubContentRefImpl extends _EpubContentRef {
 
 abstract class _EpubContentRef extends EpubContentRef {
   const factory _EpubContentRef(
-          {final Map<String, EpubTextContentFileRef> html,
-          final Map<String, EpubTextContentFileRef> css,
-          final Map<String, EpubByteContentFileRef> images,
-          final Map<String, EpubByteContentFileRef> fonts,
-          final Map<String, EpubContentFileRef<dynamic>> allFiles}) =
+          {required final Map<String, EpubTextContentFileRef> html,
+          required final Map<String, EpubTextContentFileRef> css,
+          required final Map<String, EpubByteContentFileRef> images,
+          required final Map<String, EpubByteContentFileRef> fonts,
+          required final Map<String, EpubContentFileRef<dynamic>> allFiles}) =
       _$EpubContentRefImpl;
   const _EpubContentRef._() : super._();
 

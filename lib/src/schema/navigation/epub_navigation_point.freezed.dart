@@ -16,12 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubNavigationPoint {
+  List<EpubNavigationLabel> get navigationLabels =>
+      throw _privateConstructorUsedError;
+  EpubNavigationContent get content => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get classs => throw _privateConstructorUsedError;
   String? get playOrder => throw _privateConstructorUsedError;
-  List<EpubNavigationLabel> get navigationLabels =>
-      throw _privateConstructorUsedError;
-  EpubNavigationContent? get content => throw _privateConstructorUsedError;
   List<EpubNavigationPoint> get childNavigationPoints =>
       throw _privateConstructorUsedError;
 
@@ -39,14 +39,14 @@ abstract class $EpubNavigationPointCopyWith<$Res> {
       _$EpubNavigationPointCopyWithImpl<$Res, EpubNavigationPoint>;
   @useResult
   $Res call(
-      {String? id,
+      {List<EpubNavigationLabel> navigationLabels,
+      EpubNavigationContent content,
+      String? id,
       String? classs,
       String? playOrder,
-      List<EpubNavigationLabel> navigationLabels,
-      EpubNavigationContent? content,
       List<EpubNavigationPoint> childNavigationPoints});
 
-  $EpubNavigationContentCopyWith<$Res>? get content;
+  $EpubNavigationContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -64,14 +64,22 @@ class _$EpubNavigationPointCopyWithImpl<$Res, $Val extends EpubNavigationPoint>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? navigationLabels = null,
+    Object? content = null,
     Object? id = freezed,
     Object? classs = freezed,
     Object? playOrder = freezed,
-    Object? navigationLabels = null,
-    Object? content = freezed,
     Object? childNavigationPoints = null,
   }) {
     return _then(_value.copyWith(
+      navigationLabels: null == navigationLabels
+          ? _value.navigationLabels
+          : navigationLabels // ignore: cast_nullable_to_non_nullable
+              as List<EpubNavigationLabel>,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationContent,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -84,14 +92,6 @@ class _$EpubNavigationPointCopyWithImpl<$Res, $Val extends EpubNavigationPoint>
           ? _value.playOrder
           : playOrder // ignore: cast_nullable_to_non_nullable
               as String?,
-      navigationLabels: null == navigationLabels
-          ? _value.navigationLabels
-          : navigationLabels // ignore: cast_nullable_to_non_nullable
-              as List<EpubNavigationLabel>,
-      content: freezed == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationContent?,
       childNavigationPoints: null == childNavigationPoints
           ? _value.childNavigationPoints
           : childNavigationPoints // ignore: cast_nullable_to_non_nullable
@@ -103,12 +103,8 @@ class _$EpubNavigationPointCopyWithImpl<$Res, $Val extends EpubNavigationPoint>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubNavigationContentCopyWith<$Res>? get content {
-    if (_value.content == null) {
-      return null;
-    }
-
-    return $EpubNavigationContentCopyWith<$Res>(_value.content!, (value) {
+  $EpubNavigationContentCopyWith<$Res> get content {
+    return $EpubNavigationContentCopyWith<$Res>(_value.content, (value) {
       return _then(_value.copyWith(content: value) as $Val);
     });
   }
@@ -123,15 +119,15 @@ abstract class _$$EpubNavigationPointImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {List<EpubNavigationLabel> navigationLabels,
+      EpubNavigationContent content,
+      String? id,
       String? classs,
       String? playOrder,
-      List<EpubNavigationLabel> navigationLabels,
-      EpubNavigationContent? content,
       List<EpubNavigationPoint> childNavigationPoints});
 
   @override
-  $EpubNavigationContentCopyWith<$Res>? get content;
+  $EpubNavigationContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -147,14 +143,22 @@ class __$$EpubNavigationPointImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? navigationLabels = null,
+    Object? content = null,
     Object? id = freezed,
     Object? classs = freezed,
     Object? playOrder = freezed,
-    Object? navigationLabels = null,
-    Object? content = freezed,
     Object? childNavigationPoints = null,
   }) {
     return _then(_$EpubNavigationPointImpl(
+      navigationLabels: null == navigationLabels
+          ? _value._navigationLabels
+          : navigationLabels // ignore: cast_nullable_to_non_nullable
+              as List<EpubNavigationLabel>,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as EpubNavigationContent,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -167,14 +171,6 @@ class __$$EpubNavigationPointImplCopyWithImpl<$Res>
           ? _value.playOrder
           : playOrder // ignore: cast_nullable_to_non_nullable
               as String?,
-      navigationLabels: null == navigationLabels
-          ? _value._navigationLabels
-          : navigationLabels // ignore: cast_nullable_to_non_nullable
-              as List<EpubNavigationLabel>,
-      content: freezed == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as EpubNavigationContent?,
       childNavigationPoints: null == childNavigationPoints
           ? _value._childNavigationPoints
           : childNavigationPoints // ignore: cast_nullable_to_non_nullable
@@ -187,24 +183,17 @@ class __$$EpubNavigationPointImplCopyWithImpl<$Res>
 
 class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
   const _$EpubNavigationPointImpl(
-      {this.id,
+      {required final List<EpubNavigationLabel> navigationLabels,
+      required this.content,
+      this.id,
       this.classs,
       this.playOrder,
-      final List<EpubNavigationLabel> navigationLabels = const [],
-      this.content,
       final List<EpubNavigationPoint> childNavigationPoints = const []})
       : _navigationLabels = navigationLabels,
         _childNavigationPoints = childNavigationPoints;
 
-  @override
-  final String? id;
-  @override
-  final String? classs;
-  @override
-  final String? playOrder;
   final List<EpubNavigationLabel> _navigationLabels;
   @override
-  @JsonKey()
   List<EpubNavigationLabel> get navigationLabels {
     if (_navigationLabels is EqualUnmodifiableListView)
       return _navigationLabels;
@@ -213,7 +202,13 @@ class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
   }
 
   @override
-  final EpubNavigationContent? content;
+  final EpubNavigationContent content;
+  @override
+  final String? id;
+  @override
+  final String? classs;
+  @override
+  final String? playOrder;
   final List<EpubNavigationPoint> _childNavigationPoints;
   @override
   @JsonKey()
@@ -226,7 +221,7 @@ class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
 
   @override
   String toString() {
-    return 'EpubNavigationPoint(id: $id, classs: $classs, playOrder: $playOrder, navigationLabels: $navigationLabels, content: $content, childNavigationPoints: $childNavigationPoints)';
+    return 'EpubNavigationPoint(navigationLabels: $navigationLabels, content: $content, id: $id, classs: $classs, playOrder: $playOrder, childNavigationPoints: $childNavigationPoints)';
   }
 
   @override
@@ -234,13 +229,13 @@ class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubNavigationPointImpl &&
+            const DeepCollectionEquality()
+                .equals(other._navigationLabels, _navigationLabels) &&
+            (identical(other.content, content) || other.content == content) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.classs, classs) || other.classs == classs) &&
             (identical(other.playOrder, playOrder) ||
                 other.playOrder == playOrder) &&
-            const DeepCollectionEquality()
-                .equals(other._navigationLabels, _navigationLabels) &&
-            (identical(other.content, content) || other.content == content) &&
             const DeepCollectionEquality()
                 .equals(other._childNavigationPoints, _childNavigationPoints));
   }
@@ -248,11 +243,11 @@ class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_navigationLabels),
+      content,
       id,
       classs,
       playOrder,
-      const DeepCollectionEquality().hash(_navigationLabels),
-      content,
       const DeepCollectionEquality().hash(_childNavigationPoints));
 
   /// Create a copy of EpubNavigationPoint
@@ -267,24 +262,24 @@ class _$EpubNavigationPointImpl implements _EpubNavigationPoint {
 
 abstract class _EpubNavigationPoint implements EpubNavigationPoint {
   const factory _EpubNavigationPoint(
-          {final String? id,
+          {required final List<EpubNavigationLabel> navigationLabels,
+          required final EpubNavigationContent content,
+          final String? id,
           final String? classs,
           final String? playOrder,
-          final List<EpubNavigationLabel> navigationLabels,
-          final EpubNavigationContent? content,
           final List<EpubNavigationPoint> childNavigationPoints}) =
       _$EpubNavigationPointImpl;
 
+  @override
+  List<EpubNavigationLabel> get navigationLabels;
+  @override
+  EpubNavigationContent get content;
   @override
   String? get id;
   @override
   String? get classs;
   @override
   String? get playOrder;
-  @override
-  List<EpubNavigationLabel> get navigationLabels;
-  @override
-  EpubNavigationContent? get content;
   @override
   List<EpubNavigationPoint> get childNavigationPoints;
 

@@ -18,10 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EpubContainer {
   XMLInfo get xmlInfo => throw _privateConstructorUsedError;
   EpubContainerRootFile get rootFile => throw _privateConstructorUsedError;
+  List<EpubContainerRootFile> get rootFiles =>
+      throw _privateConstructorUsedError;
   String? get xmlns => throw _privateConstructorUsedError;
   String? get version => throw _privateConstructorUsedError;
-  List<EpubContainerRootFile>? get rootFiles =>
-      throw _privateConstructorUsedError;
 
   /// Create a copy of EpubContainer
   /// with the given fields replaced by the non-null parameter values.
@@ -39,9 +39,9 @@ abstract class $EpubContainerCopyWith<$Res> {
   $Res call(
       {XMLInfo xmlInfo,
       EpubContainerRootFile rootFile,
+      List<EpubContainerRootFile> rootFiles,
       String? xmlns,
-      String? version,
-      List<EpubContainerRootFile>? rootFiles});
+      String? version});
 
   $XMLInfoCopyWith<$Res> get xmlInfo;
   $EpubContainerRootFileCopyWith<$Res> get rootFile;
@@ -64,9 +64,9 @@ class _$EpubContainerCopyWithImpl<$Res, $Val extends EpubContainer>
   $Res call({
     Object? xmlInfo = null,
     Object? rootFile = null,
+    Object? rootFiles = null,
     Object? xmlns = freezed,
     Object? version = freezed,
-    Object? rootFiles = freezed,
   }) {
     return _then(_value.copyWith(
       xmlInfo: null == xmlInfo
@@ -77,6 +77,10 @@ class _$EpubContainerCopyWithImpl<$Res, $Val extends EpubContainer>
           ? _value.rootFile
           : rootFile // ignore: cast_nullable_to_non_nullable
               as EpubContainerRootFile,
+      rootFiles: null == rootFiles
+          ? _value.rootFiles
+          : rootFiles // ignore: cast_nullable_to_non_nullable
+              as List<EpubContainerRootFile>,
       xmlns: freezed == xmlns
           ? _value.xmlns
           : xmlns // ignore: cast_nullable_to_non_nullable
@@ -85,10 +89,6 @@ class _$EpubContainerCopyWithImpl<$Res, $Val extends EpubContainer>
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String?,
-      rootFiles: freezed == rootFiles
-          ? _value.rootFiles
-          : rootFiles // ignore: cast_nullable_to_non_nullable
-              as List<EpubContainerRootFile>?,
     ) as $Val);
   }
 
@@ -124,9 +124,9 @@ abstract class _$$EpubContainerImplCopyWith<$Res>
   $Res call(
       {XMLInfo xmlInfo,
       EpubContainerRootFile rootFile,
+      List<EpubContainerRootFile> rootFiles,
       String? xmlns,
-      String? version,
-      List<EpubContainerRootFile>? rootFiles});
+      String? version});
 
   @override
   $XMLInfoCopyWith<$Res> get xmlInfo;
@@ -149,9 +149,9 @@ class __$$EpubContainerImplCopyWithImpl<$Res>
   $Res call({
     Object? xmlInfo = null,
     Object? rootFile = null,
+    Object? rootFiles = null,
     Object? xmlns = freezed,
     Object? version = freezed,
-    Object? rootFiles = freezed,
   }) {
     return _then(_$EpubContainerImpl(
       xmlInfo: null == xmlInfo
@@ -162,6 +162,10 @@ class __$$EpubContainerImplCopyWithImpl<$Res>
           ? _value.rootFile
           : rootFile // ignore: cast_nullable_to_non_nullable
               as EpubContainerRootFile,
+      rootFiles: null == rootFiles
+          ? _value._rootFiles
+          : rootFiles // ignore: cast_nullable_to_non_nullable
+              as List<EpubContainerRootFile>,
       xmlns: freezed == xmlns
           ? _value.xmlns
           : xmlns // ignore: cast_nullable_to_non_nullable
@@ -170,10 +174,6 @@ class __$$EpubContainerImplCopyWithImpl<$Res>
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String?,
-      rootFiles: freezed == rootFiles
-          ? _value._rootFiles
-          : rootFiles // ignore: cast_nullable_to_non_nullable
-              as List<EpubContainerRootFile>?,
     ));
   }
 }
@@ -184,9 +184,9 @@ class _$EpubContainerImpl extends _EpubContainer {
   const _$EpubContainerImpl(
       {required this.xmlInfo,
       required this.rootFile,
+      required final List<EpubContainerRootFile> rootFiles,
       this.xmlns,
-      this.version,
-      final List<EpubContainerRootFile>? rootFiles})
+      this.version})
       : _rootFiles = rootFiles,
         super._();
 
@@ -194,23 +194,22 @@ class _$EpubContainerImpl extends _EpubContainer {
   final XMLInfo xmlInfo;
   @override
   final EpubContainerRootFile rootFile;
+  final List<EpubContainerRootFile> _rootFiles;
+  @override
+  List<EpubContainerRootFile> get rootFiles {
+    if (_rootFiles is EqualUnmodifiableListView) return _rootFiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rootFiles);
+  }
+
   @override
   final String? xmlns;
   @override
   final String? version;
-  final List<EpubContainerRootFile>? _rootFiles;
-  @override
-  List<EpubContainerRootFile>? get rootFiles {
-    final value = _rootFiles;
-    if (value == null) return null;
-    if (_rootFiles is EqualUnmodifiableListView) return _rootFiles;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
 
   @override
   String toString() {
-    return 'EpubContainer(xmlInfo: $xmlInfo, rootFile: $rootFile, xmlns: $xmlns, version: $version, rootFiles: $rootFiles)';
+    return 'EpubContainer(xmlInfo: $xmlInfo, rootFile: $rootFile, rootFiles: $rootFiles, xmlns: $xmlns, version: $version)';
   }
 
   @override
@@ -221,15 +220,15 @@ class _$EpubContainerImpl extends _EpubContainer {
             (identical(other.xmlInfo, xmlInfo) || other.xmlInfo == xmlInfo) &&
             (identical(other.rootFile, rootFile) ||
                 other.rootFile == rootFile) &&
-            (identical(other.xmlns, xmlns) || other.xmlns == xmlns) &&
-            (identical(other.version, version) || other.version == version) &&
             const DeepCollectionEquality()
-                .equals(other._rootFiles, _rootFiles));
+                .equals(other._rootFiles, _rootFiles) &&
+            (identical(other.xmlns, xmlns) || other.xmlns == xmlns) &&
+            (identical(other.version, version) || other.version == version));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, xmlInfo, rootFile, xmlns,
-      version, const DeepCollectionEquality().hash(_rootFiles));
+  int get hashCode => Object.hash(runtimeType, xmlInfo, rootFile,
+      const DeepCollectionEquality().hash(_rootFiles), xmlns, version);
 
   /// Create a copy of EpubContainer
   /// with the given fields replaced by the non-null parameter values.
@@ -244,9 +243,9 @@ abstract class _EpubContainer extends EpubContainer {
   const factory _EpubContainer(
       {required final XMLInfo xmlInfo,
       required final EpubContainerRootFile rootFile,
+      required final List<EpubContainerRootFile> rootFiles,
       final String? xmlns,
-      final String? version,
-      final List<EpubContainerRootFile>? rootFiles}) = _$EpubContainerImpl;
+      final String? version}) = _$EpubContainerImpl;
   const _EpubContainer._() : super._();
 
   @override
@@ -254,11 +253,11 @@ abstract class _EpubContainer extends EpubContainer {
   @override
   EpubContainerRootFile get rootFile;
   @override
+  List<EpubContainerRootFile> get rootFiles;
+  @override
   String? get xmlns;
   @override
   String? get version;
-  @override
-  List<EpubContainerRootFile>? get rootFiles;
 
   /// Create a copy of EpubContainer
   /// with the given fields replaced by the non-null parameter values.
