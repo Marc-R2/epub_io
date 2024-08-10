@@ -58,6 +58,10 @@ jobs:
             test/res/**
           key: ${{ runner.os }}-epub-downloads
 
+      - name: Show files in ./coverage
+        run: | 
+          ls -la ./coverage
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
