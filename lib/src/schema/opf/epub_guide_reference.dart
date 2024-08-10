@@ -7,9 +7,9 @@ part 'epub_guide_reference.g.dart';
 @freezed
 class EpubGuideReference with _$EpubGuideReference, XmlWrite {
   const factory EpubGuideReference({
-    String? type,
+    required String type,
+    required String href,
     String? title,
-    String? href,
   }) = _EpubGuideReference;
 
   factory EpubGuideReference.fromJson(Map<String, dynamic> json) =>
