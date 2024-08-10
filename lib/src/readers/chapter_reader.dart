@@ -52,9 +52,9 @@ class ChapterReader {
       }
 
       final chapterRef = EpubChapterRef(
-        epubContentFileRef: bookRef.content!.allFiles[contentFileName],
+        epubContentFileRef: bookRef.content!.allFiles[contentFileName]!,
         title: navigationPoint.navigationLabels.first.text,
-        contentFileName: contentFileName,
+        contentFileName: contentFileName!,
         anchor: anchor,
         subChapters:
             getChaptersImpl(bookRef, navigationPoint.childNavigationPoints),

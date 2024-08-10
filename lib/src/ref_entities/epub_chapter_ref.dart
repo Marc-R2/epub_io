@@ -7,20 +7,17 @@ part 'epub_chapter_ref.freezed.dart';
 @freezed
 class EpubChapterRef with _$EpubChapterRef {
   const factory EpubChapterRef({
-    EpubContentFileRef<dynamic>? epubContentFileRef,
+    required EpubContentFileRef<dynamic> epubContentFileRef,
+    required String contentFileName,
+    required List<EpubChapterRef> subChapters,
     String? title,
-    String? contentFileName,
     String? anchor,
-    @Default([]) List<EpubChapterRef> subChapters,
   }) = _EpubChapterRef;
 
   const EpubChapterRef._();
 
   Future<EpubChapter<dynamic>> asChapter() async {
-    if (epubContentFileRef == null) {
-      throw Exception('epubContentFileRef is null');
-    }
-    final content = await epubContentFileRef!.readContent();
+    final content = await epubContentFileRef.readContent();
 
     final sub = await Future.wait<EpubChapter<dynamic>>(
       subChapters.map((e) => e.asChapter()),
