@@ -10,7 +10,7 @@ class EpubChapterRef with _$EpubChapterRef {
     required EpubContentFileRef<dynamic> epubContentFileRef,
     required String contentFileName,
     required List<EpubChapterRef> subChapters,
-    String? title,
+    required String title,
     String? anchor,
   }) = _EpubChapterRef;
 

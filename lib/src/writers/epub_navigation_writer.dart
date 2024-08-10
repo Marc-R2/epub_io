@@ -75,7 +75,7 @@ class EpubNavigationWriter {
             'navLabel',
             nest: () => builder.element(
               'text',
-              nest: () => builder.text(element.text!),
+              nest: () => builder.text(element.text),
             ),
           );
         }
