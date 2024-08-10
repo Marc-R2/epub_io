@@ -31,16 +31,16 @@ class ChapterReader {
     for (final navigationPoint in navigationPoints) {
       String? contentFileName;
       String? anchor;
-      if (navigationPoint.content?.source == null) continue;
+      if (navigationPoint.content.source == null) continue;
       final contentSourceAnchorCharIndex =
-          navigationPoint.content!.source!.indexOf('#');
+          navigationPoint.content.source!.indexOf('#');
       if (contentSourceAnchorCharIndex == -1) {
-        contentFileName = navigationPoint.content!.source;
+        contentFileName = navigationPoint.content.source;
         anchor = null;
       } else {
-        contentFileName = navigationPoint.content!.source!
+        contentFileName = navigationPoint.content.source!
             .substring(0, contentSourceAnchorCharIndex);
-        anchor = navigationPoint.content!.source!
+        anchor = navigationPoint.content.source!
             .substring(contentSourceAnchorCharIndex + 1);
       }
 

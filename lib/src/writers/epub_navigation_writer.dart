@@ -79,7 +79,7 @@ class EpubNavigationWriter {
             ),
           );
         }
-        builder.element('content', attributes: {'src': point.content!.source!});
+        builder.element('content', attributes: {'src': point.content.source!});
       },
     );
   }
