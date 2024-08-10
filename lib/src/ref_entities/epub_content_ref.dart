@@ -8,16 +8,11 @@ part 'epub_content_ref.freezed.dart';
 @freezed
 class EpubContentRef with _$EpubContentRef {
   const factory EpubContentRef({
-    @Default(<String, EpubTextContentFileRef>{})
-    Map<String, EpubTextContentFileRef> html,
-    @Default(<String, EpubTextContentFileRef>{})
-    Map<String, EpubTextContentFileRef> css,
-    @Default(<String, EpubByteContentFileRef>{})
-    Map<String, EpubByteContentFileRef> images,
-    @Default(<String, EpubByteContentFileRef>{})
-    Map<String, EpubByteContentFileRef> fonts,
-    @Default(<String, EpubContentFileRef<dynamic>>{})
-    Map<String, EpubContentFileRef<dynamic>> allFiles,
+    required Map<String, EpubTextContentFileRef> html,
+    required Map<String, EpubTextContentFileRef> css,
+    required Map<String, EpubByteContentFileRef> images,
+    required Map<String, EpubByteContentFileRef> fonts,
+    required Map<String, EpubContentFileRef<dynamic>> allFiles,
   }) = _EpubContentRef;
 
   const EpubContentRef._();
