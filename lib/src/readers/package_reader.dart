@@ -61,9 +61,9 @@ class PackageReader {
           'rights' => rights.add(innerText),
           'link' => links.add(Link.readXML(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub2 =>
-            metaItems.add(readMetadataMetaVersion2(metadataItemNode)),
+            metaItems.add(EpubMetadataMetaV2.readXML(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub3 =>
-            metaItems.add(readMetadataMetaVersion3(metadataItemNode)),
+            metaItems.add(EpubMetadataMetaV3.readXML(metadataItemNode)),
           _ => null,
         };
       },
@@ -88,79 +88,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<meta>` element within the `<metadata>` section of an
-  /// EPUB 2.0 document and returns an [EpubMetadataMeta] object.
-  ///
-  /// - **[metadataMetaNode]**: The XML element representing a meta item.
-  ///
-  /// Returns an [EpubMetadataMeta] object containing
-  /// the meta item's name and content.
-  static EpubMetadataMeta readMetadataMetaVersion2(
-    XmlElement metadataMetaNode,
-  ) {
-    String? name;
-    String? content;
-    for (final attribute in metadataMetaNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'name':
-          name = attributeValue;
-        case 'content':
-          content = attributeValue;
-      }
-    }
-    return EpubMetadataMeta(
-      name: name,
-      content: content,
-    );
-  }
-
-  /// Parses a `<meta>` element within the `<metadata>` section of an
-  /// EPUB 3.0 document and returns an `EpubMetadataMeta` object.
-  ///
-  /// - **[metadataMetaNode]**: The XML element representing a meta item.
-  ///
-  /// Returns an [EpubMetadataMeta] object containing the
-  /// meta item's various attributes.
-  static EpubMetadataMeta readMetadataMetaVersion3(
-    XmlElement metadataMetaNode,
-  ) {
-    final attributes = <String, String>{};
-    String? id;
-    String? refines;
-    String? property;
-    String? scheme;
-    String? content;
-    for (final metadataMetaNodeAttribute in metadataMetaNode.attributes) {
-      final attributeValue = metadataMetaNodeAttribute.value;
-
-      final name = metadataMetaNodeAttribute.name.local.toLowerCase();
-
-      attributes[name] = attributeValue;
-      switch (name) {
-        case 'id':
-          id = attributeValue;
-        case 'refines':
-          refines = attributeValue;
-        case 'property':
-          property = attributeValue;
-        case 'scheme':
-          scheme = attributeValue;
-      }
-    }
-    content = metadataMetaNode.innerText;
-
-    return EpubMetadataMeta(
-      id: id,
-      refines: refines,
-      property: property,
-      scheme: scheme,
-      content: content,
-      attributes: attributes,
     );
   }
 

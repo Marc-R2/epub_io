@@ -152,17 +152,17 @@ void printLink(ObjectCompare<Link?> link) {
 void printMetaItems(ObjectListCompare<EpubMetadataMeta?> metaItems) {
   metaItems
     ..line('length', (b) => b?.length, showObj: true)
-    ..forEach(printMetaItem);
+    ..forEach(printMetaItem, showObj: true);
 }
 
 void printMetaItem(ObjectCompare<EpubMetadataMeta?> metaItem) {
-  metaItem
+  /* metaItem // TODO: switch EpubMetadataMetaV2/EpubMetadataMetaV3
     ..line('name', (b) => b?.name)
     ..line('content', (b) => b?.content, showObj: true)
     ..line('id', (b) => b?.id)
     ..line('refines', (b) => b?.refines)
     ..line('property', (b) => b?.property)
-    ..line('scheme', (b) => b?.scheme);
+    ..line('scheme', (b) => b?.scheme); */
   metaItem.map('attributes', (b) => b?.attributes, showObj: true)
     ..line('length', (b) => b?.length, showObj: true)
     ..forEach();
