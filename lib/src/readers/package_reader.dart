@@ -8,24 +8,6 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-  /// Parses the `<manifest>` element from an XML document
-  /// and converts it into an [EpubManifest] object.
-  ///
-  /// - **[manifestNode]**: The XML element representing the manifest section.
-  ///
-  /// Returns an [EpubManifest] object containing
-  /// a list of [EpubManifestItem] items.
-  static EpubManifest readManifest(XmlElement manifestNode) {
-    final items = <EpubManifestItem>[];
-
-    final children = manifestNode.children.whereType<XmlElement>();
-    for (final manifestItemNode in children) {
-      if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
-      items.add(EpubManifestItem.readXml(manifestItemNode));
-    }
-    return EpubManifest(items: items);
-  }
-
   /// Parses a single `<link>` element within the `<metadata>` section
   /// and returns a [Link] object.
   ///
@@ -339,7 +321,7 @@ class PackageReader {
     final metadata = readMetadata(metadataNode, version);
 
     final manifestNode = getNode('manifest', namespace: nameSpace.uri);
-    final manifest = readManifest(manifestNode);
+    final manifest = EpubManifest.readXml(manifestNode);
 
     final spineNode = getNode('spine', namespace: nameSpace.uri);
     final spine = EpubSpine.readXml(spineNode);
