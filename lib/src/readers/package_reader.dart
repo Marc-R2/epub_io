@@ -8,56 +8,7 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-  /// Parses the `<guide>` element from an XML document
-  /// and converts it into an [EpubGuide] object.
-  ///
-  /// - **[guideNode]**: The XML element representing the guide section.
-  ///
-  /// Returns an [EpubGuide] object containing
-  /// a list of [EpubGuideReference] items.
-  static EpubGuide readGuide(XmlElement guideNode) {
-    final items = <EpubGuideReference>[];
-
-    guideNode.children.whereType<XmlElement>().forEach(
-      (XmlElement guideReferenceNode) {
-        if (guideReferenceNode.name.local.toLowerCase() == 'reference') {
-          String? type;
-          String? title;
-          String? href;
-
-          for (final attribute in guideReferenceNode.attributes) {
-            final attributeValue = attribute.value;
-
-            switch (attribute.name.local.toLowerCase()) {
-              case 'type':
-                type = attributeValue;
-              case 'title':
-                title = attributeValue;
-              case 'href':
-                href = attributeValue;
-            }
-          }
-          if (type == null || type.isEmpty) {
-            throw Exception('Incorrect EPUB guide: item type is missing');
-          }
-          if (href == null || href.isEmpty) {
-            throw Exception('Incorrect EPUB guide: item href is missing');
-          }
-
-          final guideReference = EpubGuideReference(
-            type: type,
-            title: title,
-            href: href,
-          );
-
-          items.add(guideReference);
-        }
-      },
-    );
-    return EpubGuide(items: items);
-  }
-
-  /// Parses the `<manifest>` element from an XML document
+   /// Parses the `<manifest>` element from an XML document
   /// and converts it into an [EpubManifest] object.
   ///
   /// - **[manifestNode]**: The XML element representing the manifest section.
@@ -400,7 +351,7 @@ class PackageReader {
     final spine = readSpine(spineNode);
 
     final guideNode = getNodeOrNull('guide', namespace: nameSpace.uri);
-    final guide = guideNode != null ? readGuide(guideNode) : null;
+    final guide = guideNode != null ? EpubGuide.readXML(guideNode) : null;
 
     final bindingsNode = getNodeOrNull('bindings', namespace: nameSpace.uri);
     final bindings = switch (bindingsNode) {

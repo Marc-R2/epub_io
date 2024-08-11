@@ -1,6 +1,5 @@
 import 'package:epub_io/src/schema/opf/epub_package.dart';
 import 'package:epub_io/src/schema/opf/epub_version.dart';
-import 'package:epub_io/src/writers/epub_guide_writer.dart';
 import 'package:epub_io/src/writers/epub_manifest_writer.dart';
 import 'package:epub_io/src/writers/epub_metadata_writer.dart';
 import 'package:epub_io/src/writers/epub_spine_writer.dart';
@@ -54,9 +53,8 @@ class EpubPackageWriter {
           );
           EpubSpineWriter.writeSpine(builder, package.spine, nameSpace);
 
-          if (package.guide != null) {
-            EpubGuideWriter.writeGuide(builder, package.guide!, nameSpace);
-          }
+          package.guide?.writeXML(builder, nameSpace.uri);
+
           if (package.bindings != null) {
             builder.element(
               'bindings',
