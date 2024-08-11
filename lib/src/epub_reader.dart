@@ -54,7 +54,7 @@ class EpubReader
 
   final EpubArchive epubArchive;
 
-  Future<EpubMetadata> get metadata async => (await schema).package.metadata!;
+  Future<EpubMetadata> get metadata async => (await schema).package.metadata;
 
   Future<String?> get title async => (await metadata)
       .titles

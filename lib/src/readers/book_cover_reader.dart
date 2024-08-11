@@ -29,7 +29,7 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
   ///
   /// Returns a list of [EpubMetadataMeta] objects from the metadata section.
   static List<EpubMetadataMeta> metaItems(EpubSchema schema) =>
-      schema.package.metadata?.metaItems ?? [];
+      schema.package.metadata.metaItems;
 
   /// Finds and returns the metadata item representing the cover image.
   ///
@@ -59,7 +59,7 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
     EpubSchema schema,
     EpubMetadataMeta cover,
   ) {
-    final manifest = schema.package.manifest?.items.firstWhereOrNull(
+    final manifest = schema.package.manifest.items.firstWhereOrNull(
       (manifestItem) =>
           manifestItem.id.toLowerCase() == cover.content?.toLowerCase(),
     );
