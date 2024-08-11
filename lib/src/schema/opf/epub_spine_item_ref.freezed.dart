@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubSpineItemRef {
+  String get idRef => throw _privateConstructorUsedError;
   bool? get isLinear => throw _privateConstructorUsedError;
-  String? get idRef => throw _privateConstructorUsedError;
   String? get properties => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubSpineItemRef
@@ -33,7 +33,7 @@ abstract class $EpubSpineItemRefCopyWith<$Res> {
           EpubSpineItemRef value, $Res Function(EpubSpineItemRef) then) =
       _$EpubSpineItemRefCopyWithImpl<$Res, EpubSpineItemRef>;
   @useResult
-  $Res call({bool? isLinear, String? idRef, String? properties});
+  $Res call({String idRef, bool? isLinear, String? properties});
 }
 
 /// @nodoc
@@ -51,19 +51,19 @@ class _$EpubSpineItemRefCopyWithImpl<$Res, $Val extends EpubSpineItemRef>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? idRef = null,
     Object? isLinear = freezed,
-    Object? idRef = freezed,
     Object? properties = freezed,
   }) {
     return _then(_value.copyWith(
+      idRef: null == idRef
+          ? _value.idRef
+          : idRef // ignore: cast_nullable_to_non_nullable
+              as String,
       isLinear: freezed == isLinear
           ? _value.isLinear
           : isLinear // ignore: cast_nullable_to_non_nullable
               as bool?,
-      idRef: freezed == idRef
-          ? _value.idRef
-          : idRef // ignore: cast_nullable_to_non_nullable
-              as String?,
       properties: freezed == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$EpubSpineItemRefImplCopyWith<$Res>
       __$$EpubSpineItemRefImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool? isLinear, String? idRef, String? properties});
+  $Res call({String idRef, bool? isLinear, String? properties});
 }
 
 /// @nodoc
@@ -96,19 +96,19 @@ class __$$EpubSpineItemRefImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? idRef = null,
     Object? isLinear = freezed,
-    Object? idRef = freezed,
     Object? properties = freezed,
   }) {
     return _then(_$EpubSpineItemRefImpl(
+      idRef: null == idRef
+          ? _value.idRef
+          : idRef // ignore: cast_nullable_to_non_nullable
+              as String,
       isLinear: freezed == isLinear
           ? _value.isLinear
           : isLinear // ignore: cast_nullable_to_non_nullable
               as bool?,
-      idRef: freezed == idRef
-          ? _value.idRef
-          : idRef // ignore: cast_nullable_to_non_nullable
-              as String?,
       properties: freezed == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
@@ -120,18 +120,19 @@ class __$$EpubSpineItemRefImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EpubSpineItemRefImpl implements _EpubSpineItemRef {
-  const _$EpubSpineItemRefImpl({this.isLinear, this.idRef, this.properties});
+  const _$EpubSpineItemRefImpl(
+      {required this.idRef, this.isLinear, this.properties});
 
   @override
-  final bool? isLinear;
+  final String idRef;
   @override
-  final String? idRef;
+  final bool? isLinear;
   @override
   final String? properties;
 
   @override
   String toString() {
-    return 'EpubSpineItemRef(isLinear: $isLinear, idRef: $idRef, properties: $properties)';
+    return 'EpubSpineItemRef(idRef: $idRef, isLinear: $isLinear, properties: $properties)';
   }
 
   @override
@@ -139,15 +140,15 @@ class _$EpubSpineItemRefImpl implements _EpubSpineItemRef {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EpubSpineItemRefImpl &&
+            (identical(other.idRef, idRef) || other.idRef == idRef) &&
             (identical(other.isLinear, isLinear) ||
                 other.isLinear == isLinear) &&
-            (identical(other.idRef, idRef) || other.idRef == idRef) &&
             (identical(other.properties, properties) ||
                 other.properties == properties));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLinear, idRef, properties);
+  int get hashCode => Object.hash(runtimeType, idRef, isLinear, properties);
 
   /// Create a copy of EpubSpineItemRef
   /// with the given fields replaced by the non-null parameter values.
@@ -161,14 +162,14 @@ class _$EpubSpineItemRefImpl implements _EpubSpineItemRef {
 
 abstract class _EpubSpineItemRef implements EpubSpineItemRef {
   const factory _EpubSpineItemRef(
-      {final bool? isLinear,
-      final String? idRef,
+      {required final String idRef,
+      final bool? isLinear,
       final String? properties}) = _$EpubSpineItemRefImpl;
 
   @override
-  bool? get isLinear;
+  String get idRef;
   @override
-  String? get idRef;
+  bool? get isLinear;
   @override
   String? get properties;
 

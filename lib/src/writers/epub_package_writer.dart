@@ -47,16 +47,13 @@ class EpubPackageWriter {
             package.version,
             nameSpace,
           );
-          if (package.manifest != null) {
-            EpubManifestWriter.writeManifest(
-              builder,
-              package.manifest!,
-              nameSpace,
-            );
-          }
-          if (package.spine != null) {
-            EpubSpineWriter.writeSpine(builder, package.spine!, nameSpace);
-          }
+          EpubManifestWriter.writeManifest(
+            builder,
+            package.manifest,
+            nameSpace,
+          );
+          EpubSpineWriter.writeSpine(builder, package.spine, nameSpace);
+
           if (package.guide != null) {
             EpubGuideWriter.writeGuide(builder, package.guide!, nameSpace);
           }

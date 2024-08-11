@@ -18,10 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EpubPackage {
   NameSpace get nameSpace => throw _privateConstructorUsedError;
   XMLInfo get xmlInfo => throw _privateConstructorUsedError;
-  EpubVersion? get version => throw _privateConstructorUsedError;
-  EpubMetadata? get metadata => throw _privateConstructorUsedError;
-  EpubManifest? get manifest => throw _privateConstructorUsedError;
-  EpubSpine? get spine => throw _privateConstructorUsedError;
+  EpubVersion get version => throw _privateConstructorUsedError;
+  EpubMetadata get metadata => throw _privateConstructorUsedError;
+  EpubManifest get manifest => throw _privateConstructorUsedError;
+  EpubSpine get spine => throw _privateConstructorUsedError;
   EpubGuide? get guide => throw _privateConstructorUsedError;
   List<MediaType>? get bindings => throw _privateConstructorUsedError;
   String? get uniqueIdentifier => throw _privateConstructorUsedError;
@@ -44,10 +44,10 @@ abstract class $EpubPackageCopyWith<$Res> {
   $Res call(
       {NameSpace nameSpace,
       XMLInfo xmlInfo,
-      EpubVersion? version,
-      EpubMetadata? metadata,
-      EpubManifest? manifest,
-      EpubSpine? spine,
+      EpubVersion version,
+      EpubMetadata metadata,
+      EpubManifest manifest,
+      EpubSpine spine,
       EpubGuide? guide,
       List<MediaType>? bindings,
       String? uniqueIdentifier,
@@ -56,9 +56,9 @@ abstract class $EpubPackageCopyWith<$Res> {
 
   $NameSpaceCopyWith<$Res> get nameSpace;
   $XMLInfoCopyWith<$Res> get xmlInfo;
-  $EpubMetadataCopyWith<$Res>? get metadata;
-  $EpubManifestCopyWith<$Res>? get manifest;
-  $EpubSpineCopyWith<$Res>? get spine;
+  $EpubMetadataCopyWith<$Res> get metadata;
+  $EpubManifestCopyWith<$Res> get manifest;
+  $EpubSpineCopyWith<$Res> get spine;
   $EpubGuideCopyWith<$Res>? get guide;
 }
 
@@ -79,10 +79,10 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   $Res call({
     Object? nameSpace = null,
     Object? xmlInfo = null,
-    Object? version = freezed,
-    Object? metadata = freezed,
-    Object? manifest = freezed,
-    Object? spine = freezed,
+    Object? version = null,
+    Object? metadata = null,
+    Object? manifest = null,
+    Object? spine = null,
     Object? guide = freezed,
     Object? bindings = freezed,
     Object? uniqueIdentifier = freezed,
@@ -98,22 +98,22 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
           ? _value.xmlInfo
           : xmlInfo // ignore: cast_nullable_to_non_nullable
               as XMLInfo,
-      version: freezed == version
+      version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
-              as EpubVersion?,
-      metadata: freezed == metadata
+              as EpubVersion,
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as EpubMetadata?,
-      manifest: freezed == manifest
+              as EpubMetadata,
+      manifest: null == manifest
           ? _value.manifest
           : manifest // ignore: cast_nullable_to_non_nullable
-              as EpubManifest?,
-      spine: freezed == spine
+              as EpubManifest,
+      spine: null == spine
           ? _value.spine
           : spine // ignore: cast_nullable_to_non_nullable
-              as EpubSpine?,
+              as EpubSpine,
       guide: freezed == guide
           ? _value.guide
           : guide // ignore: cast_nullable_to_non_nullable
@@ -161,12 +161,8 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubMetadataCopyWith<$Res>? get metadata {
-    if (_value.metadata == null) {
-      return null;
-    }
-
-    return $EpubMetadataCopyWith<$Res>(_value.metadata!, (value) {
+  $EpubMetadataCopyWith<$Res> get metadata {
+    return $EpubMetadataCopyWith<$Res>(_value.metadata, (value) {
       return _then(_value.copyWith(metadata: value) as $Val);
     });
   }
@@ -175,12 +171,8 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubManifestCopyWith<$Res>? get manifest {
-    if (_value.manifest == null) {
-      return null;
-    }
-
-    return $EpubManifestCopyWith<$Res>(_value.manifest!, (value) {
+  $EpubManifestCopyWith<$Res> get manifest {
+    return $EpubManifestCopyWith<$Res>(_value.manifest, (value) {
       return _then(_value.copyWith(manifest: value) as $Val);
     });
   }
@@ -189,12 +181,8 @@ class _$EpubPackageCopyWithImpl<$Res, $Val extends EpubPackage>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EpubSpineCopyWith<$Res>? get spine {
-    if (_value.spine == null) {
-      return null;
-    }
-
-    return $EpubSpineCopyWith<$Res>(_value.spine!, (value) {
+  $EpubSpineCopyWith<$Res> get spine {
+    return $EpubSpineCopyWith<$Res>(_value.spine, (value) {
       return _then(_value.copyWith(spine: value) as $Val);
     });
   }
@@ -225,10 +213,10 @@ abstract class _$$EpubPackageImplCopyWith<$Res>
   $Res call(
       {NameSpace nameSpace,
       XMLInfo xmlInfo,
-      EpubVersion? version,
-      EpubMetadata? metadata,
-      EpubManifest? manifest,
-      EpubSpine? spine,
+      EpubVersion version,
+      EpubMetadata metadata,
+      EpubManifest manifest,
+      EpubSpine spine,
       EpubGuide? guide,
       List<MediaType>? bindings,
       String? uniqueIdentifier,
@@ -240,11 +228,11 @@ abstract class _$$EpubPackageImplCopyWith<$Res>
   @override
   $XMLInfoCopyWith<$Res> get xmlInfo;
   @override
-  $EpubMetadataCopyWith<$Res>? get metadata;
+  $EpubMetadataCopyWith<$Res> get metadata;
   @override
-  $EpubManifestCopyWith<$Res>? get manifest;
+  $EpubManifestCopyWith<$Res> get manifest;
   @override
-  $EpubSpineCopyWith<$Res>? get spine;
+  $EpubSpineCopyWith<$Res> get spine;
   @override
   $EpubGuideCopyWith<$Res>? get guide;
 }
@@ -264,10 +252,10 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
   $Res call({
     Object? nameSpace = null,
     Object? xmlInfo = null,
-    Object? version = freezed,
-    Object? metadata = freezed,
-    Object? manifest = freezed,
-    Object? spine = freezed,
+    Object? version = null,
+    Object? metadata = null,
+    Object? manifest = null,
+    Object? spine = null,
     Object? guide = freezed,
     Object? bindings = freezed,
     Object? uniqueIdentifier = freezed,
@@ -283,22 +271,22 @@ class __$$EpubPackageImplCopyWithImpl<$Res>
           ? _value.xmlInfo
           : xmlInfo // ignore: cast_nullable_to_non_nullable
               as XMLInfo,
-      version: freezed == version
+      version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
-              as EpubVersion?,
-      metadata: freezed == metadata
+              as EpubVersion,
+      metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as EpubMetadata?,
-      manifest: freezed == manifest
+              as EpubMetadata,
+      manifest: null == manifest
           ? _value.manifest
           : manifest // ignore: cast_nullable_to_non_nullable
-              as EpubManifest?,
-      spine: freezed == spine
+              as EpubManifest,
+      spine: null == spine
           ? _value.spine
           : spine // ignore: cast_nullable_to_non_nullable
-              as EpubSpine?,
+              as EpubSpine,
       guide: freezed == guide
           ? _value.guide
           : guide // ignore: cast_nullable_to_non_nullable
@@ -329,10 +317,10 @@ class _$EpubPackageImpl implements _EpubPackage {
   const _$EpubPackageImpl(
       {required this.nameSpace,
       required this.xmlInfo,
-      this.version,
-      this.metadata,
-      this.manifest,
-      this.spine,
+      required this.version,
+      required this.metadata,
+      required this.manifest,
+      required this.spine,
       this.guide,
       final List<MediaType>? bindings,
       this.uniqueIdentifier,
@@ -345,13 +333,13 @@ class _$EpubPackageImpl implements _EpubPackage {
   @override
   final XMLInfo xmlInfo;
   @override
-  final EpubVersion? version;
+  final EpubVersion version;
   @override
-  final EpubMetadata? metadata;
+  final EpubMetadata metadata;
   @override
-  final EpubManifest? manifest;
+  final EpubManifest manifest;
   @override
-  final EpubSpine? spine;
+  final EpubSpine spine;
   @override
   final EpubGuide? guide;
   final List<MediaType>? _bindings;
@@ -426,10 +414,10 @@ abstract class _EpubPackage implements EpubPackage {
   const factory _EpubPackage(
       {required final NameSpace nameSpace,
       required final XMLInfo xmlInfo,
-      final EpubVersion? version,
-      final EpubMetadata? metadata,
-      final EpubManifest? manifest,
-      final EpubSpine? spine,
+      required final EpubVersion version,
+      required final EpubMetadata metadata,
+      required final EpubManifest manifest,
+      required final EpubSpine spine,
       final EpubGuide? guide,
       final List<MediaType>? bindings,
       final String? uniqueIdentifier,
@@ -441,13 +429,13 @@ abstract class _EpubPackage implements EpubPackage {
   @override
   XMLInfo get xmlInfo;
   @override
-  EpubVersion? get version;
+  EpubVersion get version;
   @override
-  EpubMetadata? get metadata;
+  EpubMetadata get metadata;
   @override
-  EpubManifest? get manifest;
+  EpubManifest get manifest;
   @override
-  EpubSpine? get spine;
+  EpubSpine get spine;
   @override
   EpubGuide? get guide;
   @override

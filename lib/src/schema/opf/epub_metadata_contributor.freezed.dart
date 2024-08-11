@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubMetadataContributor {
-  String? get contributor => throw _privateConstructorUsedError;
+  String get contributor => throw _privateConstructorUsedError;
   String? get fileAs => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
 
@@ -33,7 +33,7 @@ abstract class $EpubMetadataContributorCopyWith<$Res> {
           $Res Function(EpubMetadataContributor) then) =
       _$EpubMetadataContributorCopyWithImpl<$Res, EpubMetadataContributor>;
   @useResult
-  $Res call({String? contributor, String? fileAs, String? role});
+  $Res call({String contributor, String? fileAs, String? role});
 }
 
 /// @nodoc
@@ -52,15 +52,15 @@ class _$EpubMetadataContributorCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contributor = freezed,
+    Object? contributor = null,
     Object? fileAs = freezed,
     Object? role = freezed,
   }) {
     return _then(_value.copyWith(
-      contributor: freezed == contributor
+      contributor: null == contributor
           ? _value.contributor
           : contributor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       fileAs: freezed == fileAs
           ? _value.fileAs
           : fileAs // ignore: cast_nullable_to_non_nullable
@@ -82,7 +82,7 @@ abstract class _$$EpubMetadataContributorImplCopyWith<$Res>
       __$$EpubMetadataContributorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? contributor, String? fileAs, String? role});
+  $Res call({String contributor, String? fileAs, String? role});
 }
 
 /// @nodoc
@@ -100,15 +100,15 @@ class __$$EpubMetadataContributorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contributor = freezed,
+    Object? contributor = null,
     Object? fileAs = freezed,
     Object? role = freezed,
   }) {
     return _then(_$EpubMetadataContributorImpl(
-      contributor: freezed == contributor
+      contributor: null == contributor
           ? _value.contributor
           : contributor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       fileAs: freezed == fileAs
           ? _value.fileAs
           : fileAs // ignore: cast_nullable_to_non_nullable
@@ -125,10 +125,10 @@ class __$$EpubMetadataContributorImplCopyWithImpl<$Res>
 
 class _$EpubMetadataContributorImpl implements _EpubMetadataContributor {
   const _$EpubMetadataContributorImpl(
-      {this.contributor, this.fileAs, this.role});
+      {required this.contributor, this.fileAs, this.role});
 
   @override
-  final String? contributor;
+  final String contributor;
   @override
   final String? fileAs;
   @override
@@ -165,12 +165,12 @@ class _$EpubMetadataContributorImpl implements _EpubMetadataContributor {
 
 abstract class _EpubMetadataContributor implements EpubMetadataContributor {
   const factory _EpubMetadataContributor(
-      {final String? contributor,
+      {required final String contributor,
       final String? fileAs,
       final String? role}) = _$EpubMetadataContributorImpl;
 
   @override
-  String? get contributor;
+  String get contributor;
   @override
   String? get fileAs;
   @override

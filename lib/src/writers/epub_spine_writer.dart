@@ -33,7 +33,7 @@ class EpubSpineWriter {
             'itemref',
             namespace: nameSpace.uri,
             attributes: {
-              'idref': spineitem.idRef!,
+              'idref': spineitem.idRef,
               if (spineitem.isLinear != null)
                 'linear': spineitem.isLinear! ? 'yes' : 'no',
               if (spineitem.properties != null)

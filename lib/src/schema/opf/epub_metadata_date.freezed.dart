@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubMetadataDate {
-  String? get date => throw _privateConstructorUsedError;
+  String get date => throw _privateConstructorUsedError;
   String? get event => throw _privateConstructorUsedError;
 
   /// Create a copy of EpubMetadataDate
@@ -32,7 +32,7 @@ abstract class $EpubMetadataDateCopyWith<$Res> {
           EpubMetadataDate value, $Res Function(EpubMetadataDate) then) =
       _$EpubMetadataDateCopyWithImpl<$Res, EpubMetadataDate>;
   @useResult
-  $Res call({String? date, String? event});
+  $Res call({String date, String? event});
 }
 
 /// @nodoc
@@ -50,14 +50,14 @@ class _$EpubMetadataDateCopyWithImpl<$Res, $Val extends EpubMetadataDate>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
+    Object? date = null,
     Object? event = freezed,
   }) {
     return _then(_value.copyWith(
-      date: freezed == date
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,7 @@ abstract class _$$EpubMetadataDateImplCopyWith<$Res>
       __$$EpubMetadataDateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? date, String? event});
+  $Res call({String date, String? event});
 }
 
 /// @nodoc
@@ -90,14 +90,14 @@ class __$$EpubMetadataDateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
+    Object? date = null,
     Object? event = freezed,
   }) {
     return _then(_$EpubMetadataDateImpl(
-      date: freezed == date
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -109,10 +109,10 @@ class __$$EpubMetadataDateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EpubMetadataDateImpl implements _EpubMetadataDate {
-  const _$EpubMetadataDateImpl({this.date, this.event});
+  const _$EpubMetadataDateImpl({required this.date, this.event});
 
   @override
-  final String? date;
+  final String date;
   @override
   final String? event;
 
@@ -144,11 +144,12 @@ class _$EpubMetadataDateImpl implements _EpubMetadataDate {
 }
 
 abstract class _EpubMetadataDate implements EpubMetadataDate {
-  const factory _EpubMetadataDate({final String? date, final String? event}) =
-      _$EpubMetadataDateImpl;
+  const factory _EpubMetadataDate(
+      {required final String date,
+      final String? event}) = _$EpubMetadataDateImpl;
 
   @override
-  String? get date;
+  String get date;
   @override
   String? get event;
 

@@ -2,11 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/schema/container/epub_container.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:xml/xml.dart';
 
 /// The `PackageReader` class provides methods to read and parse

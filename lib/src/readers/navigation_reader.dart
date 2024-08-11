@@ -2,12 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/schema/container/epub_container.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_list.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_list.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_target_type.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart' as xml;
@@ -24,8 +18,6 @@ mixin NavigationReader implements EpubArchiveReader {
         return readNavigationV2(epubContainer, package);
       case EpubVersion.epub3:
         return readNavigationV3(epubContainer, package);
-      case null:
-        throw Exception('Unknown EPUB version.');
     }
   }
 
@@ -33,18 +25,12 @@ mixin NavigationReader implements EpubArchiveReader {
     EpubContainer epubContainer,
     EpubPackage package,
   ) async {
-    final tocId = package.spine?.tableOfContents;
+    final tocId = package.spine.tableOfContents;
     if (tocId == null || tocId.isEmpty) {
       throw Exception('EPUB parsing error: TOC ID is empty.');
     }
 
-    final tocManifestItem = package.manifest?.getItemById(tocId);
-
-    if (tocManifestItem == null) {
-      throw Exception(
-        'EPUB parsing error: TOC item $tocId not found in EPUB manifest.',
-      );
-    }
+    final tocManifestItem = package.manifest.getItemById(tocId);
 
     _tocFileEntryPath = ZipPathUtils.combine(
       epubContainer.contentDirectoryPath,
@@ -126,12 +112,7 @@ mixin NavigationReader implements EpubArchiveReader {
     EpubContainer epubContainer,
     EpubPackage package,
   ) async {
-    final tocManifestItem = package.manifest?.getItemByProperty('nav');
-    if (tocManifestItem == null) {
-      throw Exception(
-        'EPUB parsing error: TOC item, not found in EPUB manifest.',
-      );
-    }
+    final tocManifestItem = package.manifest.getItemByProperty('nav');
 
     _tocFileEntryPath = ZipPathUtils.combine(
       epubContainer.contentDirectoryPath,
@@ -153,7 +134,7 @@ mixin NavigationReader implements EpubArchiveReader {
       );
     }
 
-    final titles = package.metadata!.titles;
+    final titles = package.metadata.titles;
     final docTitle = EpubNavigationDocTitle(titles: titles);
 
     final navNode = containerDocument.findAllElements('nav').firstOrNull;

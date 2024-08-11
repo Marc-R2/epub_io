@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EpubMetadataCreator {
-  String? get creator => throw _privateConstructorUsedError;
+  String get creator => throw _privateConstructorUsedError;
   String? get fileAs => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
 
@@ -33,7 +33,7 @@ abstract class $EpubMetadataCreatorCopyWith<$Res> {
           EpubMetadataCreator value, $Res Function(EpubMetadataCreator) then) =
       _$EpubMetadataCreatorCopyWithImpl<$Res, EpubMetadataCreator>;
   @useResult
-  $Res call({String? creator, String? fileAs, String? role});
+  $Res call({String creator, String? fileAs, String? role});
 }
 
 /// @nodoc
@@ -51,15 +51,15 @@ class _$EpubMetadataCreatorCopyWithImpl<$Res, $Val extends EpubMetadataCreator>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creator = freezed,
+    Object? creator = null,
     Object? fileAs = freezed,
     Object? role = freezed,
   }) {
     return _then(_value.copyWith(
-      creator: freezed == creator
+      creator: null == creator
           ? _value.creator
           : creator // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       fileAs: freezed == fileAs
           ? _value.fileAs
           : fileAs // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$EpubMetadataCreatorImplCopyWith<$Res>
       __$$EpubMetadataCreatorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? creator, String? fileAs, String? role});
+  $Res call({String creator, String? fileAs, String? role});
 }
 
 /// @nodoc
@@ -96,15 +96,15 @@ class __$$EpubMetadataCreatorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creator = freezed,
+    Object? creator = null,
     Object? fileAs = freezed,
     Object? role = freezed,
   }) {
     return _then(_$EpubMetadataCreatorImpl(
-      creator: freezed == creator
+      creator: null == creator
           ? _value.creator
           : creator // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       fileAs: freezed == fileAs
           ? _value.fileAs
           : fileAs // ignore: cast_nullable_to_non_nullable
@@ -120,10 +120,11 @@ class __$$EpubMetadataCreatorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EpubMetadataCreatorImpl implements _EpubMetadataCreator {
-  const _$EpubMetadataCreatorImpl({this.creator, this.fileAs, this.role});
+  const _$EpubMetadataCreatorImpl(
+      {required this.creator, this.fileAs, this.role});
 
   @override
-  final String? creator;
+  final String creator;
   @override
   final String? fileAs;
   @override
@@ -159,12 +160,12 @@ class _$EpubMetadataCreatorImpl implements _EpubMetadataCreator {
 
 abstract class _EpubMetadataCreator implements EpubMetadataCreator {
   const factory _EpubMetadataCreator(
-      {final String? creator,
+      {required final String creator,
       final String? fileAs,
       final String? role}) = _$EpubMetadataCreatorImpl;
 
   @override
-  String? get creator;
+  String get creator;
   @override
   String? get fileAs;
   @override

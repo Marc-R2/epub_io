@@ -7,7 +7,6 @@ import 'package:epub_io/src/readers/content_ref_reader.dart';
 import 'package:epub_io/src/readers/lazy_object.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:image/image.dart' as images;
 
 /// The [BookCoverReader] mixin provides functionality
@@ -29,7 +28,7 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
   ///
   /// Returns a list of [EpubMetadataMeta] objects from the metadata section.
   static List<EpubMetadataMeta> metaItems(EpubSchema schema) =>
-      schema.package.metadata?.metaItems ?? [];
+      schema.package.metadata.metaItems;
 
   /// Finds and returns the metadata item representing the cover image.
   ///
@@ -59,7 +58,7 @@ mixin BookCoverReader implements SchemaReader, ContentRefReader {
     EpubSchema schema,
     EpubMetadataMeta cover,
   ) {
-    final manifest = schema.package.manifest?.items.firstWhereOrNull(
+    final manifest = schema.package.manifest.items.firstWhereOrNull(
       (manifestItem) =>
           manifestItem.id.toLowerCase() == cover.content?.toLowerCase(),
     );

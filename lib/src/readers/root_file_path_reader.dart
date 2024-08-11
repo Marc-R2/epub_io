@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/schema/container/epub_container.dart';
 import 'package:xml/xml.dart' as xml;
 
 /// The `RootFilePathReader` class is responsible for reading and parsing the

@@ -54,7 +54,7 @@ class EpubMetadataWriter {
               builder
                 ..attribute('role', item.role, namespace: opfNamespace)
                 ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.creator!);
+                ..text(item.creator);
             },
           );
         }
@@ -67,7 +67,7 @@ class EpubMetadataWriter {
               builder
                 ..attribute('role', item.role, namespace: opfNamespace)
                 ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.contributor!);
+                ..text(item.contributor);
             },
           );
         }
@@ -79,7 +79,7 @@ class EpubMetadataWriter {
             nest: () {
               builder
                 ..attribute('event', date.event, namespace: opfNamespace)
-                ..text(date.date!);
+                ..text(date.date);
             },
           );
         }
