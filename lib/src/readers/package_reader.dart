@@ -21,13 +21,7 @@ class PackageReader {
     final children = manifestNode.children.whereType<XmlElement>();
     for (final manifestItemNode in children) {
       if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
-      final itemMap = <String, dynamic>{};
-      for (final itemAttr in manifestItemNode.attributes) {
-        final key = itemAttr.name.local.toLowerCase();
-        itemMap[key] = itemAttr.value;
-        if (key == 'properties') itemMap[key] = itemAttr.value.split(' ');
-      }
-      items.add(EpubManifestItem.fromJson(itemMap));
+      items.add(EpubManifestItem.readXml(manifestItemNode));
     }
     return EpubManifest(items: items);
   }
