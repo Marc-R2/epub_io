@@ -134,7 +134,7 @@ class PackageReader {
           'description' => description = innerText,
           'publisher' => publishers.add(innerText),
           'contributor' =>
-            contributors.add(readMetadataContributor(metadataItemNode)),
+            contributors.add(EpubMetadataContributor.readXML(metadataItemNode)),
           'date' => dates.add(readMetadataDate(metadataItemNode)),
           'type' => types.add(innerText),
           'format' => formats.add(innerText),
@@ -174,39 +174,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<contributor>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataContributor]`object.
-  ///
-  /// - **[metadataContributorNode]**: The XML element representing a contributor.
-  ///
-  /// Returns an [EpubMetadataContributor] object
-  /// containing the contributor's name, role, and file-as attributes.
-  static EpubMetadataContributor readMetadataContributor(
-    XmlElement metadataContributorNode,
-  ) {
-    String? contributor;
-    String? role;
-    String? fileAs;
-
-    for (final attribute in metadataContributorNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'role':
-          role = attributeValue;
-        case 'file-as':
-          fileAs = attributeValue;
-      }
-    }
-    contributor = metadataContributorNode.innerText;
-
-    return EpubMetadataContributor(
-      contributor: contributor,
-      role: role,
-      fileAs: fileAs,
     );
   }
 
