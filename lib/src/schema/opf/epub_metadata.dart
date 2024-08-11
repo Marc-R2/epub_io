@@ -1,3 +1,4 @@
+import 'package:epub_io/src/epub_read_write.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_contributor.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_creator.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_date.dart';
@@ -5,6 +6,7 @@ import 'package:epub_io/src/schema/opf/epub_metadata_identifier.dart';
 import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:epub_io/src/xml_write.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:xml/xml.dart';
 
 part 'epub_metadata.freezed.dart';
 part 'epub_metadata.g.dart';
@@ -37,7 +39,7 @@ class EpubMetadata with _$EpubMetadata {
 }
 
 @freezed
-class Link with _$Link, XmlWrite {
+class Link with _$Link, XmlWrite, EpubReadWrite<Link> {
   const factory Link({
     required String href,
     String? rel,
@@ -47,4 +49,24 @@ class Link with _$Link, XmlWrite {
   factory Link.fromJson(Map<String, dynamic> json) => _$LinkFromJson(json);
 
   const Link._();
+
+  factory Link.readXML(XmlElement node) {
+    final href = node.getAttribute('href');
+    final rel = node.getAttribute('rel');
+    final refines = node.getAttribute('refines');
+
+    return Link(href: href!, rel: rel, refines: refines);
+  }
+
+  @override
+  Link readXMLBuilder(XmlElement node) => Link.readXML(node);
+
+  @override
+  void writeXMLBuilder(XmlBuilder builder, [String? namespace]) {
+    builder.element(
+      'link',
+      namespace: namespace,
+      attributes: toMap(),
+    );
+  }
 }

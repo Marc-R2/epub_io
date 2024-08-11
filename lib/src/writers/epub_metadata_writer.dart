@@ -43,8 +43,11 @@ class EpubMetadataWriter {
           ..nests('language', meta.languages)
           ..nests('relation', meta.relations)
           ..nests('coverage', meta.coverages)
-          ..nests('rights', meta.rights)
-          ..writeXmls('link', meta.links);
+          ..nests('rights', meta.rights);
+
+        for (final link in meta.links ?? <Link>[]) {
+          link.writeXML(builder, nameSpace.uri);
+        }
 
         for (final item in meta.creators) {
           item.writeXML(builder, dcNamespace);

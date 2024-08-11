@@ -8,20 +8,6 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-  /// Parses a single `<link>` element within the `<metadata>` section
-  /// and returns a [Link] object.
-  ///
-  /// - **[manifestNode]**: The XML element representing a link in the metadata.
-  ///
-  /// Returns a [Link] object containing `href`, `rel`, and `refines` attributes
-  static Link readMetadataLink(XmlElement manifestNode) {
-    final href = manifestNode.getAttribute('href');
-    final rel = manifestNode.getAttribute('rel');
-    final refines = manifestNode.getAttribute('refines');
-
-    return Link(href: href!, rel: rel, refines: refines);
-  }
-
   /// Parses the `<metadata>` element from an XML document
   /// and converts it into an [EpubMetadata] object.
   ///
@@ -73,7 +59,7 @@ class PackageReader {
           'relation' => relations.add(innerText),
           'coverage' => coverages.add(innerText),
           'rights' => rights.add(innerText),
-          'link' => links.add(readMetadataLink(metadataItemNode)),
+          'link' => links.add(Link.readXML(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub2 =>
             metaItems.add(readMetadataMetaVersion2(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub3 =>
