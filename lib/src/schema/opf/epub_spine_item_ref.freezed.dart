@@ -119,9 +119,10 @@ class __$$EpubSpineItemRefImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubSpineItemRefImpl implements _EpubSpineItemRef {
+class _$EpubSpineItemRefImpl extends _EpubSpineItemRef {
   const _$EpubSpineItemRefImpl(
-      {required this.idRef, this.isLinear, this.properties});
+      {required this.idRef, this.isLinear, this.properties})
+      : super._();
 
   @override
   final String idRef;
@@ -160,11 +161,12 @@ class _$EpubSpineItemRefImpl implements _EpubSpineItemRef {
           this, _$identity);
 }
 
-abstract class _EpubSpineItemRef implements EpubSpineItemRef {
+abstract class _EpubSpineItemRef extends EpubSpineItemRef {
   const factory _EpubSpineItemRef(
       {required final String idRef,
       final bool? isLinear,
       final String? properties}) = _$EpubSpineItemRefImpl;
+  const _EpubSpineItemRef._() : super._();
 
   @override
   String get idRef;

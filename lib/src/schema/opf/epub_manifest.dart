@@ -1,16 +1,45 @@
 import 'package:collection/collection.dart';
+import 'package:epub_io/src/epub_read_write.dart';
 import 'package:epub_io/src/schema/opf/epub_manifest_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:xml/xml.dart';
 
 part 'epub_manifest.freezed.dart';
 
 @freezed
-class EpubManifest with _$EpubManifest {
+class EpubManifest with _$EpubManifest, EpubReadWrite<EpubManifest> {
   const factory EpubManifest({
     @Default(<EpubManifestItem>[]) List<EpubManifestItem> items,
   }) = _EpubManifest;
 
   const EpubManifest._();
+
+  factory EpubManifest.readXml(XmlElement node) {
+    final items = <EpubManifestItem>[];
+
+    final children = node.children.whereType<XmlElement>();
+    for (final manifestItemNode in children) {
+      if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
+      items.add(EpubManifestItem.readXml(manifestItemNode));
+    }
+    return EpubManifest(items: items);
+  }
+
+  @override
+  EpubManifest readXMLBuilder(XmlElement node) => EpubManifest.readXml(node);
+
+  @override
+  void writeXMLBuilder(XmlBuilder builder, [String? namespace]) {
+    builder.element(
+      'manifest',
+      namespace: namespace,
+      nest: () {
+        for (final item in items) {
+          item.writeXML(builder, namespace);
+        }
+      },
+    );
+  }
 
   EpubManifestItem? getItemByOrNull(
     bool? Function(EpubManifestItem item) predicate,

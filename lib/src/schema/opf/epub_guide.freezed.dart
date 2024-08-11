@@ -96,10 +96,11 @@ class __$$EpubGuideImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubGuideImpl implements _EpubGuide {
+class _$EpubGuideImpl extends _EpubGuide {
   const _$EpubGuideImpl(
       {final List<EpubGuideReference> items = const <EpubGuideReference>[]})
-      : _items = items;
+      : _items = items,
+        super._();
 
   final List<EpubGuideReference> _items;
   @override
@@ -136,9 +137,10 @@ class _$EpubGuideImpl implements _EpubGuide {
       __$$EpubGuideImplCopyWithImpl<_$EpubGuideImpl>(this, _$identity);
 }
 
-abstract class _EpubGuide implements EpubGuide {
+abstract class _EpubGuide extends EpubGuide {
   const factory _EpubGuide({final List<EpubGuideReference> items}) =
       _$EpubGuideImpl;
+  const _EpubGuide._() : super._();
 
   @override
   List<EpubGuideReference> get items;

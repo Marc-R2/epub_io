@@ -1,5 +1,4 @@
 import 'package:epub_io/src/schema/container/epub_container.dart';
-import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder;
 
 /// The `EpubContainerWriter` class is responsible for generating the XML
@@ -30,7 +29,8 @@ class EpubContainerWriter {
         },
         nest: () => builder.element(
           'rootfiles',
-          nest: () => builder.writeXmls('rootfile', container.rootFiles),
+          nest: () => container.rootFiles
+              .forEach((rootFile) => rootFile.writeXML(builder)),
         ),
       );
 

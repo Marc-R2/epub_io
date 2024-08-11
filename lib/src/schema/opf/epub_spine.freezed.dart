@@ -118,12 +118,13 @@ class __$$EpubSpineImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubSpineImpl implements _EpubSpine {
+class _$EpubSpineImpl extends _EpubSpine {
   const _$EpubSpineImpl(
       {required this.ltr,
       this.tableOfContents,
       final List<EpubSpineItemRef> items = const <EpubSpineItemRef>[]})
-      : _items = items;
+      : _items = items,
+        super._();
 
   @override
   final bool ltr;
@@ -167,11 +168,12 @@ class _$EpubSpineImpl implements _EpubSpine {
       __$$EpubSpineImplCopyWithImpl<_$EpubSpineImpl>(this, _$identity);
 }
 
-abstract class _EpubSpine implements EpubSpine {
+abstract class _EpubSpine extends EpubSpine {
   const factory _EpubSpine(
       {required final bool ltr,
       final String? tableOfContents,
       final List<EpubSpineItemRef> items}) = _$EpubSpineImpl;
+  const _EpubSpine._() : super._();
 
   @override
   bool get ltr;

@@ -1,10 +1,9 @@
+import 'package:epub_io/src/epub_read_write.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
-import 'package:epub_io/src/xml_write.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:xml/xml.dart';
 
 part 'epub_container.freezed.dart';
-part 'epub_container.g.dart';
 
 @freezed
 class EpubContainer with _$EpubContainer {
@@ -64,14 +63,34 @@ class XMLInfo with _$XMLInfo {
 }
 
 @freezed
-class EpubContainerRootFile with _$EpubContainerRootFile, XmlWrite {
+class EpubContainerRootFile
+    with _$EpubContainerRootFile, EpubReadWrite<EpubContainerRootFile> {
   const factory EpubContainerRootFile({
     @JsonKey(name: 'full-path') required String fullPath,
     @JsonKey(name: 'media-type') String? mediaType,
   }) = _EpubContainerRootFile;
 
-  factory EpubContainerRootFile.fromJson(Map<String, dynamic> json) =>
-      _$EpubContainerRootFileFromJson(json);
-
   const EpubContainerRootFile._();
+
+  factory EpubContainerRootFile.readXml(XmlElement node) =>
+      EpubContainerRootFile(
+        fullPath: node.getAttribute('full-path')!,
+        mediaType: node.getAttribute('media-type'),
+      );
+
+  @override
+  EpubContainerRootFile readXMLBuilder(XmlElement node) =>
+      EpubContainerRootFile.readXml(node);
+
+  @override
+  void writeXMLBuilder(XmlBuilder builder, [String? namespace]) {
+    builder.element(
+      'rootfile',
+      namespace: namespace,
+      attributes: {
+        'full-path': fullPath,
+        if (mediaType != null) 'media-type': mediaType!,
+      },
+    );
+  }
 }

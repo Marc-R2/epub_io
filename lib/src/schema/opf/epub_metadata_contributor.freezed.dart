@@ -123,9 +123,10 @@ class __$$EpubMetadataContributorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubMetadataContributorImpl implements _EpubMetadataContributor {
+class _$EpubMetadataContributorImpl extends _EpubMetadataContributor {
   const _$EpubMetadataContributorImpl(
-      {required this.contributor, this.fileAs, this.role});
+      {required this.contributor, this.fileAs, this.role})
+      : super._();
 
   @override
   final String contributor;
@@ -163,11 +164,12 @@ class _$EpubMetadataContributorImpl implements _EpubMetadataContributor {
           _$EpubMetadataContributorImpl>(this, _$identity);
 }
 
-abstract class _EpubMetadataContributor implements EpubMetadataContributor {
+abstract class _EpubMetadataContributor extends EpubMetadataContributor {
   const factory _EpubMetadataContributor(
       {required final String contributor,
       final String? fileAs,
       final String? role}) = _$EpubMetadataContributorImpl;
+  const _EpubMetadataContributor._() : super._();
 
   @override
   String get contributor;

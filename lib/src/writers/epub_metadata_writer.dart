@@ -60,16 +60,7 @@ class EpubMetadataWriter {
         }
 
         for (final item in meta.contributors) {
-          builder.element(
-            'contributor',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('role', item.role, namespace: opfNamespace)
-                ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.contributor);
-            },
-          );
+          item.writeXML(builder, dcNamespace);
         }
 
         for (final date in meta.dates) {

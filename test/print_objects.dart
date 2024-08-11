@@ -1,5 +1,4 @@
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 
 import 'object_compare.dart';
 
@@ -68,7 +67,9 @@ void printPackage(ObjectCompare<EpubPackage?> package) {
   printMetadata(package.line('metadata', (b) => b?.metadata));
   package.line('manifest', (b) => b?.manifest);
   printSpine(package.line('spine', (b) => b?.spine));
-  package.line('guide', (b) => b?.guide);
+  package.line('guide', (b) => b?.guide).lines('items', (b) => b?.items)
+    ..line('length', (b) => b?.length, showObj: true)
+    ..forEach(printGuideReference);
   package.lines('bindings', (b) => b?.bindings)
     ..line('length', (b) => b?.length, showObj: true)
     ..forEach(printMediaType);
@@ -78,6 +79,13 @@ void printPackage(ObjectCompare<EpubPackage?> package) {
     ..line('xmlLang', (b) => b?.xmlLang, showObj: true)
     ..line('xmlVersion', (b) => b?.xmlInfo, showObj: true);
   printNameSpace(package.line('nameSpace', (b) => b?.nameSpace, showObj: true));
+}
+
+void printGuideReference(ObjectCompare<EpubGuideReference?> reference) {
+  reference
+    ..line('type', (b) => b?.type)
+    ..line('href', (b) => b?.href)
+    ..line('title', (b) => b?.title);
 }
 
 void printNameSpace(ObjectCompare<NameSpace?> nameSpace) {

@@ -1,9 +1,6 @@
 import 'package:epub_io/src/schema/opf/epub_package.dart';
 import 'package:epub_io/src/schema/opf/epub_version.dart';
-import 'package:epub_io/src/writers/epub_guide_writer.dart';
-import 'package:epub_io/src/writers/epub_manifest_writer.dart';
 import 'package:epub_io/src/writers/epub_metadata_writer.dart';
-import 'package:epub_io/src/writers/epub_spine_writer.dart';
 import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
 
@@ -47,16 +44,10 @@ class EpubPackageWriter {
             package.version,
             nameSpace,
           );
-          EpubManifestWriter.writeManifest(
-            builder,
-            package.manifest,
-            nameSpace,
-          );
-          EpubSpineWriter.writeSpine(builder, package.spine, nameSpace);
+          package.manifest.writeXML(builder, nameSpace.uri);
+          package.spine.writeXML(builder, nameSpace.uri);
+          package.guide?.writeXML(builder, nameSpace.uri);
 
-          if (package.guide != null) {
-            EpubGuideWriter.writeGuide(builder, package.guide!, nameSpace);
-          }
           if (package.bindings != null) {
             builder.element(
               'bindings',

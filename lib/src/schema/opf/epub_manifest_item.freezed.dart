@@ -219,7 +219,7 @@ class __$$EpubManifestItemImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$EpubManifestItemImpl implements _EpubManifestItem {
+class _$EpubManifestItemImpl extends _EpubManifestItem {
   const _$EpubManifestItemImpl(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'href') required this.href,
@@ -230,7 +230,8 @@ class _$EpubManifestItemImpl implements _EpubManifestItem {
       @JsonKey(name: 'fallback') this.fallback,
       @JsonKey(name: 'fallback-style') this.fallbackStyle,
       @JsonKey(name: 'properties') final Set<String>? properties})
-      : _properties = properties;
+      : _properties = properties,
+        super._();
 
   factory _$EpubManifestItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$EpubManifestItemImplFromJson(json);
@@ -329,7 +330,7 @@ class _$EpubManifestItemImpl implements _EpubManifestItem {
   }
 }
 
-abstract class _EpubManifestItem implements EpubManifestItem {
+abstract class _EpubManifestItem extends EpubManifestItem {
   const factory _EpubManifestItem(
           {@JsonKey(name: 'id') required final String id,
           @JsonKey(name: 'href') required final String href,
@@ -341,6 +342,7 @@ abstract class _EpubManifestItem implements EpubManifestItem {
           @JsonKey(name: 'fallback-style') final String? fallbackStyle,
           @JsonKey(name: 'properties') final Set<String>? properties}) =
       _$EpubManifestItemImpl;
+  const _EpubManifestItem._() : super._();
 
   factory _EpubManifestItem.fromJson(Map<String, dynamic> json) =
       _$EpubManifestItemImpl.fromJson;

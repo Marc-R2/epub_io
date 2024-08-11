@@ -8,79 +8,6 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-  /// Parses the `<guide>` element from an XML document
-  /// and converts it into an [EpubGuide] object.
-  ///
-  /// - **[guideNode]**: The XML element representing the guide section.
-  ///
-  /// Returns an [EpubGuide] object containing
-  /// a list of [EpubGuideReference] items.
-  static EpubGuide readGuide(XmlElement guideNode) {
-    final items = <EpubGuideReference>[];
-
-    guideNode.children.whereType<XmlElement>().forEach(
-      (XmlElement guideReferenceNode) {
-        if (guideReferenceNode.name.local.toLowerCase() == 'reference') {
-          String? type;
-          String? title;
-          String? href;
-
-          for (final attribute in guideReferenceNode.attributes) {
-            final attributeValue = attribute.value;
-
-            switch (attribute.name.local.toLowerCase()) {
-              case 'type':
-                type = attributeValue;
-              case 'title':
-                title = attributeValue;
-              case 'href':
-                href = attributeValue;
-            }
-          }
-          if (type == null || type.isEmpty) {
-            throw Exception('Incorrect EPUB guide: item type is missing');
-          }
-          if (href == null || href.isEmpty) {
-            throw Exception('Incorrect EPUB guide: item href is missing');
-          }
-
-          final guideReference = EpubGuideReference(
-            type: type,
-            title: title,
-            href: href,
-          );
-
-          items.add(guideReference);
-        }
-      },
-    );
-    return EpubGuide(items: items);
-  }
-
-  /// Parses the `<manifest>` element from an XML document
-  /// and converts it into an [EpubManifest] object.
-  ///
-  /// - **[manifestNode]**: The XML element representing the manifest section.
-  ///
-  /// Returns an [EpubManifest] object containing
-  /// a list of [EpubManifestItem] items.
-  static EpubManifest readManifest(XmlElement manifestNode) {
-    final items = <EpubManifestItem>[];
-
-    final children = manifestNode.children.whereType<XmlElement>();
-    for (final manifestItemNode in children) {
-      if (manifestItemNode.name.local.toLowerCase() != 'item') continue;
-      final itemMap = <String, dynamic>{};
-      for (final itemAttr in manifestItemNode.attributes) {
-        final key = itemAttr.name.local.toLowerCase();
-        itemMap[key] = itemAttr.value;
-        if (key == 'properties') itemMap[key] = itemAttr.value.split(' ');
-      }
-      items.add(EpubManifestItem.fromJson(itemMap));
-    }
-    return EpubManifest(items: items);
-  }
-
   /// Parses a single `<link>` element within the `<metadata>` section
   /// and returns a [Link] object.
   ///
@@ -134,7 +61,7 @@ class PackageReader {
           'description' => description = innerText,
           'publisher' => publishers.add(innerText),
           'contributor' =>
-            contributors.add(readMetadataContributor(metadataItemNode)),
+            contributors.add(EpubMetadataContributor.readXML(metadataItemNode)),
           'date' => dates.add(readMetadataDate(metadataItemNode)),
           'type' => types.add(innerText),
           'format' => formats.add(innerText),
@@ -174,39 +101,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<contributor>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataContributor]`object.
-  ///
-  /// - **[metadataContributorNode]**: The XML element representing a contributor.
-  ///
-  /// Returns an [EpubMetadataContributor] object
-  /// containing the contributor's name, role, and file-as attributes.
-  static EpubMetadataContributor readMetadataContributor(
-    XmlElement metadataContributorNode,
-  ) {
-    String? contributor;
-    String? role;
-    String? fileAs;
-
-    for (final attribute in metadataContributorNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'role':
-          role = attributeValue;
-        case 'file-as':
-          fileAs = attributeValue;
-      }
-    }
-    contributor = metadataContributorNode.innerText;
-
-    return EpubMetadataContributor(
-      contributor: contributor,
-      role: role,
-      fileAs: fileAs,
     );
   }
 
@@ -427,13 +321,13 @@ class PackageReader {
     final metadata = readMetadata(metadataNode, version);
 
     final manifestNode = getNode('manifest', namespace: nameSpace.uri);
-    final manifest = readManifest(manifestNode);
+    final manifest = EpubManifest.readXml(manifestNode);
 
     final spineNode = getNode('spine', namespace: nameSpace.uri);
-    final spine = readSpine(spineNode);
+    final spine = EpubSpine.readXml(spineNode);
 
     final guideNode = getNodeOrNull('guide', namespace: nameSpace.uri);
-    final guide = guideNode != null ? readGuide(guideNode) : null;
+    final guide = guideNode != null ? EpubGuide.readXML(guideNode) : null;
 
     final bindingsNode = getNodeOrNull('bindings', namespace: nameSpace.uri);
     final bindings = switch (bindingsNode) {
@@ -458,53 +352,6 @@ class PackageReader {
       xmlLang: xmlLang,
       bindings: bindings?.toList(),
       xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
-    );
-  }
-
-  /// Parses the `<spine>` element from an XML document
-  /// and converts it into an [EpubSpine] object.
-  ///
-  /// - **[spineNode]**: The XML element representing the spine section.
-  ///
-  /// Returns an [EpubSpine] object containing
-  /// a list of [EpubSpineItemRef] items.
-  static EpubSpine readSpine(XmlElement spineNode) {
-    final items = <EpubSpineItemRef>[];
-    final tableOfContents = spineNode.getAttribute('toc');
-
-    final pageProgression =
-        spineNode.getAttribute('page-progression-direction');
-    final ltr =
-        (pageProgression == null) || pageProgression.toLowerCase() == 'ltr';
-
-    spineNode.children.whereType<XmlElement>().forEach(
-      (XmlElement spineItemNode) {
-        if (spineItemNode.name.local.toLowerCase() == 'itemref') {
-          final idRef = spineItemNode.getAttribute('idref');
-          if (idRef == null || idRef.isEmpty) {
-            throw Exception('Incorrect EPUB spine: item ID ref is missing');
-          }
-
-          final linearAttribute = spineItemNode.getAttribute('linear');
-
-          bool? isLinear;
-          if (linearAttribute != null) {
-            isLinear = linearAttribute.toLowerCase() == 'yes';
-          }
-
-          final spineItemRef = EpubSpineItemRef(
-            idRef: idRef,
-            isLinear: isLinear,
-            properties: spineItemNode.getAttribute('properties'),
-          );
-          items.add(spineItemRef);
-        }
-      },
-    );
-    return EpubSpine(
-      items: items,
-      tableOfContents: tableOfContents,
-      ltr: ltr,
     );
   }
 }
