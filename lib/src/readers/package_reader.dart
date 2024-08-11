@@ -348,7 +348,7 @@ class PackageReader {
     final manifest = readManifest(manifestNode);
 
     final spineNode = getNode('spine', namespace: nameSpace.uri);
-    final spine = readSpine(spineNode);
+    final spine = EpubSpine.readXml(spineNode);
 
     final guideNode = getNodeOrNull('guide', namespace: nameSpace.uri);
     final guide = guideNode != null ? EpubGuide.readXML(guideNode) : null;
@@ -376,35 +376,6 @@ class PackageReader {
       xmlLang: xmlLang,
       bindings: bindings?.toList(),
       xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
-    );
-  }
-
-  /// Parses the `<spine>` element from an XML document
-  /// and converts it into an [EpubSpine] object.
-  ///
-  /// - **[spineNode]**: The XML element representing the spine section.
-  ///
-  /// Returns an [EpubSpine] object containing
-  /// a list of [EpubSpineItemRef] items.
-  static EpubSpine readSpine(XmlElement spineNode) {
-    final items = <EpubSpineItemRef>[];
-    final tableOfContents = spineNode.getAttribute('toc');
-
-    final pageProgression =
-        spineNode.getAttribute('page-progression-direction');
-    final ltr =
-        (pageProgression == null) || pageProgression.toLowerCase() == 'ltr';
-
-    spineNode.children.whereType<XmlElement>().forEach(
-      (XmlElement spineItemNode) {
-        if (spineItemNode.name.local.toLowerCase() != 'itemref') return;
-        items.add(EpubSpineItemRef.readXML(spineItemNode));
-      },
-    );
-    return EpubSpine(
-      items: items,
-      tableOfContents: tableOfContents,
-      ltr: ltr,
     );
   }
 }
