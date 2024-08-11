@@ -55,15 +55,7 @@ class EpubMetadataWriter {
         }
 
         for (final date in meta.dates) {
-          builder.element(
-            'date',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('event', date.event, namespace: opfNamespace)
-                ..text(date.date);
-            },
-          );
+          date.writeXML(builder, dcNamespace);
         }
 
         for (final id in meta.identifiers) {

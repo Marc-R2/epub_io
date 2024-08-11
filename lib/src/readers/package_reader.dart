@@ -63,7 +63,7 @@ class PackageReader {
           'publisher' => publishers.add(innerText),
           'contributor' =>
             contributors.add(EpubMetadataContributor.readXML(metadataItemNode)),
-          'date' => dates.add(readMetadataDate(metadataItemNode)),
+          'date' => dates.add(EpubMetadataDate.readXML(metadataItemNode)),
           'type' => types.add(innerText),
           'format' => formats.add(innerText),
           'identifier' =>
@@ -102,32 +102,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<date>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataDate] object.
-  ///
-  /// - **[metadataDateNode]**: The XML element representing a date.
-  ///
-  /// Returns an [EpubMetadataDate] object
-  /// containing the date and event attributes.
-  static EpubMetadataDate readMetadataDate(XmlElement metadataDateNode) {
-    String? event;
-    String? date;
-
-    final eventAttribute = metadataDateNode.getAttribute(
-      'event',
-      namespace: metadataDateNode.name.namespaceUri,
-    );
-    if (eventAttribute != null && eventAttribute.isNotEmpty) {
-      event = eventAttribute;
-    }
-    date = metadataDateNode.innerText;
-
-    return EpubMetadataDate(
-      date: date,
-      event: event,
     );
   }
 
