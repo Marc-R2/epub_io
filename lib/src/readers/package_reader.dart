@@ -56,7 +56,8 @@ class PackageReader {
 
         return switch (metadataItemNode.name.local.toLowerCase()) {
           'title' => titles.add(innerText),
-          'creator' => creators.add(readMetadataCreator(metadataItemNode)),
+          'creator' =>
+            creators.add(EpubMetadataCreator.readXML(metadataItemNode)),
           'subject' => subjects.add(innerText),
           'description' => description = innerText,
           'publisher' => publishers.add(innerText),
@@ -101,39 +102,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<creator>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataCreator] object.
-  ///
-  /// - **[metadataCreatorNode]**: The XML element representing a creator.
-  ///
-  /// Returns an [EpubMetadataCreator] object containing
-  /// the creator's name, role, and file-as attributes.
-  static EpubMetadataCreator readMetadataCreator(
-    XmlElement metadataCreatorNode,
-  ) {
-    String? creator;
-    String? role;
-    String? fileAs;
-
-    for (final attribute in metadataCreatorNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'role':
-          role = attributeValue;
-        case 'file-as':
-          fileAs = attributeValue;
-      }
-    }
-    creator = metadataCreatorNode.innerText;
-
-    return EpubMetadataCreator(
-      creator: creator,
-      role: role,
-      fileAs: fileAs,
     );
   }
 

@@ -47,16 +47,7 @@ class EpubMetadataWriter {
           ..writeXmls('link', meta.links);
 
         for (final item in meta.creators) {
-          builder.element(
-            'creator',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('role', item.role, namespace: opfNamespace)
-                ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.creator);
-            },
-          );
+          item.writeXML(builder, dcNamespace);
         }
 
         for (final item in meta.contributors) {
