@@ -103,9 +103,18 @@ class ObjectListCompare<T> extends ObjectCompare<List<T>?> {
 
   int get length => max(obj1?.length ?? 0, obj2?.length ?? 0);
 
-  void forEach([void Function(ObjectCompare<T?>)? f]) {
+  void forEach(
+    void Function(ObjectCompare<T?>)? f, {
+    bool showObj = false,
+    bool allowToString = true,
+  }) {
     for (var i = 0; i < length; i++) {
-      final childCompare = line('$i', (b) => b?.elementAtOrNull(i));
+      final childCompare = line(
+        '$i',
+        (b) => b?.elementAtOrNull(i),
+        showObj: showObj,
+        allowToString: allowToString,
+      );
       f?.call(childCompare);
     }
   }

@@ -33,7 +33,8 @@ mixin _$EpubMetadata {
   List<String> get relations => throw _privateConstructorUsedError;
   List<String> get coverages => throw _privateConstructorUsedError;
   List<String> get rights => throw _privateConstructorUsedError;
-  List<EpubMetadataMeta> get metaItems => throw _privateConstructorUsedError;
+  List<EpubMetadataMeta<String?>> get metaItems =>
+      throw _privateConstructorUsedError;
   String? get xmlnsDc => throw _privateConstructorUsedError;
   String? get xmlnsOpf => throw _privateConstructorUsedError;
   List<Link>? get links => throw _privateConstructorUsedError;
@@ -67,7 +68,7 @@ abstract class $EpubMetadataCopyWith<$Res> {
       List<String> relations,
       List<String> coverages,
       List<String> rights,
-      List<EpubMetadataMeta> metaItems,
+      List<EpubMetadataMeta<String?>> metaItems,
       String? xmlnsDc,
       String? xmlnsOpf,
       List<Link>? links});
@@ -172,7 +173,7 @@ class _$EpubMetadataCopyWithImpl<$Res, $Val extends EpubMetadata>
       metaItems: null == metaItems
           ? _value.metaItems
           : metaItems // ignore: cast_nullable_to_non_nullable
-              as List<EpubMetadataMeta>,
+              as List<EpubMetadataMeta<String?>>,
       xmlnsDc: freezed == xmlnsDc
           ? _value.xmlnsDc
           : xmlnsDc // ignore: cast_nullable_to_non_nullable
@@ -213,7 +214,7 @@ abstract class _$$EpubMetadataImplCopyWith<$Res>
       List<String> relations,
       List<String> coverages,
       List<String> rights,
-      List<EpubMetadataMeta> metaItems,
+      List<EpubMetadataMeta<String?>> metaItems,
       String? xmlnsDc,
       String? xmlnsOpf,
       List<Link>? links});
@@ -316,7 +317,7 @@ class __$$EpubMetadataImplCopyWithImpl<$Res>
       metaItems: null == metaItems
           ? _value._metaItems
           : metaItems // ignore: cast_nullable_to_non_nullable
-              as List<EpubMetadataMeta>,
+              as List<EpubMetadataMeta<String?>>,
       xmlnsDc: freezed == xmlnsDc
           ? _value.xmlnsDc
           : xmlnsDc // ignore: cast_nullable_to_non_nullable
@@ -354,7 +355,8 @@ class _$EpubMetadataImpl implements _EpubMetadata {
       final List<String> relations = const <String>[],
       final List<String> coverages = const <String>[],
       final List<String> rights = const <String>[],
-      final List<EpubMetadataMeta> metaItems = const <EpubMetadataMeta>[],
+      final List<EpubMetadataMeta<String?>> metaItems =
+          const <EpubMetadataMeta>[],
       this.xmlnsDc,
       this.xmlnsOpf,
       final List<Link>? links})
@@ -503,10 +505,10 @@ class _$EpubMetadataImpl implements _EpubMetadata {
     return EqualUnmodifiableListView(_rights);
   }
 
-  final List<EpubMetadataMeta> _metaItems;
+  final List<EpubMetadataMeta<String?>> _metaItems;
   @override
   @JsonKey()
-  List<EpubMetadataMeta> get metaItems {
+  List<EpubMetadataMeta<String?>> get metaItems {
     if (_metaItems is EqualUnmodifiableListView) return _metaItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_metaItems);
@@ -616,7 +618,7 @@ abstract class _EpubMetadata implements EpubMetadata {
       final List<String> relations,
       final List<String> coverages,
       final List<String> rights,
-      final List<EpubMetadataMeta> metaItems,
+      final List<EpubMetadataMeta<String?>> metaItems,
       final String? xmlnsDc,
       final String? xmlnsOpf,
       final List<Link>? links}) = _$EpubMetadataImpl;
@@ -652,7 +654,7 @@ abstract class _EpubMetadata implements EpubMetadata {
   @override
   List<String> get rights;
   @override
-  List<EpubMetadataMeta> get metaItems;
+  List<EpubMetadataMeta<String?>> get metaItems;
   @override
   String? get xmlnsDc;
   @override

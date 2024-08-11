@@ -21,6 +21,9 @@ class EpubUri {
 
   EpubUri resolve(String s) =>
       EpubUri([...segments, ...EpubUri.parse(s).segments]);
+
+  @override
+  String toString() => path;
 }
 
 class EpubFile {

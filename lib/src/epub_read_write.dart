@@ -1,8 +1,17 @@
 import 'package:xml/xml.dart';
 
-mixin EpubReadWrite<T extends EpubReadWrite<T>> {
+mixin EpubWrite {
+  void writeXMLBuilder(XmlBuilder builder, [String? namespace]);
+
+  void writeXML(XmlBuilder builder, [String? namespace]) {
+    writeXMLBuilder(builder, namespace);
+  }
+}
+
+mixin EpubReadWrite<T extends EpubReadWrite<T>> implements EpubWrite {
   T readXMLBuilder(XmlElement node);
 
+  @override
   void writeXMLBuilder(XmlBuilder builder, [String? namespace]);
 
   bool _testReversible() {
@@ -25,6 +34,7 @@ mixin EpubReadWrite<T extends EpubReadWrite<T>> {
     return result;
   }
 
+  @override
   void writeXML(XmlBuilder builder, [String? namespace]) {
     writeXMLBuilder(builder, namespace);
   }

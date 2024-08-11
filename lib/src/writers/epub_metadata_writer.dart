@@ -69,24 +69,7 @@ class EpubMetadataWriter {
           builder.element(
             'meta',
             namespace: nameSpace.uri,
-            nest: () {
-              if (version == EpubVersion.epub2) {
-                builder
-                  ..attribute('name', metaItem.name)
-                  ..attribute('content', metaItem.content);
-              } else if (version == EpubVersion.epub3) {
-                builder
-                  ..attribute('id', metaItem.id)
-                  ..attribute('refines', metaItem.refines)
-                  ..attribute('property', metaItem.property)
-                  ..attribute('scheme', metaItem.scheme)
-                  ..text(metaItem.content!);
-
-                metaItem.attributes.forEach(
-                  (key, value) => builder.attribute(key, value),
-                );
-              }
-            },
+            nest: () => metaItem.writeXML(builder),
           );
         }
 
