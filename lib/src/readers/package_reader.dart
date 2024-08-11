@@ -67,7 +67,7 @@ class PackageReader {
           'type' => types.add(innerText),
           'format' => formats.add(innerText),
           'identifier' =>
-            identifiers.add(readMetadataIdentifier(metadataItemNode)),
+            identifiers.add(EpubMetadataIdentifier.readXML(metadataItemNode)),
           'source' => sources.add(innerText),
           'language' => languages.add(innerText),
           'relation' => relations.add(innerText),
@@ -102,39 +102,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses an `<identifier>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataIdentifier] object.
-  ///
-  /// - **[metadataIdentifierNode]**: The XML element representing an identifier
-  ///
-  /// Returns an [EpubMetadataIdentifier] object containing
-  /// the identifier's ID, scheme, and value.
-  static EpubMetadataIdentifier readMetadataIdentifier(
-    XmlElement metadataIdentifierNode,
-  ) {
-    String? id;
-    String? scheme;
-    String? identifier;
-
-    for (final attribute in metadataIdentifierNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'id':
-          id = attributeValue;
-        case 'scheme':
-          scheme = attributeValue;
-      }
-    }
-    identifier = metadataIdentifierNode.innerText;
-
-    return EpubMetadataIdentifier(
-      id: id,
-      scheme: scheme,
-      identifier: identifier,
     );
   }
 

@@ -59,16 +59,7 @@ class EpubMetadataWriter {
         }
 
         for (final id in meta.identifiers) {
-          builder.element(
-            'identifier',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('id', id.id)
-                ..attribute('scheme', id.scheme, namespace: opfNamespace)
-                ..text(id.identifier!);
-            },
-          );
+          id.writeXML(builder, dcNamespace);
         }
 
         for (final metaItem in meta.metaItems) {
