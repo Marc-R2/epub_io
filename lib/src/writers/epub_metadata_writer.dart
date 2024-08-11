@@ -79,7 +79,7 @@ class EpubMetadataWriter {
             nest: () {
               builder
                 ..attribute('event', date.event, namespace: opfNamespace)
-                ..text(date.date!);
+                ..text(date.date);
             },
           );
         }

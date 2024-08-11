@@ -5,7 +5,7 @@ part 'epub_metadata_date.freezed.dart';
 @freezed
 class EpubMetadataDate with _$EpubMetadataDate {
   const factory EpubMetadataDate({
-    String? date,
+    required String date,
     String? event,
   }) = _EpubMetadataDate;
 }
