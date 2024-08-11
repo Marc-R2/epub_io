@@ -54,7 +54,7 @@ class EpubMetadataWriter {
               builder
                 ..attribute('role', item.role, namespace: opfNamespace)
                 ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.creator!);
+                ..text(item.creator);
             },
           );
         }
