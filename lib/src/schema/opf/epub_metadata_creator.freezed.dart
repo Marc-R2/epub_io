@@ -119,9 +119,10 @@ class __$$EpubMetadataCreatorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubMetadataCreatorImpl implements _EpubMetadataCreator {
+class _$EpubMetadataCreatorImpl extends _EpubMetadataCreator {
   const _$EpubMetadataCreatorImpl(
-      {required this.creator, this.fileAs, this.role});
+      {required this.creator, this.fileAs, this.role})
+      : super._();
 
   @override
   final String creator;
@@ -158,11 +159,12 @@ class _$EpubMetadataCreatorImpl implements _EpubMetadataCreator {
           this, _$identity);
 }
 
-abstract class _EpubMetadataCreator implements EpubMetadataCreator {
+abstract class _EpubMetadataCreator extends EpubMetadataCreator {
   const factory _EpubMetadataCreator(
       {required final String creator,
       final String? fileAs,
       final String? role}) = _$EpubMetadataCreatorImpl;
+  const _EpubMetadataCreator._() : super._();
 
   @override
   String get creator;

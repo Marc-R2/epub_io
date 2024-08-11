@@ -108,8 +108,8 @@ class __$$EpubMetadataDateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubMetadataDateImpl implements _EpubMetadataDate {
-  const _$EpubMetadataDateImpl({required this.date, this.event});
+class _$EpubMetadataDateImpl extends _EpubMetadataDate {
+  const _$EpubMetadataDateImpl({required this.date, this.event}) : super._();
 
   @override
   final String date;
@@ -143,10 +143,11 @@ class _$EpubMetadataDateImpl implements _EpubMetadataDate {
           this, _$identity);
 }
 
-abstract class _EpubMetadataDate implements EpubMetadataDate {
+abstract class _EpubMetadataDate extends EpubMetadataDate {
   const factory _EpubMetadataDate(
       {required final String date,
       final String? event}) = _$EpubMetadataDateImpl;
+  const _EpubMetadataDate._() : super._();
 
   @override
   String get date;

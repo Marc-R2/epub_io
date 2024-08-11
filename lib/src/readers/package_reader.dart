@@ -8,20 +8,6 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-  /// Parses a single `<link>` element within the `<metadata>` section
-  /// and returns a [Link] object.
-  ///
-  /// - **[manifestNode]**: The XML element representing a link in the metadata.
-  ///
-  /// Returns a [Link] object containing `href`, `rel`, and `refines` attributes
-  static Link readMetadataLink(XmlElement manifestNode) {
-    final href = manifestNode.getAttribute('href');
-    final rel = manifestNode.getAttribute('rel');
-    final refines = manifestNode.getAttribute('refines');
-
-    return Link(href: href!, rel: rel, refines: refines);
-  }
-
   /// Parses the `<metadata>` element from an XML document
   /// and converts it into an [EpubMetadata] object.
   ///
@@ -56,23 +42,24 @@ class PackageReader {
 
         return switch (metadataItemNode.name.local.toLowerCase()) {
           'title' => titles.add(innerText),
-          'creator' => creators.add(readMetadataCreator(metadataItemNode)),
+          'creator' =>
+            creators.add(EpubMetadataCreator.readXML(metadataItemNode)),
           'subject' => subjects.add(innerText),
           'description' => description = innerText,
           'publisher' => publishers.add(innerText),
           'contributor' =>
             contributors.add(EpubMetadataContributor.readXML(metadataItemNode)),
-          'date' => dates.add(readMetadataDate(metadataItemNode)),
+          'date' => dates.add(EpubMetadataDate.readXML(metadataItemNode)),
           'type' => types.add(innerText),
           'format' => formats.add(innerText),
           'identifier' =>
-            identifiers.add(readMetadataIdentifier(metadataItemNode)),
+            identifiers.add(EpubMetadataIdentifier.readXML(metadataItemNode)),
           'source' => sources.add(innerText),
           'language' => languages.add(innerText),
           'relation' => relations.add(innerText),
           'coverage' => coverages.add(innerText),
           'rights' => rights.add(innerText),
-          'link' => links.add(readMetadataLink(metadataItemNode)),
+          'link' => links.add(Link.readXML(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub2 =>
             metaItems.add(readMetadataMetaVersion2(metadataItemNode)),
           'meta' when epubVersion == EpubVersion.epub3 =>
@@ -101,98 +88,6 @@ class PackageReader {
       xmlnsDc: metadataNode.getAttribute('xmlns:dc'),
       xmlnsOpf: metadataNode.getAttribute('xmlns:opf'),
       links: links,
-    );
-  }
-
-  /// Parses a `<creator>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataCreator] object.
-  ///
-  /// - **[metadataCreatorNode]**: The XML element representing a creator.
-  ///
-  /// Returns an [EpubMetadataCreator] object containing
-  /// the creator's name, role, and file-as attributes.
-  static EpubMetadataCreator readMetadataCreator(
-    XmlElement metadataCreatorNode,
-  ) {
-    String? creator;
-    String? role;
-    String? fileAs;
-
-    for (final attribute in metadataCreatorNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'role':
-          role = attributeValue;
-        case 'file-as':
-          fileAs = attributeValue;
-      }
-    }
-    creator = metadataCreatorNode.innerText;
-
-    return EpubMetadataCreator(
-      creator: creator,
-      role: role,
-      fileAs: fileAs,
-    );
-  }
-
-  /// Parses a `<date>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataDate] object.
-  ///
-  /// - **[metadataDateNode]**: The XML element representing a date.
-  ///
-  /// Returns an [EpubMetadataDate] object
-  /// containing the date and event attributes.
-  static EpubMetadataDate readMetadataDate(XmlElement metadataDateNode) {
-    String? event;
-    String? date;
-
-    final eventAttribute = metadataDateNode.getAttribute(
-      'event',
-      namespace: metadataDateNode.name.namespaceUri,
-    );
-    if (eventAttribute != null && eventAttribute.isNotEmpty) {
-      event = eventAttribute;
-    }
-    date = metadataDateNode.innerText;
-
-    return EpubMetadataDate(
-      date: date,
-      event: event,
-    );
-  }
-
-  /// Parses an `<identifier>` element within the `<metadata>` section
-  /// and returns an [EpubMetadataIdentifier] object.
-  ///
-  /// - **[metadataIdentifierNode]**: The XML element representing an identifier
-  ///
-  /// Returns an [EpubMetadataIdentifier] object containing
-  /// the identifier's ID, scheme, and value.
-  static EpubMetadataIdentifier readMetadataIdentifier(
-    XmlElement metadataIdentifierNode,
-  ) {
-    String? id;
-    String? scheme;
-    String? identifier;
-
-    for (final attribute in metadataIdentifierNode.attributes) {
-      final attributeValue = attribute.value;
-
-      switch (attribute.name.local.toLowerCase()) {
-        case 'id':
-          id = attributeValue;
-        case 'scheme':
-          scheme = attributeValue;
-      }
-    }
-    identifier = metadataIdentifierNode.innerText;
-
-    return EpubMetadataIdentifier(
-      id: id,
-      scheme: scheme,
-      identifier: identifier,
     );
   }
 

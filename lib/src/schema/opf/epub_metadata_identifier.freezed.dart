@@ -123,8 +123,9 @@ class __$$EpubMetadataIdentifierImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EpubMetadataIdentifierImpl implements _EpubMetadataIdentifier {
-  const _$EpubMetadataIdentifierImpl({this.id, this.scheme, this.identifier});
+class _$EpubMetadataIdentifierImpl extends _EpubMetadataIdentifier {
+  const _$EpubMetadataIdentifierImpl({this.id, this.scheme, this.identifier})
+      : super._();
 
   @override
   final String? id;
@@ -162,11 +163,12 @@ class _$EpubMetadataIdentifierImpl implements _EpubMetadataIdentifier {
           _$EpubMetadataIdentifierImpl>(this, _$identity);
 }
 
-abstract class _EpubMetadataIdentifier implements EpubMetadataIdentifier {
+abstract class _EpubMetadataIdentifier extends EpubMetadataIdentifier {
   const factory _EpubMetadataIdentifier(
       {final String? id,
       final String? scheme,
       final String? identifier}) = _$EpubMetadataIdentifierImpl;
+  const _EpubMetadataIdentifier._() : super._();
 
   @override
   String? get id;

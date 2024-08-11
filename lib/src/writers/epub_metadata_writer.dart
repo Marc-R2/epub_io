@@ -43,20 +43,14 @@ class EpubMetadataWriter {
           ..nests('language', meta.languages)
           ..nests('relation', meta.relations)
           ..nests('coverage', meta.coverages)
-          ..nests('rights', meta.rights)
-          ..writeXmls('link', meta.links);
+          ..nests('rights', meta.rights);
+
+        for (final link in meta.links ?? <Link>[]) {
+          link.writeXML(builder, nameSpace.uri);
+        }
 
         for (final item in meta.creators) {
-          builder.element(
-            'creator',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('role', item.role, namespace: opfNamespace)
-                ..attribute('file-as', item.fileAs, namespace: opfNamespace)
-                ..text(item.creator);
-            },
-          );
+          item.writeXML(builder, dcNamespace);
         }
 
         for (final item in meta.contributors) {
@@ -64,28 +58,11 @@ class EpubMetadataWriter {
         }
 
         for (final date in meta.dates) {
-          builder.element(
-            'date',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('event', date.event, namespace: opfNamespace)
-                ..text(date.date);
-            },
-          );
+          date.writeXML(builder, dcNamespace);
         }
 
         for (final id in meta.identifiers) {
-          builder.element(
-            'identifier',
-            namespace: dcNamespace,
-            nest: () {
-              builder
-                ..attribute('id', id.id)
-                ..attribute('scheme', id.scheme, namespace: opfNamespace)
-                ..text(id.identifier!);
-            },
-          );
+          id.writeXML(builder, dcNamespace);
         }
 
         for (final metaItem in meta.metaItems) {
