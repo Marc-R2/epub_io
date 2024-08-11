@@ -4,6 +4,7 @@ import 'dart:io';
 // TODO(Marc-R2): archive_io is not compatible with web
 // provide a version based on platform to support the web
 import 'package:archive/archive_io.dart';
+import 'package:collection/collection.dart';
 import 'package:epub_io/epub_io.dart';
 import 'package:epub_io/src/readers/book_cover_reader.dart';
 import 'package:epub_io/src/readers/content_reader.dart';
@@ -56,9 +57,7 @@ class EpubReader
 
   Future<EpubMetadata> get metadata async => (await schema).package.metadata;
 
-  Future<String?> get title async => (await metadata)
-      .titles
-      .firstWhere((String name) => true, orElse: () => '');
+  Future<String?> get title async => (await metadata).titles.firstOrNull;
 
   Future<List<EpubMetadataCreator>> get authors async =>
       (await metadata).creators;
