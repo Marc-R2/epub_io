@@ -7,7 +7,6 @@ import 'package:epub_io/src/readers/content_ref_reader.dart';
 import 'package:epub_io/src/readers/lazy_object.dart';
 import 'package:epub_io/src/readers/schema_reader.dart';
 import 'package:epub_io/src/ref_entities/epub_byte_content_file_ref.dart';
-import 'package:epub_io/src/schema/opf/epub_metadata_meta.dart';
 import 'package:image/image.dart' as images;
 
 /// The [BookCoverReader] mixin provides functionality

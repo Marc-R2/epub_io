@@ -53,6 +53,7 @@ class EpubReader
     return EpubReader.fromPath(file.absolute.path, stream: stream);
   }
 
+  @override
   final EpubArchive epubArchive;
 
   Future<EpubMetadata> get metadata async => (await schema).package.metadata;

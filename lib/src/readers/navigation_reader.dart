@@ -2,12 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
-import 'package:epub_io/src/schema/container/epub_container.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_list.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_list.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_target.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_page_target_type.dart';
-import 'package:epub_io/src/schema/navigation/epub_navigation_target.dart';
 import 'package:epub_io/src/utils/zip_path_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart' as xml;

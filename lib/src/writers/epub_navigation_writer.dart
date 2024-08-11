@@ -31,6 +31,7 @@ class EpubNavigationWriter {
         },
         namespace: _namespace,
         nest: () {
+          // TODO(Marc-R2): Write all the elements of the [navigation] model.
           builder
             ..element(
               'head',
