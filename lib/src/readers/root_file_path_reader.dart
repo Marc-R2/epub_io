@@ -44,11 +44,7 @@ class RootFilePathReader {
 
     for (final rootFileElement in rootFileElements.expand((e) => e.children)) {
       if (rootFileElement is! xml.XmlElement) continue;
-      final rootFile = EpubContainerRootFile(
-        fullPath: rootFileElement.getAttribute('full-path')!,
-        mediaType: rootFileElement.getAttribute('media-type'),
-      );
-      rootFiles.add(rootFile);
+      rootFiles.add(EpubContainerRootFile.readXml(rootFileElement));
     }
 
     return EpubContainer(
