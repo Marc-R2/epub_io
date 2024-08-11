@@ -8,7 +8,7 @@ import 'package:xml/xml.dart';
 /// the various components of an EPUB package from its XML representation,
 /// such as metadata, manifest, spine, and guide.
 class PackageReader {
-   /// Parses the `<manifest>` element from an XML document
+  /// Parses the `<manifest>` element from an XML document
   /// and converts it into an [EpubManifest] object.
   ///
   /// - **[manifestNode]**: The XML element representing the manifest section.
@@ -397,26 +397,8 @@ class PackageReader {
 
     spineNode.children.whereType<XmlElement>().forEach(
       (XmlElement spineItemNode) {
-        if (spineItemNode.name.local.toLowerCase() == 'itemref') {
-          final idRef = spineItemNode.getAttribute('idref');
-          if (idRef == null || idRef.isEmpty) {
-            throw Exception('Incorrect EPUB spine: item ID ref is missing');
-          }
-
-          final linearAttribute = spineItemNode.getAttribute('linear');
-
-          bool? isLinear;
-          if (linearAttribute != null) {
-            isLinear = linearAttribute.toLowerCase() == 'yes';
-          }
-
-          final spineItemRef = EpubSpineItemRef(
-            idRef: idRef,
-            isLinear: isLinear,
-            properties: spineItemNode.getAttribute('properties'),
-          );
-          items.add(spineItemRef);
-        }
+        if (spineItemNode.name.local.toLowerCase() != 'itemref') return;
+        items.add(EpubSpineItemRef.readXML(spineItemNode));
       },
     );
     return EpubSpine(

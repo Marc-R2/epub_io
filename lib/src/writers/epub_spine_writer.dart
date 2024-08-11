@@ -29,17 +29,7 @@ class EpubSpineWriter {
       },
       nest: () {
         for (final spineitem in spine.items) {
-          builder.element(
-            'itemref',
-            namespace: nameSpace.uri,
-            attributes: {
-              'idref': spineitem.idRef,
-              if (spineitem.isLinear != null)
-                'linear': spineitem.isLinear! ? 'yes' : 'no',
-              if (spineitem.properties != null)
-                'properties': spineitem.properties!,
-            },
-          );
+          spineitem.writeXML(builder, nameSpace.uri);
         }
       },
     );
