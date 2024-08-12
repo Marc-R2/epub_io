@@ -150,12 +150,7 @@ class PackageReader {
     final bindingsNode = getNodeOrNull('bindings', namespace: nameSpace.uri);
     final bindings = switch (bindingsNode) {
       null => null,
-      _ => bindingsNode.children.whereType<XmlElement>().map(
-            (XmlElement bindingNode) => MediaType(
-              mediaType: bindingNode.getAttribute('media-type'),
-              handler: bindingNode.getAttribute('handler'),
-            ),
-          ),
+      _ => bindingsNode.children.whereType<XmlElement>().map(MediaType.readXML),
     };
 
     return EpubPackage(
