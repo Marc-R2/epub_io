@@ -12,12 +12,18 @@ mixin EpubMetadataMeta<T extends String?> implements EpubWrite {
   Map<String, String> get attributes;
 
   void writeXMLBuilder(XmlBuilder builder, [String? namespace]) {
-    for (final entry in attributes.entries) {
-      builder.attribute(entry.key, entry.value);
-    }
-    if (this is EpubMetadataMetaV3) {
-      builder.text((this as EpubMetadataMetaV3).content);
-    }
+    builder.element(
+      'meta',
+      namespace: namespace,
+      nest: () {
+        for (final entry in attributes.entries) {
+          builder.attribute(entry.key, entry.value);
+        }
+        if (this is EpubMetadataMetaV3) {
+          builder.text((this as EpubMetadataMetaV3).content);
+        }
+      },
+    );
   }
 }
 

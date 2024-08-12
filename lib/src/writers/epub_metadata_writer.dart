@@ -19,7 +19,6 @@ class EpubMetadataWriter {
   static void writeMetadata(
     XmlBuilder builder,
     EpubMetadata? meta,
-    EpubVersion? version,
     NameSpace nameSpace,
   ) {
     final dcNamespace = meta!.xmlnsDc;
@@ -43,35 +42,13 @@ class EpubMetadataWriter {
           ..nests('language', meta.languages)
           ..nests('relation', meta.relations)
           ..nests('coverage', meta.coverages)
-          ..nests('rights', meta.rights);
-
-        for (final link in meta.links ?? <Link>[]) {
-          link.writeXML(builder, nameSpace.uri);
-        }
-
-        for (final item in meta.creators) {
-          item.writeXML(builder, dcNamespace);
-        }
-
-        for (final item in meta.contributors) {
-          item.writeXML(builder, dcNamespace);
-        }
-
-        for (final date in meta.dates) {
-          date.writeXML(builder, dcNamespace);
-        }
-
-        for (final id in meta.identifiers) {
-          id.writeXML(builder, dcNamespace);
-        }
-
-        for (final metaItem in meta.metaItems) {
-          builder.element(
-            'meta',
-            namespace: nameSpace.uri,
-            nest: () => metaItem.writeXML(builder),
-          );
-        }
+          ..nests('rights', meta.rights)
+          ..writeEpubWrites(meta.links, nameSpace.uri)
+          ..writeEpubWrites(meta.creators, dcNamespace)
+          ..writeEpubWrites(meta.contributors, dcNamespace)
+          ..writeEpubWrites(meta.dates, dcNamespace)
+          ..writeEpubWrites(meta.identifiers, dcNamespace)
+          ..writeEpubWrites(meta.metaItems);
 
         if (meta.description != null) {
           builder.element(

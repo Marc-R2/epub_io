@@ -1,6 +1,11 @@
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/epub_read_write.dart';
 import 'package:epub_io/src/xml_write.dart';
 import 'package:xml/xml.dart';
+
+extension XmlElementReader on XmlElement {
+  T readElement<T>(T Function(XmlElement) readXML) => readXML(this);
+}
 
 extension XmlWriter on XmlBuilder {
   void elementOr(
@@ -21,6 +26,17 @@ extension XmlWriter on XmlBuilder {
       isSelfClosing: isSelfClosing,
       nest: nest,
     );
+  }
+
+  void writeEpubWrite(EpubWrite epub, [String? namespace]) {
+    epub.writeXML(this, namespace);
+  }
+
+  void writeEpubWrites(Iterable<EpubWrite>? epubs, [String? namespace]) {
+    if (epubs == null) return;
+    for (final epub in epubs) {
+      writeEpubWrite(epub, namespace);
+    }
   }
 
   void writeXml(String name, XmlWrite xmlWrite, {NameSpace? nameSpace}) =>
