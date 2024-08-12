@@ -66,11 +66,7 @@ class EpubMetadataWriter {
         }
 
         for (final metaItem in meta.metaItems) {
-          builder.element(
-            'meta',
-            namespace: nameSpace.uri,
-            nest: () => metaItem.writeXML(builder),
-          );
+          metaItem.writeXML(builder);
         }
 
         if (meta.description != null) {
