@@ -3,6 +3,10 @@ import 'package:epub_io/src/epub_read_write.dart';
 import 'package:epub_io/src/xml_write.dart';
 import 'package:xml/xml.dart';
 
+extension XmlElementReader on XmlElement {
+  T readElement<T>(T Function(XmlElement) readXML) => readXML(this);
+}
+
 extension XmlWriter on XmlBuilder {
   void elementOr(
     String name, {

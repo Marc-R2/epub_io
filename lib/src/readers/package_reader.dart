@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_io/epub_io.dart';
+import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart';
 
 /// The `PackageReader` class provides methods to read and parse
@@ -115,54 +116,37 @@ class PackageReader {
         .findElements('package', namespace: opfNamespace)
         .firstWhere((XmlElement? elem) => elem != null);
 
-    XmlElement? getNodeOrNull(String name, {String? namespace}) => packageNode
-        .findElements(name, namespace: namespace)
-        .firstWhereOrNull((XmlElement? elem) => elem != null);
-
-    XmlElement getNode(String name, {String? namespace}) =>
-        getNodeOrNull(name, namespace: namespace) ??
-        (throw Exception('Incorrect EPUB package: $name node is missing'));
-
     final nameSpace = NameSpace(
       uri: packageNode.namespaceUri!,
       prefix: packageNode.namespacePrefix,
     );
 
-    final uniqueIdentifier = packageNode.getAttribute('unique-identifier');
-    final prefix = packageNode.getAttribute('prefix');
-    final xmlLang = packageNode.getAttribute('xml:lang');
+    XmlElement? getNodeOrNull(String name) => packageNode
+        .findElements(name, namespace: nameSpace.uri)
+        .firstWhereOrNull((XmlElement? elem) => elem != null);
+
+    XmlElement getNode(String name) =>
+        getNodeOrNull(name) ??
+        (throw Exception('Incorrect EPUB package: $name node is missing'));
 
     final epubVersionValue = packageNode.getAttribute('version');
     final version = EpubVersion.fromString(epubVersionValue);
 
-    final metadataNode = getNode('metadata', namespace: nameSpace.uri);
-    final metadata = readMetadata(metadataNode, version);
-
-    final manifestNode = getNode('manifest', namespace: nameSpace.uri);
-    final manifest = EpubManifest.readXml(manifestNode);
-
-    final spineNode = getNode('spine', namespace: nameSpace.uri);
-    final spine = EpubSpine.readXml(spineNode);
-
-    final guideNode = getNodeOrNull('guide', namespace: nameSpace.uri);
-    final guide = guideNode != null ? EpubGuide.readXML(guideNode) : null;
-
-    final bindingsNode = getNodeOrNull('bindings', namespace: nameSpace.uri);
-    final bindings = switch (bindingsNode) {
-      null => null,
-      _ => bindingsNode.children.whereType<XmlElement>().map(MediaType.readXML),
-    };
+    final bindings = getNodeOrNull('bindings')
+        ?.children
+        .whereType<XmlElement>()
+        .map(MediaType.readXML);
 
     return EpubPackage(
       nameSpace: nameSpace,
       version: version,
-      metadata: metadata,
-      manifest: manifest,
-      spine: spine,
-      guide: guide,
-      uniqueIdentifier: uniqueIdentifier,
-      prefix: prefix,
-      xmlLang: xmlLang,
+      metadata: readMetadata(getNode('metadata'), version),
+      manifest: getNode('manifest').readElement(EpubManifest.readXml),
+      spine: getNode('spine').readElement(EpubSpine.readXml),
+      guide: getNodeOrNull('guide')?.readElement(EpubGuide.readXML),
+      uniqueIdentifier: packageNode.getAttribute('unique-identifier'),
+      prefix: packageNode.getAttribute('prefix'),
+      xmlLang: packageNode.getAttribute('xml:lang'),
       bindings: bindings?.toList(),
       xmlInfo: XMLInfo.fromXmlDocument(containerDocument),
     );
