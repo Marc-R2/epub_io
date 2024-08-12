@@ -1,5 +1,4 @@
 import 'package:epub_io/src/schema/opf/epub_package.dart';
-import 'package:epub_io/src/schema/opf/epub_version.dart';
 import 'package:epub_io/src/writers/epub_metadata_writer.dart';
 import 'package:epub_io/src/xml_writer.dart';
 import 'package:xml/xml.dart' show XmlBuilder, XmlElement, XmlNodeType;
@@ -31,7 +30,7 @@ class EpubPackageWriter {
         namespace: nameSpace.uri,
         namespaces: {nameSpace.uri: nameSpace.prefix},
         attributes: {
-          'version': package.version == EpubVersion.epub2 ? '2.0' : '3.0',
+          'version': package.version.vString,
           if (package.uniqueIdentifier != null)
             'unique-identifier': package.uniqueIdentifier!,
           if (package.xmlLang != null) 'xml:lang': package.xmlLang!,

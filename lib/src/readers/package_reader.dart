@@ -133,11 +133,7 @@ class PackageReader {
     final xmlLang = packageNode.getAttribute('xml:lang');
 
     final epubVersionValue = packageNode.getAttribute('version');
-    final version = switch (epubVersionValue) {
-      '2.0' => EpubVersion.epub2,
-      '3.0' => EpubVersion.epub3,
-      _ => throw Exception('Unsupported EPUB version: $epubVersionValue.'),
-    };
+    final version = EpubVersion.fromString(epubVersionValue);
 
     final metadataNode = getNode('metadata', namespace: nameSpace.uri);
     final metadata = readMetadata(metadataNode, version);
