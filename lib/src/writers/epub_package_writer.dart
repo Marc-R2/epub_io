@@ -40,7 +40,6 @@ class EpubPackageWriter {
           EpubMetadataWriter.writeMetadata(
             builder,
             package.metadata,
-            package.version,
             nameSpace,
           );
           package.manifest.writeXML(builder, nameSpace.uri);
